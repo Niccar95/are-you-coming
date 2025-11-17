@@ -21,15 +21,12 @@ async function getAttendees(): Promise<Attendee[]> {
 export default async function Home() {
   const allAttendees = await getAttendees();
 
-  // for later
-  // const countDownDate = new Date("Dec 6, 2025 18:00").getTime();
-
   return (
     <div
-      className={`flex flex-col min-h-screen items-center justify-center gap-8 bg-[linear-gradient(135deg,#fff5f5,#f3e5ff,#e5ebff,#e0f2ff,#d9f7f7,#d3f9d8,#e9fac8,#fff9db)] p-6 ${poppins.className}`}
+      className={`flex flex-col min-h-screen items-center justify-center gap-8 bg-linear-to-br from-white to-blue-50 p-6 ${poppins.className}`}
     >
       <div className="text-center space-y-2">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-white">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-800">
           🎉 NICO&apos;S BIRTHDAY PARTY
         </h1>
         <p className="text-2xl text-zinc-600 dark:text-zinc-400">

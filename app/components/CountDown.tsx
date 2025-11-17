@@ -49,17 +49,13 @@ const CountDown = () => {
   return (
     <div className="flex gap-3 justify-center mt-4">
       <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <span className="text-3xl font-bold text-white">
-          {timeLeft.days}
-        </span>
+        <span className="text-3xl font-bold text-white">{timeLeft.days}</span>
         <span className="text-xs uppercase text-yellow-100 font-semibold">
           Days
         </span>
       </div>
       <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <span className="text-3xl font-bold text-white">
-          {timeLeft.hours}
-        </span>
+        <span className="text-3xl font-bold text-white">{timeLeft.hours}</span>
         <span className="text-xs uppercase text-yellow-100 font-semibold">
           Hours
         </span>
