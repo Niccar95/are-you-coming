@@ -2,6 +2,7 @@ import AttendeeForm from "./components/AttendeeForm";
 import { Attendee } from "./lib/models/Attendee";
 import { Poppins } from "next/font/google";
 import pool from "./lib/db";
+import CountDown from "./components/CountDown";
 
 export const revalidate = 0;
 
@@ -25,16 +26,17 @@ export default async function Home() {
 
   return (
     <div
-      className={`flex flex-col min-h-screen items-center justify-center gap-8 bg-zinc-50 dark:bg-black p-6 ${poppins.className}`}
+      className={`flex flex-col min-h-screen items-center justify-center gap-8 bg-[linear-gradient(135deg,#fff5f5,#f3e5ff,#e5ebff,#e0f2ff,#d9f7f7,#d3f9d8,#e9fac8,#fff9db)] p-6 ${poppins.className}`}
     >
       <div className="text-center space-y-2">
-        <h1 className="text-5xl md:text-6xl font-bold text-zinc-900 dark:text-white">
-          🎉 BIRTHDAY PARTY
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-white">
+          🎉 NICO&apos;S BIRTHDAY PARTY
         </h1>
         <p className="text-2xl text-zinc-600 dark:text-zinc-400">
-          December 6th, 2025
+          December 6th, 2025 • 18:00
         </p>
       </div>
+      <CountDown />
 
       <AttendeeForm />
 
