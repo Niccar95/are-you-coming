@@ -3,6 +3,8 @@ import { Attendee } from "./lib/models/Attendee";
 import { Poppins } from "next/font/google";
 import pool from "./lib/db";
 
+export const revalidate = 0;
+
 const poppins = Poppins({
   weight: ["400", "600", "700"],
   subsets: ["latin"],
