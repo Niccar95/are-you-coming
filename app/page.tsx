@@ -27,7 +27,7 @@ export default async function Home() {
     >
       <div className="text-center space-y-2">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-800">
-          🎉 NICO&apos;S BIRTHDAY PARTY
+          🎉 NICOS 30TH BDAY PARTY
         </h1>
         <p className="text-2xl text-zinc-600 dark:text-zinc-400">
           December 6th, 2025 • 18:00
@@ -35,43 +35,56 @@ export default async function Home() {
       </div>
       <CountDown />
 
-      <AttendeeForm />
-
-      {allAttendees.length > 0 && (
-        <div className="w-full max-w-md">
-          <div className="relative mb-6">
-            <h2 className="text-3xl font-bold text-center bg-linear-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
-              ⭐ VIP GUEST LIST ⭐
-            </h2>
-            <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-              {allAttendees.length}{" "}
-              {allAttendees.length === 1 ? "guest" : "guests"} confirmed
-            </p>
-          </div>
-          <ul className="space-y-3">
-            {allAttendees.map((attendee, index) => (
-              <li
-                key={attendee.id}
-                className="group relative bg-linear-to-r from-yellow-50 to-amber-50 dark:from-zinc-900 dark:to-zinc-800 px-6 py-5 rounded-xl shadow-lg border-2 border-yellow-400/30 dark:border-yellow-600/30 hover:border-yellow-500 dark:hover:border-yellow-500 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="shrink-0 w-10 h-10 rounded-full bg-linear-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
-                    {index + 1}
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-xl font-semibold text-zinc-900 dark:text-white">
-                      {attendee.name}
-                    </span>
-                  </div>
-                  <span className="text-2xl opacity-70 group-hover:opacity-100 transition-opacity">
-                    🎊
-                  </span>
-                </div>
-              </li>
-            ))}
+      <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-6 items-start justify-center">
+        <div className="w-full lg:w-80 bg-white dark:bg-zinc-900 rounded-lg shadow-md p-6 border border-zinc-200 dark:border-zinc-800">
+          <h3 className="text-lg font-semibold text-zinc-800 dark:text-white mb-3">Party Info</h3>
+          <ul className="space-y-2 text-zinc-700 dark:text-zinc-300">
+            <li className="flex items-center gap-2">
+              <span className="text-blue-500">🍹</span>
+              Punch & snacks provided
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-blue-500">🍺</span>
+              Bring your own booze
+            </li>
           </ul>
         </div>
-      )}
+
+        <div className="w-full lg:w-96">
+          <AttendeeForm />
+        </div>
+
+        {allAttendees.length > 0 && (
+          <div className="w-full lg:w-80">
+            <div className="relative mb-6">
+              <h2 className="text-2xl font-bold text-center bg-linear-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
+                ⭐ VIP GUESTS ⭐
+              </h2>
+              <p className="text-center text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+                {allAttendees.length}{" "}
+                {allAttendees.length === 1 ? "guest" : "guests"}
+              </p>
+            </div>
+            <ul className="space-y-2 lg:max-h-96 lg:overflow-y-auto lg:pr-2">
+              {allAttendees.map((attendee, index) => (
+                <li
+                  key={attendee.id}
+                  className="bg-linear-to-r from-yellow-50 to-amber-50 dark:from-zinc-900 dark:to-zinc-800 px-4 py-3 rounded-lg shadow border border-yellow-400/30 dark:border-yellow-600/30"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="shrink-0 w-8 h-8 rounded-full bg-linear-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white font-bold text-sm shadow">
+                      {index + 1}
+                    </div>
+                    <p className="text-sm font-semibold text-zinc-900 dark:text-white">
+                      {attendee.name}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -49,32 +49,32 @@ const CountDown = () => {
   return (
     <div className="flex gap-3 justify-center mt-4">
       <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <span className="text-3xl font-bold text-white">{timeLeft.days}</span>
-        <span className="text-xs uppercase text-yellow-100 font-semibold">
+        <p className="text-3xl font-bold text-white">{timeLeft.days}</p>
+        <p className="text-xs uppercase text-yellow-100 font-semibold">
           Days
-        </span>
+        </p>
       </div>
       <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <span className="text-3xl font-bold text-white">{timeLeft.hours}</span>
-        <span className="text-xs uppercase text-yellow-100 font-semibold">
+        <p className="text-3xl font-bold text-white">{timeLeft.hours}</p>
+        <p className="text-xs uppercase text-yellow-100 font-semibold">
           Hours
-        </span>
+        </p>
       </div>
       <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <span className="text-3xl font-bold text-white">
+        <p className="text-3xl font-bold text-white">
           {timeLeft.minutes}
-        </span>
-        <span className="text-xs uppercase text-yellow-100 font-semibold">
+        </p>
+        <p className="text-xs uppercase text-yellow-100 font-semibold">
           Minutes
-        </span>
+        </p>
       </div>
       <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <span className="text-3xl font-bold text-white">
+        <p className="text-3xl font-bold text-white">
           {timeLeft.seconds}
-        </span>
-        <span className="text-xs uppercase text-yellow-100 font-semibold">
+        </p>
+        <p className="text-xs uppercase text-yellow-100 font-semibold">
           Seconds
-        </span>
+        </p>
       </div>
     </div>
   );
