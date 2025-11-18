@@ -27,17 +27,22 @@ export default async function Home() {
     >
       <div className="text-center space-y-2">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-800">
-          🎉 NICOS 30TH BDAY PARTY
+          🎉 NICO&apos;S 30TH BDAY PARTY
         </h1>
         <p className="text-2xl text-zinc-600 dark:text-zinc-400">
           December 6th, 2025 • 18:00
+        </p>
+        <p className="text-lg text-zinc-500 dark:text-zinc-500">
+          📍 Ursvik, Sundbyberg
         </p>
       </div>
       <CountDown />
 
       <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-6 items-start justify-center">
         <div className="w-full lg:w-80 bg-white dark:bg-zinc-900 rounded-lg shadow-md p-6 border border-zinc-200 dark:border-zinc-800">
-          <h3 className="text-lg font-semibold text-zinc-800 dark:text-white mb-3">Party Info</h3>
+          <h3 className="text-lg font-semibold text-zinc-800 dark:text-white mb-3">
+            Party Info
+          </h3>
           <ul className="space-y-2 text-zinc-700 dark:text-zinc-300">
             <li className="flex items-center gap-2">
               <span className="text-blue-500">🍹</span>
@@ -58,7 +63,7 @@ export default async function Home() {
           <div className="w-full lg:w-80">
             <div className="relative mb-6">
               <h2 className="text-2xl font-bold text-center bg-linear-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
-                ⭐ VIP GUESTS ⭐
+                ⭐ GUESTS LIST ⭐
               </h2>
               <p className="text-center text-xs text-zinc-500 dark:text-zinc-400 mt-1">
                 {allAttendees.length}{" "}
