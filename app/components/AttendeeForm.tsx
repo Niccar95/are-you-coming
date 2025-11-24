@@ -35,7 +35,7 @@ const AttendeeForm = () => {
   };
 
   return (
-    <form onSubmit={submitAttendance} className="flex flex-col gap-4 w-full max-w-md p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg">
+    <form onSubmit={submitAttendance} className="flex flex-col gap-4 w-full p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg">
       <h3 className="text-lg font-semibold text-zinc-800 dark:text-white mb-2">Sign Up</h3>
       <div className="flex flex-col gap-2">
         <label htmlFor="name" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
