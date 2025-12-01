@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import pool from "./lib/db";
 import CountDown from "./components/CountDown";
 import Image from "next/image";
+import SendRemindersButton from "./components/SendRemindersButton";
 
 export const revalidate = 0;
 
@@ -116,6 +117,7 @@ export default async function Home() {
           </div>
         )}
       </div>
+      <SendRemindersButton />
     </div>
   );
 }
