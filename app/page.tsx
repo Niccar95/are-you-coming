@@ -5,6 +5,7 @@ import pool from "./lib/db";
 import CountDown from "./components/CountDown";
 import Image from "next/image";
 import SendRemindersButton from "./components/SendRemindersButton";
+import SignIn from "./components/sign-in";
 
 export const revalidate = 0;
 
@@ -17,7 +18,7 @@ async function getAttendees(): Promise<Attendee[]> {
   const { rows } = await pool.query("SELECT * FROM attendees ORDER BY id ASC");
   return rows.map(
     (attendee: Attendee) =>
-      new Attendee(attendee.id, attendee.name, attendee.email)
+      new Attendee(attendee.id, attendee.name, attendee.email),
   );
 }
 export default async function Home() {
@@ -118,6 +119,7 @@ export default async function Home() {
         )}
       </div>
       <SendRemindersButton />
+      <SignIn />
     </div>
   );
 }
