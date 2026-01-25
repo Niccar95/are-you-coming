@@ -2,12 +2,14 @@ import emailjs from "@emailjs/nodejs";
 import pool from "../lib/db";
 import { Attendee } from "../lib/models/Attendee";
 
-const sendReminders = async () => {
+export const sendReminders = async () => {
   try {
-    const { rows } = await pool.query("SELECT * FROM attendees ORDER BY id ASC");
+    const { rows } = await pool.query(
+      "SELECT * FROM attendees ORDER BY id ASC",
+    );
     const attendees = rows.map(
       (attendee: Attendee) =>
-        new Attendee(attendee.id, attendee.name, attendee.email)
+        new Attendee(attendee.id, attendee.name, attendee.email),
     );
 
     console.log(`Found ${attendees.length} attendees to send reminders to`);
@@ -22,7 +24,7 @@ const sendReminders = async () => {
           },
           {
             publicKey: "_TeZKUhH8wHVx8a5J",
-          }
+          },
         );
         console.log(`✓ Reminder sent to ${attendee.email}`, response);
       } catch (emailError) {
@@ -36,5 +38,3 @@ const sendReminders = async () => {
     throw err;
   }
 };
-
-export default sendReminders;
