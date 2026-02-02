@@ -6,7 +6,7 @@
 psql "$(grep DATABASE_URL .env | cut -d '=' -f2-)"
 ```
 
-Or copy your `DATABASE_URL` from `.env` and run:
+Or copy your `DATABASE_URL` from `.env.local` and run:
 
 ```bash
 psql "your_connection_string_here"

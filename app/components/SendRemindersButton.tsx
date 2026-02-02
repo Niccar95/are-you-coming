@@ -53,7 +53,7 @@ const SendRemindersButton = () => {
       <button
         onClick={sendReminders}
         disabled={sending}
-        className="bg-purple-500 hover:bg-purple-600 disabled:bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg shadow-lg cursor-pointer"
+        className="bg-violet-500 hover:bg-violet-600 disabled:bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg shadow-lg cursor-pointer"
       >
         {sending ? "Sending..." : "Send Reminders"}
       </button>

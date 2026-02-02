@@ -28,7 +28,7 @@ const DashboardPage = async () => {
 
   return (
     <div
-      className={`flex flex-col min-h-screen items-center justify-center gap-8 bg-linear-to-br from-white to-blue-50 p-6 ${poppins.className}`}
+      className={`flex flex-col min-h-screen items-center justify-center gap-8 bg-linear-to-br from-white to-violet-50 p-6 ${poppins.className}`}
     >
       <div className="w-full max-w-2xl flex justify-between items-center">
         <p className="text-sm text-gray-600">Welcome, {session?.user?.name}</p>
@@ -40,7 +40,7 @@ const DashboardPage = async () => {
         >
           <button
             type="submit"
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 text-sm"
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 text-sm cursor-pointer"
           >
             Sign out
           </button>
@@ -74,14 +74,14 @@ const DashboardPage = async () => {
       <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-8 lg:gap-6 items-start justify-center">
         <div className="w-full lg:w-80 order-2 lg:order-1">
           <div className="relative mb-6">
-            <h2 className="text-2xl font-bold text-center bg-linear-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-bold text-center bg-linear-to-r from-violet-400 via-violet-500 to-violet-600 bg-clip-text text-transparent">
               ℹ️ PARTY INFO ℹ️
             </h2>
           </div>
           <ul className="space-y-3">
-            <li className="bg-linear-to-r from-blue-50 to-cyan-50 dark:from-zinc-900 dark:to-zinc-800 px-4 py-3 rounded-lg border border-blue-400/30 dark:border-blue-600/30">
+            <li className="bg-linear-to-r from-violet-50 to-fuchsia-50 dark:from-zinc-900 dark:to-zinc-800 px-4 py-3 rounded-lg border border-violet-400/30 dark:border-violet-600/30">
               <div className="flex items-center gap-3">
-                <div className="shrink-0 w-8 h-8 rounded-full bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg">
+                <div className="shrink-0 w-8 h-8 rounded-full bg-linear-to-br from-violet-400 to-violet-600 flex items-center justify-center text-white text-lg">
                   🍹
                 </div>
                 <p className="text-sm font-semibold text-zinc-900 dark:text-white">
@@ -89,9 +89,9 @@ const DashboardPage = async () => {
                 </p>
               </div>
             </li>
-            <li className="bg-linear-to-r from-blue-50 to-cyan-50 dark:from-zinc-900 dark:to-zinc-800 px-4 py-3 rounded-lg border border-blue-400/30 dark:border-blue-600/30">
+            <li className="bg-linear-to-r from-violet-50 to-fuchsia-50 dark:from-zinc-900 dark:to-zinc-800 px-4 py-3 rounded-lg border border-violet-400/30 dark:border-violet-600/30">
               <div className="flex items-center gap-3">
-                <div className="shrink-0 w-8 h-8 rounded-full bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg">
+                <div className="shrink-0 w-8 h-8 rounded-full bg-linear-to-br from-violet-400 to-violet-600 flex items-center justify-center text-white text-lg">
                   🍺
                 </div>
                 <p className="text-sm font-semibold text-zinc-900 dark:text-white">

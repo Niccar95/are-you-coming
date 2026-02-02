@@ -47,7 +47,7 @@ const AttendeeForm = () => {
           onChange={(e) => setAttendeeName(e.target.value)}
           type="text"
           placeholder="Enter your name"
-          className="px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:text-white"
+          className="px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 dark:bg-zinc-800 dark:text-white"
           required
         />
       </div>
@@ -61,7 +61,7 @@ const AttendeeForm = () => {
           onChange={(e) => setAttendeeEmail(e.target.value)}
           type="email"
           placeholder="your@email.com"
-          className="px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:text-white"
+          className="px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 dark:bg-zinc-800 dark:text-white"
           required
         />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -70,7 +70,7 @@ const AttendeeForm = () => {
       </div>
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-md transition-colors duration-200 mt-2"
+        className="bg-violet-500 hover:bg-violet-600 text-white font-semibold py-3 px-6 rounded-md transition-colors duration-200 mt-2 cursor-pointer"
       >
         I&apos;m in
       </button>
