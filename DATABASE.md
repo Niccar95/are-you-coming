@@ -2,23 +2,27 @@
 
 ## Connect to PostgreSQL
 
-```bash
-psql "$(grep DATABASE_URL .env | cut -d '=' -f2-)"
-```
-
-Or copy your `DATABASE_URL` from `.env.local` and run:
+**Quick way (alias):**
 
 ```bash
-psql "your_connection_string_here"
+ayc-db
 ```
+
+**Full command:**
+
+```bash
+psql "postgresql://neondb_owner:REDACTED@ep-shiny-frog-ablw3k4r-pooler.eu-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+```
+
+> The alias is defined in `~/.zshrc`. Run `source ~/.zshrc` if it doesn't work.
 
 ## Inside psql
 
-| Command | Description |
-|---------|-------------|
-| `\dt` | List all tables |
+| Command         | Description                     |
+| --------------- | ------------------------------- |
+| `\dt`           | List all tables                 |
 | `\d table_name` | Describe a table (show columns) |
-| `\q` | Quit psql |
+| `\q`            | Quit psql                       |
 
 ## Common SQL Commands
 
