@@ -1,11 +1,11 @@
 import AttendeeForm from "../components/AttendeeForm";
-import { Attendee } from "../lib/models/Attendee";
 import { Poppins } from "next/font/google";
-import pool from "../lib/db";
 import CountDown from "../components/CountDown";
 import Image from "next/image";
 import SendRemindersButton from "../components/SendRemindersButton";
 import { auth, signOut } from "@/auth";
+import EventForm from "../components/EventForm";
+import { getAttendees } from "../services/attendees";
 
 export const revalidate = 0;
 
@@ -13,14 +13,6 @@ const poppins = Poppins({
   weight: ["400", "600", "700"],
   subsets: ["latin"],
 });
-
-const getAttendees = async (): Promise<Attendee[]> => {
-  const { rows } = await pool.query("SELECT * FROM attendees ORDER BY id ASC");
-  return rows.map(
-    (attendee: Attendee) =>
-      new Attendee(attendee.id, attendee.name, attendee.email),
-  );
-};
 
 const DashboardPage = async () => {
   const session = await auth();
@@ -138,8 +130,9 @@ const DashboardPage = async () => {
         )}
       </div>
       <SendRemindersButton />
+      <EventForm />
     </div>
   );
-}
+};
 
 export default DashboardPage;
