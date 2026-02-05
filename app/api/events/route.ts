@@ -1,4 +1,4 @@
-import pool from "@/app/lib/db";
+import { addEvent } from "@/app/services/eventService";
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,10 +9,7 @@ export const POST = async (req: NextRequest) => {
   }
   const { name, event_date } = await req.json();
 
-  const result = await pool.query(
-    "INSERT INTO events (name, event_date) VALUES ($1, $2) RETURNING *",
-    [name, event_date],
-  );
+  const event = await addEvent(name, new Date(event_date));
 
-  return NextResponse.json(result.rows[0], { status: 201 });
+  return NextResponse.json(event, { status: 201 });
 };

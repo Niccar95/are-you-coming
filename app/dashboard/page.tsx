@@ -5,7 +5,7 @@ import Image from "next/image";
 import SendRemindersButton from "../components/SendRemindersButton";
 import { auth, signOut } from "@/auth";
 import EventForm from "../components/EventForm";
-import { getAttendees } from "../services/attendees";
+import { getAttendees } from "../services/attendeeService";
 
 export const revalidate = 0;
 
