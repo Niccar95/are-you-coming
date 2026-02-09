@@ -1,6 +1,6 @@
 import { signIn } from "@/auth";
 
-const SignIn = () => {
+const SignInButton = () => {
   return (
     <form
       action={async () => {
@@ -36,4 +36,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInButton;
