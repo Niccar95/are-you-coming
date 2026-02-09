@@ -4,7 +4,7 @@ import { Attendee } from "../lib/models/Attendee";
 export const getAttendees = async (): Promise<Attendee[]> => {
   const { rows } = await pool.query("SELECT * FROM attendees ORDER BY id ASC");
   return rows.map(
-    (attendee: Attendee) =>
+    (attendee: { id: number; name: string; email: string }) =>
       new Attendee(attendee.id, attendee.name, attendee.email),
   );
 };

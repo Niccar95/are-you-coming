@@ -4,7 +4,7 @@ import { Event } from "../lib/models/Event";
 export const getEvents = async (): Promise<Event[]> => {
   const { rows } = await pool.query("SELECT * FROM events ORDER BY id ASC");
   return rows.map(
-    (event: Event) => new Event(event.id, event.name, event.eventDate, event.description),
+    (event: { id: number; name: string; event_date: Date; description: string }) => new Event(event.id, event.name, event.event_date, event.description),
   );
 };
 
