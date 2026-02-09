@@ -7,6 +7,7 @@ const EventForm = () => {
   const router = useRouter();
   const [eventName, setEventName] = useState<string>("");
   const [eventDate, setEventDate] = useState("");
+  const [description, setDescription] = useState("");
 
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
 
@@ -25,6 +26,7 @@ const EventForm = () => {
         body: JSON.stringify({
           name: eventName,
           event_date: eventDate,
+          description: description,
         }),
       });
 
@@ -34,6 +36,7 @@ const EventForm = () => {
 
       setEventName("");
       setEventDate("");
+      setDescription("");
       router.refresh();
     } catch (error) {
       console.error("Error adding new event:", error);
@@ -89,6 +92,22 @@ const EventForm = () => {
               type="datetime-local"
               className="px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 dark:bg-zinc-800 dark:text-white"
               required
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="description"
+              className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter event description"
+              rows={3}
+              className="px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 dark:bg-zinc-800 dark:text-white resize-none"
             />
           </div>
           <button
