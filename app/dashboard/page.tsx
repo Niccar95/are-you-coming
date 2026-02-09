@@ -5,6 +5,8 @@ import { Poppins } from "next/font/google";
 import SendRemindersButton from "../components/SendRemindersButton";
 import { auth } from "@/auth";
 import EventForm from "../components/EventForm";
+import Events from "../components/Events";
+import { getEvents } from "../services/eventService";
 // import Navbar from "../components/Navbar"; // moved to layout.tsx
 // import { getAttendees } from "../services/attendeeService";
 
@@ -19,9 +21,13 @@ const DashboardPage = async () => {
   const session = await auth();
   // const allAttendees = await getAttendees();
 
+  const allEvents = await getEvents();
+
   return (
-    <div className={`flex flex-col min-h-screen items-center justify-start gap-8 bg-linear-to-br from-white to-violet-50 p-6 ${poppins.className}`}>
-        <p className="text-sm text-gray-600">Welcome, {session?.user?.name}</p>
+    <div
+      className={`flex flex-col min-h-screen items-center justify-start gap-8 bg-linear-to-br from-white to-violet-50 p-6 ${poppins.className}`}
+    >
+      <p className="text-sm text-gray-600">Welcome, {session?.user?.name}</p>
 
       {/* 
       <div className="relative w-full max-w-2xl rounded-lg overflow-hidden">
@@ -114,6 +120,7 @@ const DashboardPage = async () => {
       </div> */}
       <SendRemindersButton />
       <EventForm />
+      <Events allEvents={allEvents} />
     </div>
   );
 };
