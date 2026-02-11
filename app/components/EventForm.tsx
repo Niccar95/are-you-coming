@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 const EventForm = () => {
   const router = useRouter();
@@ -10,10 +10,25 @@ const EventForm = () => {
   const [description, setDescription] = useState("");
 
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const toggleEventForm = () => {
     setOpenEventForm(!openEventForm);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        setOpenEventForm(false);
+      }
+    };
+
+    if (openEventForm) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [openEventForm]);
 
   const addNewEvent = async (e: FormEvent) => {
     e.preventDefault();
@@ -44,7 +59,7 @@ const EventForm = () => {
   };
 
   return (
-    <>
+    <div ref={formRef} className="w-full max-w-2xl flex flex-col items-center gap-4">
       <button
         onClick={toggleEventForm}
         className="border border-violet-500 text-violet-600 font-semibold py-2 px-4 rounded-md hover:bg-violet-50 transition-colors cursor-pointer"
@@ -117,7 +132,7 @@ const EventForm = () => {
             Create Event
           </button>
       </form>
-    </>
+    </div>
   );
 };
 

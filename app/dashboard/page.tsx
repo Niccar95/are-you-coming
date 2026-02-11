@@ -25,7 +25,7 @@ const DashboardPage = async () => {
 
   return (
     <div
-      className={`flex flex-col min-h-screen items-center justify-start gap-8 bg-linear-to-br from-white to-violet-50 p-6 ${poppins.className}`}
+      className={`flex flex-col items-center justify-start gap-8 ${poppins.className}`}
     >
       <p className="text-sm text-gray-600">Welcome, {session?.user?.name}</p>
 

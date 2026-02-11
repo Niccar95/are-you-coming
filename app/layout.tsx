@@ -29,7 +29,12 @@ const RootLayout = ({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar />
-        <main className="lg:ml-56 pt-14 lg:pt-0">{children}</main>
+        <div className="lg:ml-56 pt-14 lg:pt-0 min-h-screen flex flex-col">
+          <main className="flex-1 p-6 bg-linear-to-br from-white to-violet-50">{children}</main>
+          <footer className="border-t border-zinc-200 py-4 px-6">
+            <p className="text-xs text-zinc-400 text-center">Are You Coming?</p>
+          </footer>
+        </div>
       </body>
     </html>
   );
