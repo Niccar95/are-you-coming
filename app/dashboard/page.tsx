@@ -7,7 +7,6 @@ import { auth } from "@/auth";
 import EventForm from "../components/EventForm";
 import Events from "../components/Events";
 import { getEvents } from "../services/eventService";
-// import Navbar from "../components/Navbar"; // moved to layout.tsx
 // import { getAttendees } from "../services/attendeeService";
 
 export const revalidate = 0;

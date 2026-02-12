@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const AttendeeForm = () => {
+const AttendeeForm = ({ eventId }: { eventId: number }) => {
   const router = useRouter();
   const [attendeeName, setAttendeeName] = useState<string>("");
   const [attendeeEmail, setAttendeeEmail] = useState<string>("");
@@ -17,6 +17,7 @@ const AttendeeForm = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          event_id: eventId,
           name: attendeeName,
           email: attendeeEmail,
         }),

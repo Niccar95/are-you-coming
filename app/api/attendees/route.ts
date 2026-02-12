@@ -16,9 +16,9 @@ export const POST = async (req: NextRequest) => {
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { name, email } = await req.json();
+  const { event_id, name, email } = await req.json();
 
-  const attendee = await addAttendee(name, email);
+  const attendee = await addAttendee(event_id, name, email);
 
   return NextResponse.json(attendee, { status: 201 });
 };
