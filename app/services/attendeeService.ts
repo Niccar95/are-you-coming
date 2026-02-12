@@ -10,6 +10,7 @@ export const getAttendees = async (): Promise<Attendee[]> => {
 };
 
 export const addAttendee = async (
+  eventId: number,
   name: string,
   email: string,
 ): Promise<Attendee> => {
@@ -17,5 +18,12 @@ export const addAttendee = async (
     "INSERT INTO attendees (name, email) VALUES ($1, $2) RETURNING *",
     [name, email],
   );
-  return new Attendee(rows[0].id, rows[0].name, rows[0].email);
+  const attendee = new Attendee(rows[0].id, rows[0].name, rows[0].email);
+
+  await pool.query(
+    "INSERT INTO event_attendees (event_id, attendee_id) VALUES ($1, $2)",
+    [eventId, attendee.id],
+  );
+
+  return attendee;
 };
