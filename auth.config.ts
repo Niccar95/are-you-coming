@@ -8,6 +8,14 @@ export const authConfig: NextAuthConfig = {
     signIn: "/",
   },
   callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) token.id = user.id;
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (token.id) session.user.id = token.id as string;
+      return session;
+    },
     authorized: async ({ auth, request }) => {
       const isLoggedIn = !!auth;
       const isOnHome = request.nextUrl.pathname === "/";

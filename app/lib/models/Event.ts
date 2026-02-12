@@ -3,12 +3,20 @@ export class Event {
   name: string;
   eventDate: Date;
   description: string;
+  userId: string;
 
-  constructor(id: number, name: string, eventDate: Date, description: string) {
+  constructor(
+    id: number,
+    name: string,
+    eventDate: Date,
+    description: string,
+    userId: string,
+  ) {
     this.id = id;
     this.name = name;
     this.eventDate = eventDate;
     this.description = description;
+    this.userId = userId;
   }
 
   displayEvent(): string {

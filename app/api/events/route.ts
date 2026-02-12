@@ -4,12 +4,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const session = await auth();
-  if (!session) {
+
+  if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { name, event_date, description } = await req.json();
 
-  const event = await addEvent(name, new Date(event_date), description);
+  const event = await addEvent(
+    name,
+    new Date(event_date),
+    description,
+    session.user.id,
+  );
 
   return NextResponse.json(event, { status: 201 });
 };
