@@ -1,0 +1,17 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Rounded square background -->
+  <rect width="64" height="64" rx="12" fill="#8B5CF6"/>
+
+  <!-- Simplified circular pin (from main logo) -->
+  <circle cx="32" cy="32" r="20" fill="white"/>
+
+  <!-- Bold check mark -->
+  <path d="M24 32 L30 38 L42 26"
+        fill="none"
+        stroke="#7C3AED"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+</svg>
