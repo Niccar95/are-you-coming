@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { auth, signOut } from "@/auth";
 
@@ -10,11 +11,13 @@ const Navbar = async () => {
     <>
       {/* Mobile: top bar */}
       <nav className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-zinc-200 flex items-center justify-between px-4 z-50">
-        <Link
-          href="/dashboard"
-          className="text-sm font-semibold text-violet-600"
-        >
-          Dashboard
+        <Link href="/dashboard">
+          <Image
+            src="/are-you-coming-logo-light-q.svg"
+            alt="Are You Coming?"
+            width={120}
+            height={43}
+          />
         </Link>
         <div className="flex items-center gap-3">
           <p className="text-xs text-zinc-500">{session?.user?.name}</p>
@@ -37,7 +40,14 @@ const Navbar = async () => {
       {/* Desktop: left sidebar */}
       <nav className="hidden lg:flex fixed top-0 left-0 h-screen w-56 bg-white border-r border-zinc-200 flex-col justify-between p-4 z-50">
         <div className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-zinc-800 mb-4">Are You Coming?</h2>
+          <Link href="/dashboard" className="mb-4">
+            <Image
+              src="/are-you-coming-logo-light-q.svg"
+              alt="Are You Coming?"
+              width={180}
+              height={65}
+            />
+          </Link>
           <Link
             href="/dashboard"
             className="text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
