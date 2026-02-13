@@ -31,6 +31,20 @@ export const getEvents = async (): Promise<Event[]> => {
   );
 };
 
+export const getEventById = async (id: number): Promise<Event | null> => {
+  const { rows } = await pool.query("SELECT * FROM events WHERE id = $1", [id]);
+
+  if (rows.length === 0) return null;
+
+  return new Event(
+    rows[0].id,
+    rows[0].name,
+    rows[0].event_date,
+    rows[0].description,
+    rows[0].user_id,
+  );
+};
+
 export const addEvent = async (
   name: string,
   eventDate: Date,
