@@ -13,4 +13,5 @@ const pool = new Pool({
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   adapter: PostgresAdapter(pool),
+  debug: true,
 });
