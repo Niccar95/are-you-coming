@@ -53,3 +53,16 @@ SELECT * FROM your_table_name;
 ```sql
 DROP TABLE your_table_name;
 ```
+
+## Sync Schema to Production
+
+Copy all table structures from dev to production (schema only, no data):
+
+```bash
+pg_dump --schema-only "DEV_CONNECTION_STRING" | psql "PROD_CONNECTION_STRING"
+```
+
+**Important:** Use the direct (non-pooler) connection string for production. The pooler endpoint strips `search_path` and won't find your tables.
+
+- Dev (pooler): `ep-shiny-frog-ablw3k4r-pooler.eu-west-2.aws.neon.tech`
+- Prod (direct): `ep-proud-snow-ab9ekjo5.eu-west-2.aws.neon.tech`
