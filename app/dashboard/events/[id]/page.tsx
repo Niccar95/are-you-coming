@@ -43,8 +43,9 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           ))}
         </div>
 
+        <h2 className="mt-10 mb-4">Event description</h2>
         {event.description && (
-          <p className="text-body mt-5 leading-relaxed">{event.description}</p>
+          <p className="text-body leading-relaxed">{event.description}</p>
         )}
 
         <hr className="border-zinc-200 mt-6" />
