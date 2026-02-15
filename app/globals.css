@@ -78,7 +78,7 @@ button, input, textarea, select {
   @apply flex flex-col gap-4 w-full p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg;
 }
 
-/* Typography */
+
 .text-title {
   @apply text-3xl font-bold text-zinc-800;
 }

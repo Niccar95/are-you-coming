@@ -1,8 +1,11 @@
 import pool from "../lib/db";
 import { Attendee } from "../lib/models/Attendee";
 
-export const getAttendees = async (): Promise<Attendee[]> => {
-  const { rows } = await pool.query("SELECT * FROM attendees ORDER BY id ASC");
+export const getAttendeesByEventId = async (eventId: number): Promise<Attendee[]> => {
+  const { rows } = await pool.query(
+    "SELECT * FROM attendees WHERE id IN (SELECT attendee_id FROM event_attendees WHERE event_id = $1) ORDER BY id ASC",
+    [eventId],
+  );
   return rows.map(
     (attendee: { id: number; name: string; email: string }) =>
       new Attendee(attendee.id, attendee.name, attendee.email),
