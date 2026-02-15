@@ -14,14 +14,14 @@ const Event = ({ id, name, eventDate, description }: EventProps) => {
         key={id}
         className="h-[200px] w-[300] p-5 bg-white dark:bg-zinc-900 rounded-lg shadow-lg cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
       >
-        <h3 className="text-lg font-semibold text-zinc-800 dark:text-white">
+        <h3 className="text-subtitle">
           {name}
         </h3>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+        <p className="text-meta mt-1">
           {new Date(eventDate).toLocaleString()}
         </p>
         {description && (
-          <p className="text-sm text-zinc-700 dark:text-zinc-300 mt-3 line-clamp-2">
+          <p className="text-body mt-3 line-clamp-2">
             {description}
           </p>
         )}

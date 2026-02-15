@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { auth } from "@/auth";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
 });
 
@@ -27,10 +22,9 @@ const RootLayout = async ({
   const session = await auth();
 
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={plusJakarta.variable}>
+      <body className="antialiased">
+
         <Navbar />
         <div className={`${session ? "lg:ml-56 pt-14 lg:pt-0" : ""} min-h-screen flex flex-col`}>
           <main className="flex-1 p-6 bg-linear-to-br from-white to-violet-50">{children}</main>

@@ -12,7 +12,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <div className="max-w-2xl mx-auto p-6 flex flex-col gap-8">
       <div>
-        <h1 className="text-3xl font-bold text-zinc-800">{event.name}</h1>
+        <h1 className="text-title">{event.name}</h1>
         <div className="flex items-center gap-2 mt-3">
           <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full">
             {new Date(event.eventDate).toLocaleDateString("en-US", {
@@ -24,7 +24,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </span>
         </div>
         {event.description && (
-          <p className="text-base text-zinc-600 mt-5 leading-relaxed">
+          <p className="text-body mt-5 leading-relaxed">
             {event.description}
           </p>
         )}

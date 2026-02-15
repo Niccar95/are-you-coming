@@ -48,31 +48,31 @@ const CountDown = () => {
 
   return (
     <div className="flex gap-3 justify-center mt-4">
-      <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <p className="text-3xl font-bold text-white">{timeLeft.days}</p>
-        <p className="text-xs uppercase text-yellow-100 font-semibold">
+      <div className="countdown-box">
+        <p className="countdown-number">{timeLeft.days}</p>
+        <p className="countdown-label">
           Days
         </p>
       </div>
-      <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <p className="text-3xl font-bold text-white">{timeLeft.hours}</p>
-        <p className="text-xs uppercase text-yellow-100 font-semibold">
+      <div className="countdown-box">
+        <p className="countdown-number">{timeLeft.hours}</p>
+        <p className="countdown-label">
           Hours
         </p>
       </div>
-      <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <p className="text-3xl font-bold text-white">
+      <div className="countdown-box">
+        <p className="countdown-number">
           {timeLeft.minutes}
         </p>
-        <p className="text-xs uppercase text-yellow-100 font-semibold">
+        <p className="countdown-label">
           Minutes
         </p>
       </div>
-      <div className="flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg">
-        <p className="text-3xl font-bold text-white">
+      <div className="countdown-box">
+        <p className="countdown-number">
           {timeLeft.seconds}
         </p>
-        <p className="text-xs uppercase text-yellow-100 font-semibold">
+        <p className="countdown-label">
           Seconds
         </p>
       </div>

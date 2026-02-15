@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-plus-jakarta);
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -7,6 +15,101 @@
 
 .animate-fade-in {
   animation: fade-in 0.3s ease-in-out;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+
+.btn-primary {
+  @apply bg-violet-500 hover:bg-violet-600 text-white font-semibold py-3 px-6 rounded-md transition-colors duration-200 cursor-pointer;
+}
+
+.btn-secondary {
+  @apply border border-zinc-300 text-zinc-600 font-semibold py-3 px-6 rounded-md hover:bg-zinc-50 transition-colors duration-200 cursor-pointer;
+}
+
+.btn-danger {
+  @apply bg-red-500 text-white rounded hover:bg-red-600 cursor-pointer;
+}
+
+.btn-outline-violet {
+  @apply border border-violet-500 text-violet-600 font-semibold py-2 px-4 rounded-md hover:bg-violet-50 transition-colors cursor-pointer;
+}
+
+.form-input {
+  @apply px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 dark:bg-zinc-800 dark:text-white;
+}
+
+.form-textarea {
+  @apply px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 dark:bg-zinc-800 dark:text-white resize-none;
+}
+
+.form-label {
+  @apply text-sm font-medium text-zinc-700 dark:text-zinc-300;
+}
+
+.form-heading {
+  @apply text-lg font-semibold text-zinc-800 dark:text-white mb-2;
+}
+
+.form-card {
+  @apply flex flex-col gap-4 w-full p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg;
+}
+
+/* Typography */
+.text-title {
+  @apply text-3xl font-bold text-zinc-800;
+}
+
+.text-subtitle {
+  @apply text-lg font-semibold text-zinc-800 dark:text-white;
+}
+
+.text-meta {
+  @apply text-sm text-zinc-500 dark:text-zinc-400;
+}
+
+.text-body {
+  @apply text-sm text-zinc-700 dark:text-zinc-300;
+}
+
+.text-subtle {
+  @apply text-xs text-zinc-500 dark:text-zinc-400;
+}
+
+/* Countdown */
+.countdown-box {
+  @apply flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg;
+}
+
+.countdown-number {
+  @apply text-3xl font-bold text-white;
+}
+
+.countdown-label {
+  @apply text-xs uppercase text-yellow-100 font-semibold;
 }
 
 .scrollbar-hide {

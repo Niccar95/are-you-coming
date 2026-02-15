@@ -36,10 +36,10 @@ const AttendeeForm = ({ eventId }: { eventId: number }) => {
   };
 
   return (
-    <form onSubmit={submitAttendance} className="flex flex-col gap-4 w-full p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg">
-      <h3 className="text-lg font-semibold text-zinc-800 dark:text-white mb-2">Sign Up</h3>
+    <form onSubmit={submitAttendance} className="form-card">
+      <h3 className="form-heading">Sign Up</h3>
       <div className="flex flex-col gap-2">
-        <label htmlFor="name" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+        <label htmlFor="name" className="form-label">
           Name
         </label>
         <input
@@ -48,12 +48,12 @@ const AttendeeForm = ({ eventId }: { eventId: number }) => {
           onChange={(e) => setAttendeeName(e.target.value)}
           type="text"
           placeholder="Enter your name"
-          className="px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 dark:bg-zinc-800 dark:text-white"
+          className="form-input"
           required
         />
       </div>
       <div className="flex flex-col gap-2">
-        <label htmlFor="email" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+        <label htmlFor="email" className="form-label">
           Email
         </label>
         <input
@@ -62,16 +62,16 @@ const AttendeeForm = ({ eventId }: { eventId: number }) => {
           onChange={(e) => setAttendeeEmail(e.target.value)}
           type="email"
           placeholder="your@email.com"
-          className="px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 dark:bg-zinc-800 dark:text-white"
+          className="form-input"
           required
         />
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">
+        <p className="text-subtle">
           We&apos;ll send you a reminder before the party
         </p>
       </div>
       <button
         type="submit"
-        className="bg-violet-500 hover:bg-violet-600 text-white font-semibold py-3 px-6 rounded-md transition-colors duration-200 mt-2 cursor-pointer"
+        className="btn-primary mt-2"
       >
         I&apos;m in
       </button>

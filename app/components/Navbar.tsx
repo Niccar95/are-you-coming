@@ -29,7 +29,7 @@ const Navbar = async () => {
           >
             <button
               type="submit"
-              className="bg-red-500 text-white px-3 py-1.5 rounded text-xs hover:bg-red-600 cursor-pointer"
+              className="btn-danger px-3 py-1.5 text-xs"
             >
               Sign out
             </button>
@@ -65,7 +65,7 @@ const Navbar = async () => {
           >
             <button
               type="submit"
-              className="w-full bg-red-500 text-white px-3 py-2 rounded text-sm hover:bg-red-600 cursor-pointer"
+              className="btn-danger w-full px-3 py-2 text-sm"
             >
               Sign out
             </button>
