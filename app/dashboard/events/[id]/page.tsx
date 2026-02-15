@@ -1,4 +1,5 @@
 import AttendeeForm from "@/app/components/AttendeeForm";
+import CountDown from "@/app/components/CountDown";
 import { getEventById } from "@/app/services/eventService";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -14,19 +15,21 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <div>
         <h1 className="text-title">{event.name}</h1>
         <div className="flex items-center gap-2 mt-3">
-          <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full">
+          <time
+            dateTime={new Date(event.eventDate).toISOString()}
+            className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
+          >
             {new Date(event.eventDate).toLocaleDateString("en-US", {
               weekday: "long",
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
-          </span>
+          </time>
         </div>
+        <CountDown eventDate={event.eventDate} />
         {event.description && (
-          <p className="text-body mt-5 leading-relaxed">
-            {event.description}
-          </p>
+          <p className="text-body mt-5 leading-relaxed">{event.description}</p>
         )}
         <hr className="border-zinc-200 mt-6" />
       </div>

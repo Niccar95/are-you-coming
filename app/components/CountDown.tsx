@@ -2,8 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-const CountDown = () => {
-  const target = new Date("Dec 6, 2025 18:00").getTime();
+interface DateProps {
+  eventDate: Date;
+}
+
+const CountDown = ({ eventDate }: DateProps) => {
+  const target = new Date(eventDate).getTime();
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -27,7 +31,7 @@ const CountDown = () => {
       setTimeLeft({
         days: Math.floor(distance / (1000 * 60 * 60 * 24)),
         hours: Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
         ),
         minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
         seconds: Math.floor((distance % (1000 * 60)) / 1000),
@@ -40,41 +44,29 @@ const CountDown = () => {
 
   if (timeLeft.expired) {
     return (
-      <div className="text-3xl font-bold text-yellow-500 animate-pulse">
+      <div className="countdown-expired">
         🎉 IT&apos;S PARTY TIME! 🎉
       </div>
     );
   }
 
   return (
-    <div className="flex gap-3 justify-center mt-4">
+    <div className="countdown-wrapper">
       <div className="countdown-box">
         <p className="countdown-number">{timeLeft.days}</p>
-        <p className="countdown-label">
-          Days
-        </p>
+        <p className="countdown-label">Days</p>
       </div>
       <div className="countdown-box">
         <p className="countdown-number">{timeLeft.hours}</p>
-        <p className="countdown-label">
-          Hours
-        </p>
+        <p className="countdown-label">Hours</p>
       </div>
       <div className="countdown-box">
-        <p className="countdown-number">
-          {timeLeft.minutes}
-        </p>
-        <p className="countdown-label">
-          Minutes
-        </p>
+        <p className="countdown-number">{timeLeft.minutes}</p>
+        <p className="countdown-label">Minutes</p>
       </div>
       <div className="countdown-box">
-        <p className="countdown-number">
-          {timeLeft.seconds}
-        </p>
-        <p className="countdown-label">
-          Seconds
-        </p>
+        <p className="countdown-number">{timeLeft.seconds}</p>
+        <p className="countdown-label">Seconds</p>
       </div>
     </div>
   );

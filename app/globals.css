@@ -100,8 +100,12 @@ button, input, textarea, select {
 }
 
 /* Countdown */
+.countdown-wrapper {
+  @apply flex gap-3 mt-4;
+}
+
 .countdown-box {
-  @apply flex flex-col items-center bg-linear-to-br from-yellow-400 to-yellow-600 rounded-lg p-3 min-w-[70px] shadow-lg;
+  @apply flex flex-col items-center bg-linear-to-br from-violet-400 to-violet-600 rounded-lg p-3 min-w-[70px] shadow-lg;
 }
 
 .countdown-number {
@@ -109,7 +113,11 @@ button, input, textarea, select {
 }
 
 .countdown-label {
-  @apply text-xs uppercase text-yellow-100 font-semibold;
+  @apply text-xs uppercase text-violet-100 font-semibold;
+}
+
+.countdown-expired {
+  @apply text-3xl font-bold text-violet-500 animate-pulse mt-4;
 }
 
 .scrollbar-hide {

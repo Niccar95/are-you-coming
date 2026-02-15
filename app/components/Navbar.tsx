@@ -15,8 +15,8 @@ const Navbar = async () => {
           <Image
             src="/are-you-coming-logo-light-q.svg"
             alt="Are You Coming?"
-            width={120}
-            height={43}
+            width={90}
+            height={32}
           />
         </Link>
         <div className="flex items-center gap-3">
@@ -40,12 +40,12 @@ const Navbar = async () => {
       {/* Desktop: left sidebar */}
       <nav className="hidden lg:flex fixed top-0 left-0 h-screen w-56 bg-white border-r border-zinc-200 flex-col justify-between p-4 z-50">
         <div className="flex flex-col gap-2">
-          <Link href="/dashboard" className="mb-4">
+          <Link href="/dashboard" className="mb-4 self-center">
             <Image
               src="/are-you-coming-logo-light-q.svg"
               alt="Are You Coming?"
-              width={180}
-              height={65}
+              width={130}
+              height={47}
             />
           </Link>
           <Link

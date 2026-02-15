@@ -1,5 +1,5 @@
 import { EventType } from "../lib/types";
-import Event from "./Event";
+import EventCard from "./EventCard";
 
 interface EventListProps {
   allEvents: EventType[];
@@ -15,7 +15,7 @@ const Events = ({ allEvents }: EventListProps) => {
       <h2 className="text-subtitle">My Events</h2>
       <div className="w-full flex gap-4 overflow-x-auto scrollbar-hide py-2">
         {allEvents.map((event) => (
-          <Event
+          <EventCard
             key={event.id}
             id={event.id}
             name={event.name}
