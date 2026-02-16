@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { Plus, X, CalendarPlus } from "lucide-react";
+import { Plus, X, CalendarPlus, ImagePlus } from "lucide-react";
+import { upload } from "@vercel/blob/client";
 
 const EventForm = () => {
   const router = useRouter();
@@ -12,6 +13,9 @@ const EventForm = () => {
 
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
   const formRef = useRef<HTMLDivElement>(null);
+
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [fileName, setFileName] = useState<string>("");
 
   const toggleEventForm = () => {
     setOpenEventForm(!openEventForm);
@@ -35,6 +39,17 @@ const EventForm = () => {
     e.preventDefault();
     if (!eventName || !eventDate) return;
 
+    let imageUrl: string | null = null;
+
+    const file = inputFileRef.current?.files?.[0];
+    if (file) {
+      const newBlob = await upload(file.name, file, {
+        access: "public",
+        handleUploadUrl: "/api/upload",
+      });
+      imageUrl = newBlob.url;
+    }
+
     try {
       const response = await fetch("/api/events", {
         method: "POST",
@@ -43,6 +58,7 @@ const EventForm = () => {
           name: eventName,
           event_date: eventDate,
           description: description,
+          image_url: imageUrl,
         }),
       });
 
@@ -53,6 +69,7 @@ const EventForm = () => {
       setEventName("");
       setEventDate("");
       setDescription("");
+      setFileName("");
       router.refresh();
     } catch (error) {
       console.error("Error adding new event:", error);
@@ -80,14 +97,9 @@ const EventForm = () => {
             : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
         }`}
       >
-        <h3 className="form-heading">
-          Create Event
-        </h3>
+        <h3 className="form-heading">Create Event</h3>
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="form-label"
-          >
+          <label htmlFor="name" className="form-label">
             Event Name
           </label>
           <input
@@ -100,11 +112,32 @@ const EventForm = () => {
             required
           />
         </div>
+
         <div className="flex flex-col gap-2">
+          <span className="form-label">Event Image (Optional)</span>
           <label
-            htmlFor="eventDate"
-            className="form-label"
+            htmlFor="imageFile"
+            className={`flex items-center gap-2 px-4 py-2 border border-dashed rounded-lg text-sm cursor-pointer transition-colors ${
+              fileName
+                ? "border-violet-400 text-violet-600"
+                : "border-zinc-300 text-zinc-500 hover:border-violet-400 hover:text-violet-600"
+            }`}
           >
+            <ImagePlus size={16} />
+            {fileName || "Choose image..."}
+          </label>
+          <input
+            id="imageFile"
+            name="file"
+            ref={inputFileRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="hidden"
+            onChange={(e) => setFileName(e.target.files?.[0]?.name || "")}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="eventDate" className="form-label">
             Event Date
           </label>
           <input
@@ -117,10 +150,7 @@ const EventForm = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="description"
-            className="form-label"
-          >
+          <label htmlFor="description" className="form-label">
             Description
           </label>
           <textarea
@@ -133,10 +163,7 @@ const EventForm = () => {
           />
         </div>
         <div className="flex gap-3 mt-2">
-          <button
-            type="submit"
-            className="btn-primary flex items-center gap-2"
-          >
+          <button type="submit" className="btn-primary flex items-center gap-2">
             <CalendarPlus size={16} />
             Create Event
           </button>

@@ -3,4 +3,5 @@ export type EventType = {
   name: string;
   eventDate: Date;
   description: string;
+  imageUrl: string | null;
 };

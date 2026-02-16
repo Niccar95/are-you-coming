@@ -20,6 +20,7 @@ export const getEvents = async (): Promise<Event[]> => {
       event_date: Date;
       description: string;
       user_id: string;
+      image_url: string | null;
     }) =>
       new Event(
         event.id,
@@ -27,6 +28,7 @@ export const getEvents = async (): Promise<Event[]> => {
         event.event_date,
         event.description,
         event.user_id,
+        event.image_url,
       ),
   );
 };
@@ -42,6 +44,7 @@ export const getEventById = async (id: number): Promise<Event | null> => {
     rows[0].event_date,
     rows[0].description,
     rows[0].user_id,
+    rows[0].image_url,
   );
 };
 
@@ -50,10 +53,11 @@ export const addEvent = async (
   eventDate: Date,
   description: string,
   userId: string,
+  imageUrl: string | null,
 ): Promise<Event> => {
   const { rows } = await pool.query(
-    "INSERT INTO events (name, event_date, description, user_id) VALUES ($1, $2, $3, $4) RETURNING *",
-    [name, eventDate, description, userId],
+    "INSERT INTO events (name, event_date, description, user_id, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+    [name, eventDate, description, userId, imageUrl],
   );
   return new Event(
     rows[0].id,
@@ -61,5 +65,6 @@ export const addEvent = async (
     rows[0].event_date,
     rows[0].description,
     rows[0].user_id,
+    rows[0].image_url,
   );
 };

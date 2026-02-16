@@ -21,6 +21,7 @@ const Events = ({ allEvents }: EventListProps) => {
             name={event.name}
             eventDate={event.eventDate}
             description={event.description}
+            imageUrl={event.imageUrl}
           />
         ))}
       </div>

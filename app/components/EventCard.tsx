@@ -5,6 +5,7 @@ interface EventProps {
   name: string;
   eventDate: Date;
   description: string;
+  imageUrl: string | null;
 }
 
 const EventCard = ({ id, name, eventDate, description }: EventProps) => {
