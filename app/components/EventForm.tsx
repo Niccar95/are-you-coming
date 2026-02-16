@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { Plus, X, CalendarPlus } from "lucide-react";
 
 const EventForm = () => {
   const router = useRouter();
@@ -65,9 +66,10 @@ const EventForm = () => {
     >
       <button
         onClick={toggleEventForm}
-        className="btn-outline-violet"
+        className="btn-outline-violet flex items-center gap-2"
       >
-        + New Event
+        <Plus size={16} />
+        New Event
       </button>
 
       <form
@@ -133,15 +135,17 @@ const EventForm = () => {
         <div className="flex gap-3 mt-2">
           <button
             type="submit"
-            className="btn-primary"
+            className="btn-primary flex items-center gap-2"
           >
+            <CalendarPlus size={16} />
             Create Event
           </button>
           <button
             type="button"
             onClick={() => setOpenEventForm(false)}
-            className="btn-secondary"
+            className="btn-secondary flex items-center gap-2"
           >
+            <X size={16} />
             Cancel
           </button>
         </div>

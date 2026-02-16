@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { UserPlus } from "lucide-react";
 
 const AttendeeForm = ({ eventId }: { eventId: number }) => {
   const router = useRouter();
@@ -71,8 +72,9 @@ const AttendeeForm = ({ eventId }: { eventId: number }) => {
       </div>
       <button
         type="submit"
-        className="btn-primary mt-2"
+        className="btn-primary mt-2 flex items-center gap-2 self-start"
       >
+        <UserPlus size={16} />
         I&apos;m in
       </button>
     </form>

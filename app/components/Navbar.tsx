@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { LayoutDashboard, LogOut } from "lucide-react";
 import { auth, signOut } from "@/auth";
 
 const Navbar = async () => {
@@ -29,8 +30,9 @@ const Navbar = async () => {
           >
             <button
               type="submit"
-              className="btn-danger px-3 py-1.5 text-xs"
+              className="btn-danger px-3 py-1.5 text-xs flex items-center gap-1"
             >
+              <LogOut size={12} />
               Sign out
             </button>
           </form>
@@ -50,8 +52,9 @@ const Navbar = async () => {
           </Link>
           <Link
             href="/dashboard"
-            className="text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
+            className="flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
           >
+            <LayoutDashboard size={16} />
             Dashboard
           </Link>
         </div>
@@ -65,8 +68,9 @@ const Navbar = async () => {
           >
             <button
               type="submit"
-              className="btn-danger w-full px-3 py-2 text-sm"
+              className="btn-danger w-full px-3 py-2 text-sm flex items-center justify-center gap-2"
             >
+              <LogOut size={14} />
               Sign out
             </button>
           </form>

@@ -10,7 +10,7 @@ interface EventProps {
 const EventCard = ({ id, name, eventDate, description }: EventProps) => {
   return (
     <Link
-      href={`/dashboard/events/${id}`}
+      href={`/events/${id}`}
       className="block min-w-[300px] shrink-0"
     >
       <article
