@@ -21,7 +21,9 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   return (
-    <div className={`max-w-2xl mx-auto flex flex-col gap-8 ${!session ? "pt-28" : ""}`}>
+    <div
+      className={`max-w-2xl mx-auto flex flex-col gap-8 ${!session ? "pt-28" : ""}`}
+    >
       {!session && (
         <nav className="fixed top-0 left-0 right-0 h-20 bg-white border-b border-zinc-200 flex items-center px-6 z-50">
           <Link href="/">
@@ -50,19 +52,27 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </time>
         </div>
         <CountDown eventDate={event.eventDate} />
-        <h2 className="mt-10 mb-4 text-subtitle flex items-center gap-2"><Users size={18} /> Attendee list</h2>
+        <h2 className="mt-10 mb-4 text-subtitle flex items-center gap-2">
+          <Users size={18} /> Attendee list
+        </h2>
         <div className="flex gap-1 md:w-1/2 overflow-x-auto scrollbar-hide">
-          {eventAttendees.map((attendee) => (
-            <p
-              className="inline-block text-nowrap bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
-              key={attendee.id}
-            >
-              {attendee.name}
-            </p>
-          ))}
+          {eventAttendees.length > 0 ? (
+            eventAttendees.map((attendee) => (
+              <p
+                className="inline-block text-nowrap bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
+                key={attendee.id}
+              >
+                {attendee.name}
+              </p>
+            ))
+          ) : (
+            <p className="text-subtle">No Attendees</p>
+          )}
         </div>
 
-        <h2 className="mt-10 mb-4 text-subtitle flex items-center gap-2"><FileText size={18} /> Event description</h2>
+        <h2 className="mt-10 mb-4 text-subtitle flex items-center gap-2">
+          <FileText size={18} /> Event description
+        </h2>
         {event.description && (
           <p className="text-body leading-relaxed">{event.description}</p>
         )}
