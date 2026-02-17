@@ -48,6 +48,18 @@ ALTER TABLE your_table ADD COLUMN new_column VARCHAR(255);
 SELECT * FROM your_table_name;
 ```
 
+**Rename a column:**
+
+```sql
+ALTER TABLE events RENAME COLUMN old_name TO new_name;
+```
+
+**Drop a column:**
+
+```sql
+ALTER TABLE events DROP COLUMN column_name;
+```
+
 **Drop a table:**
 
 ```sql
