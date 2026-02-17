@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LayoutDashboard, LogOut } from "lucide-react";
+import { Calendar, LayoutDashboard, LogOut } from "lucide-react";
 import { auth, signOut } from "@/auth";
 
 const Navbar = async () => {
@@ -57,9 +57,18 @@ const Navbar = async () => {
             <LayoutDashboard size={16} />
             Dashboard
           </Link>
+          <Link
+            href="/calendar"
+            className="flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
+          >
+            <Calendar size={16} />
+            Calendar
+          </Link>
         </div>
         <div className="flex flex-col gap-2 border-t border-zinc-200 pt-4">
-          <p className="text-xs text-zinc-500 truncate">{session?.user?.name}</p>
+          <p className="text-xs text-zinc-500 truncate">
+            {session?.user?.name}
+          </p>
           <form
             action={async () => {
               "use server";
