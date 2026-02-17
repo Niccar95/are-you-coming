@@ -11,7 +11,7 @@ ayc-db
 **Full command:**
 
 ```bash
-psql "postgresql://neondb_owner:REDACTED@ep-shiny-frog-ablw3k4r-pooler.eu-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+psql $DATABASE_URL
 ```
 
 > The alias is defined in `~/.zshrc`. Run `source ~/.zshrc` if it doesn't work.
