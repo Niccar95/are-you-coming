@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Users, FileText } from "lucide-react";
+import { Users, FileText, CalendarDays } from "lucide-react";
 import AttendeeForm from "@/app/components/AttendeeForm";
 import CountDown from "@/app/components/CountDown";
 import ShareButton from "@/app/components/ShareButton";
@@ -36,23 +36,66 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </Link>
         </nav>
       )}
-      <div>
-        <h1 className="text-title">{event.name}</h1>
-        <div className="flex items-center gap-2 mt-3">
-          <time
-            dateTime={new Date(event.eventDate).toISOString()}
-            className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
-          >
-            {new Date(event.eventDate).toLocaleDateString("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
+      {event.imageUrl ? (
+        <div className="relative rounded-lg overflow-hidden">
+          <Image
+            src={event.imageUrl}
+            alt={event.name}
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-72 object-cover"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <h1 className="text-4xl font-bold text-white">{event.name}</h1>
+            <time
+              dateTime={new Date(event.eventDate).toISOString()}
+              className="inline-block mt-3 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full"
+            >
+              {new Date(event.eventDate).toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </div>
         </div>
+      ) : (
+        <div className="relative rounded-lg overflow-hidden">
+          <div className="flex items-center justify-center bg-violet-50 w-full h-72">
+            <CalendarDays size={80} className="text-violet-300" />
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <h1 className="text-4xl font-bold text-zinc-800">{event.name}</h1>
+            <time
+              dateTime={new Date(event.eventDate).toISOString()}
+              className="inline-block mt-3 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
+            >
+              {new Date(event.eventDate).toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </div>
+        </div>
+      )}
+      <div>
         <CountDown eventDate={event.eventDate} />
-        <h2 className="mt-10 mb-4 text-subtitle flex items-center gap-2">
+
+        {event.description && (
+          <>
+            <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
+              <FileText size={18} /> Event description
+            </h2>
+            <p className="text-body leading-relaxed">{event.description}</p>
+          </>
+        )}
+
+        <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
           <Users size={18} /> Attendee list
         </h2>
         <div className="flex gap-1 md:w-1/2 overflow-x-auto scrollbar-hide">
@@ -69,13 +112,6 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="text-subtle">No Attendees</p>
           )}
         </div>
-
-        <h2 className="mt-10 mb-4 text-subtitle flex items-center gap-2">
-          <FileText size={18} /> Event description
-        </h2>
-        {event.description && (
-          <p className="text-body leading-relaxed">{event.description}</p>
-        )}
 
         <hr className="border-zinc-200 mt-6" />
       </div>
