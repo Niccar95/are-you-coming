@@ -22,9 +22,9 @@ export default function MobileMenu({ name, signOutAction }: MobileMenuProps) {
       </button>
 
       <nav
-        className={`fixed top-14 bottom-0 w-1/2 bg-white border-r border-zinc-200 shadow-2xl flex flex-col gap-2 px-4 py-4 transition-all duration-300 ${open ? "left-0 opacity-100" : "-left-1/2 opacity-0 pointer-events-none"}`}
+        className={`fixed top-14 bottom-0 w-[60%] bg-white border-r border-zinc-200 shadow-2xl flex flex-col gap-2 px-4 py-4 transition-all duration-300 ${open ? "left-0 opacity-100" : "-left-1/2 opacity-0 pointer-events-none"}`}
       >
-        <div className="flex flex-col items-center gap-2 mb-4 py-2">
+        <div className="flex items-center gap-3 mb-6 py-2">
           <div className="w-10 h-10 rounded-full bg-zinc-200" />
           <p className="text-xs text-zinc-500">{name}</p>
         </div>

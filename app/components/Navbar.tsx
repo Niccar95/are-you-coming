@@ -26,8 +26,8 @@ const Navbar = async () => {
             <Image
               src="/are-you-coming-logo-light-q.svg"
               alt="Are You Coming?"
-              width={75}
-              height={27}
+              width={82}
+              height={30}
             />
           </Link>
         </div>
