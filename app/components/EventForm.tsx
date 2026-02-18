@@ -150,15 +150,15 @@ const EventForm = () => {
             className="form-textarea"
           />
         </div>
-        <div className="flex gap-3 mt-2">
-          <button type="submit" className="btn-primary flex items-center gap-2">
+        <div className="flex justify-between lg:justify-start gap-3 mt-2">
+          <button type="submit" className="btn-primary flex items-center gap-2 text-xs py-1.5 px-3 lg:py-3 lg:px-6 lg:text-base">
             <CalendarPlus size={16} />
             Create Event
           </button>
           <button
             type="button"
             onClick={() => setOpenEventForm(false)}
-            className="btn-secondary flex items-center gap-2"
+            className="btn-secondary flex items-center gap-2 text-xs py-1.5 px-3 lg:py-3 lg:px-6 lg:text-base"
           >
             <X size={16} />
             Cancel
