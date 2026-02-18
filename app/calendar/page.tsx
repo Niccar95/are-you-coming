@@ -5,6 +5,8 @@ import { JSX, useState } from "react";
 
 const CalendarPage = () => {
   const [monthIndex, setMonthIndex] = useState<number>(new Date().getMonth());
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+
   const month = [
     "January",
     "February",
@@ -21,14 +23,30 @@ const CalendarPage = () => {
   ];
 
   const cellList: JSX.Element[] = [];
-  const fullMonth = new Date(2026, monthIndex + 1, 0).getDate();
 
-  const firstMonthDay = new Date(2026, monthIndex, 1).getDay();
+  const fullMonth = new Date(year, monthIndex + 1, 0).getDate();
+
+  const firstMonthDay = new Date(year, monthIndex, 1).getDay();
 
   const days: string[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const handlePrevious = () => setMonthIndex((prev) => prev - 1);
-  const handleNext = () => setMonthIndex((prev) => prev + 1);
+  const handlePrevious = () => {
+    if (monthIndex <= 0) {
+      setMonthIndex(11);
+      setYear(year - 1);
+    } else {
+      setMonthIndex((prev) => prev - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (monthIndex >= 11) {
+      setMonthIndex(0);
+      setYear(year + 1);
+    } else {
+      setMonthIndex((prev) => prev + 1);
+    }
+  };
 
   for (let i = 0; i < firstMonthDay + fullMonth; i++) {
     const day = days[i % 7];
@@ -78,8 +96,9 @@ const CalendarPage = () => {
           <ArrowBigRight />
         </button>
       </div>
-      <p>{month[monthIndex]}</p>
-
+      <p>
+        {month[monthIndex]} {""} {year}
+      </p>
       <div className="grid grid-cols-7 border border-zinc-200 rounded-lg overflow-hidden">
         {cellList}
       </div>
