@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useCallback, useRef, useState } from "react";
 import { Plus, X, CalendarPlus, ImagePlus } from "lucide-react";
 import { upload } from "@vercel/blob/client";
+import useClickOutside from "../hooks/useClickOutside";
 
 const EventForm = () => {
   const router = useRouter();
@@ -12,7 +13,8 @@ const EventForm = () => {
   const [description, setDescription] = useState<string>("");
 
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
-  const formRef = useRef<HTMLDivElement>(null);
+  const onClose = useCallback(() => setOpenEventForm(false), []);
+  const formRef = useClickOutside(openEventForm, onClose);
 
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string>("");
@@ -20,20 +22,6 @@ const EventForm = () => {
   const toggleEventForm = () => {
     setOpenEventForm(!openEventForm);
   };
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (formRef.current && !formRef.current.contains(e.target as Node)) {
-        setOpenEventForm(false);
-      }
-    };
-
-    if (openEventForm) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [openEventForm]);
 
   const addNewEvent = async (e: FormEvent) => {
     e.preventDefault();

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, LayoutDashboard, LogOut } from "lucide-react";
 import { auth, signOut } from "@/auth";
+import MobileMenu from "./MobileMenu";
 
 const Navbar = async () => {
   const session = await auth();
@@ -12,14 +13,18 @@ const Navbar = async () => {
     <>
       {/* Mobile: top bar */}
       <nav className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-zinc-200 flex items-center justify-between px-4 z-50">
-        <Link href="/dashboard">
-          <Image
-            src="/are-you-coming-logo-light-q.svg"
-            alt="Are You Coming?"
-            width={90}
-            height={32}
-          />
-        </Link>
+        <div className="flex items-center gap-3">
+          <MobileMenu name={session?.user?.name || ""} />
+
+          <Link href="/dashboard">
+            <Image
+              src="/are-you-coming-logo-light-q.svg"
+              alt="Are You Coming?"
+              width={90}
+              height={32}
+            />
+          </Link>
+        </div>
         <div className="flex items-center gap-3">
           <p className="text-xs text-zinc-500">{session?.user?.name}</p>
           <form
@@ -42,7 +47,7 @@ const Navbar = async () => {
       {/* Desktop: left sidebar */}
       <nav className="hidden lg:flex fixed top-0 left-0 h-screen w-56 bg-white border-r border-zinc-200 flex-col justify-between p-4 z-50">
         <div className="flex flex-col gap-2">
-          <Link href="/dashboard" className="mb-4 self-center">
+          <Link href="/dashboard" className="mb-4">
             <Image
               src="/are-you-coming-logo-light-q.svg"
               alt="Are You Coming?"
