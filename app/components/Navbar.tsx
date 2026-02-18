@@ -13,34 +13,23 @@ const Navbar = async () => {
     <>
       {/* Mobile: top bar */}
       <nav className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-zinc-200 flex items-center justify-between px-4 z-50">
-        <div className="flex items-center gap-3">
-          <MobileMenu name={session?.user?.name || ""} />
+        <div className="flex items-center gap-4">
+          <MobileMenu
+            name={session?.user?.name || ""}
+            signOutAction={async () => {
+              "use server";
+              await signOut({ redirectTo: "/" });
+            }}
+          />
 
           <Link href="/dashboard">
             <Image
               src="/are-you-coming-logo-light-q.svg"
               alt="Are You Coming?"
-              width={90}
-              height={32}
+              width={75}
+              height={27}
             />
           </Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <p className="text-xs text-zinc-500">{session?.user?.name}</p>
-          <form
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/" });
-            }}
-          >
-            <button
-              type="submit"
-              className="btn-danger px-3 py-1.5 text-xs flex items-center gap-1"
-            >
-              <LogOut size={12} />
-              Sign out
-            </button>
-          </form>
         </div>
       </nav>
 
