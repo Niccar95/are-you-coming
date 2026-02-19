@@ -11,8 +11,12 @@ const DashboardPage = async () => {
   const allEvents = await getEvents();
 
   return (
-    <div className="flex flex-col items-center justify-start gap-8">
-      <p className="text-sm text-gray-600">Welcome, {session?.user?.name}</p>
+    <div
+      className={`max-w-2xl mx-auto flex flex-col gap-8 ${!session ? "pt-28" : ""}`}
+    >
+      <p className="text-sm text-gray-600 self-center">
+        Welcome, {session?.user?.name}
+      </p>
 
       <SendRemindersButton />
       <EventForm />
