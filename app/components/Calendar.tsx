@@ -81,15 +81,25 @@ const Calendar = ({ allEvents }: EventListProps) => {
     cellList.push(
       <div
         key={i}
-        className={`border border-zinc-100 p-1 lg:p-2 min-h-14 lg:min-h-28 text-xs lg:text-sm ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"}`}
+        className={`border border-zinc-100 p-1 lg:p-2 min-h-14 lg:min-h-28 text-xs lg:text-sm ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"} `}
       >
-        {monthDate > 0 && <span className="font-medium">{monthDate}</span>}
+        {monthDate > 0 && (
+          <span className="font-medium flex items-center gap-1">
+            {monthDate}
+            {events.length > 0 && (
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+            )}
+          </span>
+        )}
         {monthDate <= 0 && <span></span>}
 
         <p className="text-subtle">{day}</p>
 
         {events.map((e) => (
-          <p key={e.id} className="mt-1">
+          <p
+            key={e.id}
+            className="mt-1 text-[10px] lg:text-xs bg-violet-100 text-violet-700 font-medium px-1 lg:px-2 py-0.5 rounded truncate"
+          >
             {e.name}
           </p>
         ))}
