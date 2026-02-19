@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { JSX, useState } from "react";
 
 const CalendarPage = () => {
@@ -30,7 +30,15 @@ const CalendarPage = () => {
 
   const days: string[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const handlePrevious = () => {
+  const handlePreviousYear = () => {
+    setYear(year - 1);
+  };
+
+  const handleNextYear = () => {
+    setYear(year + 1);
+  };
+
+  const handlePreviousMonth = () => {
     if (monthIndex <= 0) {
       setMonthIndex(11);
       setYear(year - 1);
@@ -39,7 +47,7 @@ const CalendarPage = () => {
     }
   };
 
-  const handleNext = () => {
+  const handleNextMonth = () => {
     if (monthIndex >= 11) {
       setMonthIndex(0);
       setYear(year + 1);
@@ -82,23 +90,35 @@ const CalendarPage = () => {
 
   return (
     <>
-      <div className="flex gap-2 mb-4">
+      <div className="flex items-center justify-center gap-2 mb-4">
         <button
-          onClick={handlePrevious}
+          onClick={handlePreviousYear}
           className="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 transition-colors cursor-pointer"
         >
-          <ArrowBigLeft />
+          <ChevronsLeft size={20} />
         </button>
         <button
-          onClick={handleNext}
+          onClick={handlePreviousMonth}
           className="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 transition-colors cursor-pointer"
         >
-          <ArrowBigRight />
+          <ChevronLeft size={20} />
+        </button>
+        <span className="text-lg font-semibold text-zinc-700 min-w-48 text-center">
+          {month[monthIndex]} {year}
+        </span>
+        <button
+          onClick={handleNextMonth}
+          className="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 transition-colors cursor-pointer"
+        >
+          <ChevronRight size={20} />
+        </button>
+        <button
+          onClick={handleNextYear}
+          className="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 transition-colors cursor-pointer"
+        >
+          <ChevronsRight size={20} />
         </button>
       </div>
-      <p>
-        {month[monthIndex]} {""} {year}
-      </p>
       <div className="grid grid-cols-7 border border-zinc-200 rounded-lg overflow-hidden">
         {cellList}
       </div>
