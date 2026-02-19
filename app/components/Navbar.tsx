@@ -35,7 +35,7 @@ const Navbar = async () => {
 
       {/* Desktop: left sidebar */}
       <nav className="hidden lg:flex fixed top-0 left-0 h-screen w-56 bg-white border-r border-zinc-200 flex-col justify-between p-4 z-50">
-        <div className="flex flex-col gap-2">
+        <section className="flex flex-col gap-2">
           <Link href="/dashboard" className="mb-4">
             <Image
               src="/are-you-coming-logo-light-q.svg"
@@ -44,22 +44,28 @@ const Navbar = async () => {
               height={47}
             />
           </Link>
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
-          >
-            <LayoutDashboard size={16} />
-            Dashboard
-          </Link>
-          <Link
-            href="/calendar"
-            className="flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
-          >
-            <Calendar size={16} />
-            Calendar
-          </Link>
-        </div>
-        <div className="flex flex-col gap-2 border-t border-zinc-200 pt-4">
+          <ul className="flex flex-col gap-2 list-none">
+            <li>
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
+              >
+                <LayoutDashboard size={16} />
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/calendar"
+                className="flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
+              >
+                <Calendar size={16} />
+                Calendar
+              </Link>
+            </li>
+          </ul>
+        </section>
+        <section className="flex flex-col gap-2 border-t border-zinc-200 pt-4">
           <p className="text-xs text-zinc-500 truncate">
             {session?.user?.name}
           </p>
@@ -77,7 +83,7 @@ const Navbar = async () => {
               Sign out
             </button>
           </form>
-        </div>
+        </section>
       </nav>
     </>
   );

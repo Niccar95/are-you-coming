@@ -37,7 +37,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         </nav>
       )}
       {event.imageUrl ? (
-        <div className="relative rounded-lg overflow-hidden">
+        <figure className="relative rounded-lg overflow-hidden">
           <Image
             src={event.imageUrl}
             alt={event.name}
@@ -47,7 +47,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             className="w-full h-72 object-cover"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6">
+          <figcaption className="absolute bottom-0 left-0 right-0 p-6">
             <h1 className="text-4xl font-bold text-white">{event.name}</h1>
             <time
               dateTime={new Date(event.eventDate).toISOString()}
@@ -60,14 +60,14 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 day: "numeric",
               })}
             </time>
-          </div>
-        </div>
+          </figcaption>
+        </figure>
       ) : (
-        <div className="relative rounded-lg overflow-hidden">
+        <figure className="relative rounded-lg overflow-hidden">
           <div className="flex items-center justify-center bg-violet-50 w-full h-72">
             <CalendarDays size={80} className="text-violet-300" />
           </div>
-          <div className="absolute bottom-0 left-0 right-0 p-6">
+          <figcaption className="absolute bottom-0 left-0 right-0 p-6">
             <h1 className="text-4xl font-bold text-zinc-800">{event.name}</h1>
             <time
               dateTime={new Date(event.eventDate).toISOString()}
@@ -80,10 +80,10 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 day: "numeric",
               })}
             </time>
-          </div>
-        </div>
+          </figcaption>
+        </figure>
       )}
-      <div>
+      <article>
         <CountDown eventDate={event.eventDate} />
 
         {event.description && (
@@ -100,22 +100,22 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
           <Users size={18} /> Attendee list
         </h2>
-        <div className="flex gap-1 md:w-1/2 overflow-x-auto scrollbar-hide">
-          {eventAttendees.length > 0 ? (
-            eventAttendees.map((attendee) => (
-              <p
+        {eventAttendees.length > 0 ? (
+          <ul className="flex gap-1 md:w-1/2 overflow-x-auto scrollbar-hide list-none">
+            {eventAttendees.map((attendee) => (
+              <li
                 className="inline-block text-nowrap bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
                 key={attendee.id}
               >
                 {attendee.name}
-              </p>
-            ))
-          ) : (
-            <p className="text-subtle">No Attendees</p>
-          )}
-        </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-subtle">No Attendees</p>
+        )}
 
-      </div>
+      </article>
       {!session && <AttendeeForm eventId={event.id} />}
     </div>
   );

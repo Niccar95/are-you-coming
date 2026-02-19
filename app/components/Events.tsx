@@ -11,21 +11,22 @@ const Events = ({ allEvents }: EventListProps) => {
   }
 
   return (
-    <>
+    <section>
       <h2 className="text-subtitle">My Events</h2>
-      <div className="w-full flex gap-4 overflow-x-auto scrollbar-hide py-2">
+      <ul className="w-full flex gap-4 overflow-x-auto scrollbar-hide py-2 list-none">
         {allEvents.map((event) => (
-          <EventCard
-            key={event.id}
-            id={event.id}
-            name={event.name}
-            eventDate={event.eventDate}
-            description={event.description}
-            imageUrl={event.imageUrl}
-          />
+          <li key={event.id}>
+            <EventCard
+              id={event.id}
+              name={event.name}
+              eventDate={event.eventDate}
+              description={event.description}
+              imageUrl={event.imageUrl}
+            />
+          </li>
         ))}
-      </div>
-    </>
+      </ul>
+    </section>
   );
 };
 

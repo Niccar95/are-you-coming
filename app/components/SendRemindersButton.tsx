@@ -49,7 +49,7 @@ const SendRemindersButton = () => {
   if (!isAdmin) return null;
 
   return (
-    <div className="fixed bottom-4 right-4">
+    <aside className="fixed bottom-4 right-4">
       <button
         onClick={sendReminders}
         disabled={sending}
@@ -62,7 +62,7 @@ const SendRemindersButton = () => {
           {message}
         </p>
       )}
-    </div>
+    </aside>
   );
 };
 
