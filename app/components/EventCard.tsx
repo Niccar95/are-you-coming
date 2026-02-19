@@ -5,7 +5,7 @@ import Link from "next/link";
 interface EventProps {
   id: number;
   name: string;
-  eventDate: Date;
+  eventDate: string;
   description: string;
   imageUrl: string | null;
 }

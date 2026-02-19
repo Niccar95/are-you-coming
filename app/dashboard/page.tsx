@@ -8,7 +8,15 @@ export const revalidate = 0;
 
 const DashboardPage = async () => {
   const session = await auth();
-  const allEvents = await getEvents();
+  const events = await getEvents();
+
+  const allEvents = events.map((event) => ({
+    id: event.id,
+    name: event.name,
+    eventDate: event.eventDate.toISOString(),
+    description: event.description,
+    imageUrl: event.imageUrl,
+  }));
 
   return (
     <div
