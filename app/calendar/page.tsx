@@ -64,11 +64,11 @@ const CalendarPage = () => {
     cellList.push(
       <div
         key={i}
-        className={`border border-zinc-200 p-2 ${i < firstMonthDay ? "bg-gray-100" : ""}`}
+        className={`border border-zinc-100 p-1 lg:p-2 min-h-14 lg:min-h-28 text-xs lg:text-sm ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"}`}
       >
-        {monthDate > 0 && <span>{monthDate}</span>}
+        {monthDate > 0 && <span className="font-medium">{monthDate}</span>}
         {monthDate <= 0 && <span></span>}
-        <p>{day}</p>
+        <p className="text-subtle">{day}</p>
       </div>,
     );
   }
@@ -80,49 +80,49 @@ const CalendarPage = () => {
       cellList.push(
         <div
           key={`trail-${j}`}
-          className="border border-zinc-200 p-2 bg-gray-100"
+          className="border border-zinc-100 p-1 lg:p-2 min-h-14 lg:min-h-28 bg-zinc-50"
         >
-          <p>{remainingWeekDays}</p>
+          <p className="text-subtle">{remainingWeekDays}</p>
         </div>,
       );
     }
   }
 
   return (
-    <>
-      <div className="flex items-center justify-center gap-2 mb-4">
+    <div className="form-card p-2! lg:p-6! max-w-4xl mx-auto">
+      <div className="flex items-center justify-center gap-1 lg:gap-2 mb-3 lg:mb-4">
         <button
           onClick={handlePreviousYear}
-          className="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 transition-colors cursor-pointer"
+          className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"
         >
-          <ChevronsLeft size={20} />
+          <ChevronsLeft size={18} />
         </button>
         <button
           onClick={handlePreviousMonth}
-          className="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 transition-colors cursor-pointer"
+          className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={18} />
         </button>
-        <span className="text-lg font-semibold text-zinc-700 min-w-48 text-center">
+        <span className="text-sm lg:text-lg font-semibold text-zinc-800 min-w-32 lg:min-w-48 text-center">
           {month[monthIndex]} {year}
         </span>
         <button
           onClick={handleNextMonth}
-          className="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 transition-colors cursor-pointer"
+          className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={18} />
         </button>
         <button
           onClick={handleNextYear}
-          className="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 transition-colors cursor-pointer"
+          className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"
         >
-          <ChevronsRight size={20} />
+          <ChevronsRight size={18} />
         </button>
       </div>
-      <div className="grid grid-cols-7 border border-zinc-200 rounded-lg overflow-hidden">
+      <div className="grid grid-cols-7 rounded-lg overflow-hidden border border-zinc-200">
         {cellList}
       </div>
-    </>
+    </div>
   );
 };
 
