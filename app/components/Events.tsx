@@ -11,9 +11,9 @@ const Events = ({ allEvents }: EventListProps) => {
   }
 
   return (
-    <section className="w-full overflow-x-auto scrollbar-hide py-2">
+    <section className="w-full">
       <h2 className="text-subtitle mb-4">My Events</h2>
-      <ul className="flex gap-4 list-none">
+      <ul className="flex gap-4 overflow-x-auto scrollbar-hide list-none p-2">
         {allEvents.map((event) => (
           <li key={event.id}>
             <EventCard
