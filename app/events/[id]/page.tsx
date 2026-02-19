@@ -95,6 +95,8 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </>
         )}
 
+        {session && <div className="mt-6"><ShareButton /></div>}
+
         <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
           <Users size={18} /> Attendee list
         </h2>
@@ -113,9 +115,8 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
 
-        <hr className="border-zinc-200 mt-6" />
       </div>
-      {session ? <ShareButton /> : <AttendeeForm eventId={event.id} />}
+      {!session && <AttendeeForm eventId={event.id} />}
     </div>
   );
 };
