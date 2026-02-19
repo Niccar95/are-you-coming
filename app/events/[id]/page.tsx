@@ -22,16 +22,16 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div
-      className={`max-w-2xl mx-auto flex flex-col gap-8 ${!session ? "pt-28" : ""}`}
+      className={`max-w-2xl mx-auto flex flex-col gap-8 ${!session ? "pt-20" : ""}`}
     >
       {!session && (
-        <nav className="fixed top-0 left-0 right-0 h-20 bg-white border-b border-zinc-200 flex items-center px-6 z-50">
+        <nav className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-zinc-200 flex items-center px-6 z-50">
           <Link href="/">
             <Image
               src="/are-you-coming-logo-light-q.svg"
               alt="Are You Coming?"
-              width={120}
-              height={43}
+              width={82}
+              height={30}
             />
           </Link>
         </nav>
