@@ -11,7 +11,7 @@ const Events = ({ allEvents }: EventListProps) => {
   }
 
   return (
-    <section>
+    <>
       <h2 className="text-subtitle">My Events</h2>
       <ul className="w-full flex gap-4 overflow-x-auto scrollbar-hide py-2 list-none">
         {allEvents.map((event) => (
@@ -26,7 +26,7 @@ const Events = ({ allEvents }: EventListProps) => {
           </li>
         ))}
       </ul>
-    </section>
+    </>
   );
 };
 

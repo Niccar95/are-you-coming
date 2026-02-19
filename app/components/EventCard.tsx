@@ -33,9 +33,9 @@ const EventCard = ({
             className="w-full h-36 object-cover"
           />
         ) : (
-          <figure className="flex items-center justify-center bg-violet-50 w-full h-36">
+          <div className="flex items-center justify-center bg-violet-50 w-full h-36">
             <CalendarDays size={60} className="text-violet-300" />
-          </figure>
+          </div>
         )}
         <div className="p-5">
           <h3 className="text-subtitle">{name}</h3>

@@ -3,7 +3,13 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import Image from "next/image";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { LayoutDashboard, Calendar, Globe, Code, Briefcase } from "lucide-react";
+import {
+  LayoutDashboard,
+  Calendar,
+  Globe,
+  Code,
+  Briefcase,
+} from "lucide-react";
 import { auth } from "@/auth";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -26,10 +32,13 @@ const RootLayout = async ({
   return (
     <html lang="en" className={plusJakarta.variable}>
       <body className="antialiased">
-
         <Navbar />
-        <div className={`${session ? "lg:ml-56 pt-14 lg:pt-0" : ""} min-h-screen flex flex-col`}>
-          <main className="flex-1 px-3 py-6 lg:p-6 bg-linear-to-br from-white to-violet-50">{children}</main>
+        <div
+          className={`${session ? "lg:ml-56 pt-14 lg:pt-0" : ""} min-h-screen flex flex-col`}
+        >
+          <main className="flex-1 px-3 py-6 lg:p-6 bg-linear-to-br from-white to-violet-50">
+            {children}
+          </main>
           <footer className="border-t border-zinc-200 pt-10 pb-6 lg:pt-16 lg:pb-8 px-6">
             <nav className="max-w-4xl mx-auto flex flex-col lg:flex-row items-start justify-between gap-10">
               <section className="flex flex-col gap-2">
@@ -39,17 +48,29 @@ const RootLayout = async ({
                   width={110}
                   height={40}
                 />
-                <p className="text-sm text-zinc-500">Plan events, invite friends.</p>
+                <p className="text-sm text-zinc-500">
+                  Plan events, invite friends.
+                </p>
               </section>
 
               <section className="flex flex-col gap-3">
                 <h3 className="text-sm font-semibold text-zinc-700">Pages</h3>
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <a href="/dashboard" className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"><LayoutDashboard size={14} /> Dashboard</a>
+                    <a
+                      href="/dashboard"
+                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                    >
+                      <LayoutDashboard size={14} /> Dashboard
+                    </a>
                   </li>
                   <li>
-                    <a href="/calendar" className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"><Calendar size={14} /> Calendar</a>
+                    <a
+                      href="/calendar"
+                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                    >
+                      <Calendar size={14} /> Calendar
+                    </a>
                   </li>
                 </ul>
               </section>
@@ -58,19 +79,42 @@ const RootLayout = async ({
                 <h3 className="text-sm font-semibold text-zinc-700">Connect</h3>
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <a href="https://nicolas-carrasco.vercel.app/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"><Globe size={14} /> Portfolio</a>
+                    <a
+                      href="https://nicolas-carrasco.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                    >
+                      <Globe size={14} /> Portfolio
+                    </a>
                   </li>
                   <li>
-                    <a href="https://github.com/Niccar95" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"><Code size={14} /> GitHub</a>
+                    <a
+                      href="https://github.com/Niccar95"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                    >
+                      <Code size={14} /> GitHub
+                    </a>
                   </li>
                   <li>
-                    <a href="https://www.linkedin.com/in/nicolas-carrasco-6882402a5/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"><Briefcase size={14} /> LinkedIn</a>
+                    <a
+                      href="https://www.linkedin.com/in/nicolas-carrasco-6882402a5/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                    >
+                      <Briefcase size={14} /> LinkedIn
+                    </a>
                   </li>
                 </ul>
               </section>
             </nav>
 
-            <p className="max-w-4xl mx-auto text-xs text-zinc-400 mt-10">&copy; {new Date().getFullYear()} Nicolas Carrasco</p>
+            <p className="max-w-4xl mx-auto text-xs text-zinc-400 mt-10">
+              &copy; {new Date().getFullYear()} Nicolas Carrasco
+            </p>
           </footer>
         </div>
       </body>
