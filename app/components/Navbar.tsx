@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, LayoutDashboard, LogOut } from "lucide-react";
+import { Calendar, CalendarDays, LayoutDashboard, LogOut } from "lucide-react";
 import { auth, signOut } from "@/auth";
 import MobileMenu from "./MobileMenu";
 
@@ -52,6 +52,15 @@ const Navbar = async () => {
               >
                 <LayoutDashboard size={16} />
                 Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/events"
+                className="flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
+              >
+                <CalendarDays size={16} />
+                Events
               </Link>
             </li>
             <li>

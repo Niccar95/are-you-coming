@@ -18,10 +18,10 @@ const EventCard = ({
   imageUrl,
 }: EventProps) => {
   return (
-    <Link href={`/events/${id}`} className="block min-w-[300px] shrink-0">
+    <Link href={`/events/${id}`} className="block w-full">
       <article
         key={id}
-        className="h-[300px] w-[300] bg-white dark:bg-zinc-900 rounded-lg shadow-lg cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 overflow-hidden"
+        className="h-[300px] w-full bg-white dark:bg-zinc-900 rounded-lg shadow-lg cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 overflow-hidden"
       >
         {imageUrl ? (
           <Image

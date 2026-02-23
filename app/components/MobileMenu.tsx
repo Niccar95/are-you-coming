@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import Link from "next/link";
-import { Menu, X, LayoutDashboard, Calendar, LogOut } from "lucide-react";
+import { Menu, X, LayoutDashboard, Calendar, CalendarDays, LogOut } from "lucide-react";
 import useClickOutside from "../hooks/useClickOutside";
 
 interface MobileMenuProps {
@@ -35,6 +35,14 @@ export default function MobileMenu({ name, signOutAction }: MobileMenuProps) {
         >
           <LayoutDashboard size={16} />
           Dashboard
+        </Link>
+        <Link
+          href="/events"
+          onClick={() => setOpen(false)}
+          className="flex items-center gap-2 text-sm font-medium text-zinc-700 hover:text-violet-600 hover:bg-violet-50 px-3 py-2 rounded-md transition-colors"
+        >
+          <CalendarDays size={16} />
+          Events
         </Link>
         <Link
           href="/calendar"
