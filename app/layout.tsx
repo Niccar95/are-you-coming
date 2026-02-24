@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import {
   LayoutDashboard,
+  CalendarDays,
   Calendar,
   Globe,
   Code,
@@ -36,86 +38,100 @@ const RootLayout = async ({
         <div
           className={`${session ? "lg:ml-56 pt-14 lg:pt-0" : ""} min-h-screen flex flex-col`}
         >
-          <main className={`${session ? "min-h-[calc(100vh-3.5rem)] lg:min-h-screen" : "min-h-screen"} flex-1 px-3 py-6 lg:p-6 bg-linear-to-br from-white to-violet-50`}>
+          <main
+            className={`${session ? "min-h-[calc(100vh-3.5rem)] lg:min-h-screen" : "min-h-screen"} flex-1 px-3 py-6 lg:p-6 bg-linear-to-br from-white to-violet-50`}
+          >
             {children}
           </main>
-          {session && <footer className="border-t border-zinc-200 pt-10 pb-6 lg:pt-16 lg:pb-8 px-6">
-            <nav className="max-w-4xl mx-auto flex flex-col lg:flex-row items-start justify-between gap-10">
-              <section className="flex flex-col gap-2">
-                <Image
-                  src="/are-you-coming-logo-light-q.svg"
-                  alt="Are You Coming?"
-                  width={110}
-                  height={40}
-                />
-                <p className="text-sm text-zinc-500">
-                  Plan events, invite friends.
-                </p>
-              </section>
+          {session && (
+            <footer className="border-t border-zinc-200 pt-10 pb-6 lg:pt-16 lg:pb-8 px-6">
+              <nav className="max-w-4xl mx-auto flex flex-col lg:flex-row items-start justify-between gap-10">
+                <section className="flex flex-col gap-2">
+                  <Image
+                    src="/are-you-coming-logo-light-q.svg"
+                    alt="Are You Coming?"
+                    width={110}
+                    height={40}
+                  />
+                  <p className="text-sm text-zinc-500">
+                    Plan events, invite friends.
+                  </p>
+                </section>
 
-              <section className="flex flex-col gap-3">
-                <h3 className="text-sm font-semibold text-zinc-700">Pages</h3>
-                <ul className="flex flex-col gap-2">
-                  <li>
-                    <a
-                      href="/dashboard"
-                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
-                    >
-                      <LayoutDashboard size={14} /> Dashboard
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/calendar"
-                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
-                    >
-                      <Calendar size={14} /> Calendar
-                    </a>
-                  </li>
-                </ul>
-              </section>
+                <section className="flex flex-col gap-3">
+                  <h3 className="text-sm font-semibold text-zinc-700">Pages</h3>
+                  <ul className="flex flex-col gap-2">
+                    <li>
+                      <Link
+                        href="/dashboard"
+                        className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                      >
+                        <LayoutDashboard size={14} /> Dashboard
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/events"
+                        className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                      >
+                        <CalendarDays size={14} /> Events
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/calendar"
+                        className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                      >
+                        <Calendar size={14} /> Calendar
+                      </Link>
+                    </li>
+                  </ul>
+                </section>
 
-              <section className="flex flex-col gap-3">
-                <h3 className="text-sm font-semibold text-zinc-700">Connect</h3>
-                <ul className="flex flex-col gap-2">
-                  <li>
-                    <a
-                      href="https://nicolas-carrasco.vercel.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
-                    >
-                      <Globe size={14} /> Portfolio
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://github.com/Niccar95"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
-                    >
-                      <Code size={14} /> GitHub
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.linkedin.com/in/nicolas-carrasco-6882402a5/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
-                    >
-                      <Briefcase size={14} /> LinkedIn
-                    </a>
-                  </li>
-                </ul>
-              </section>
-            </nav>
+                <section className="flex flex-col gap-3">
+                  <h3 className="text-sm font-semibold text-zinc-700">
+                    Connect
+                  </h3>
+                  <ul className="flex flex-col gap-2">
+                    <li>
+                      <a
+                        href="https://nicolas-carrasco.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                      >
+                        <Globe size={14} /> Portfolio
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://github.com/Niccar95"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                      >
+                        <Code size={14} /> GitHub
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.linkedin.com/in/nicolas-carrasco-6882402a5/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm text-zinc-500 hover:text-violet-600 transition-colors"
+                      >
+                        <Briefcase size={14} /> LinkedIn
+                      </a>
+                    </li>
+                  </ul>
+                </section>
+              </nav>
 
-            <p className="max-w-4xl mx-auto text-xs text-zinc-400 mt-10">
-              &copy; {new Date().getFullYear()} Nicolas Carrasco
-            </p>
-          </footer>}
+              <p className="max-w-4xl mx-auto text-xs text-zinc-400 mt-10">
+                &copy; {new Date().getFullYear()} Nicolas Carrasco
+              </p>
+            </footer>
+          )}
         </div>
       </body>
     </html>

@@ -1,10 +1,17 @@
 import { getEvents } from "../services/eventService";
 import EventCard from "../components/EventCard";
-import { Event } from "../lib/models/Event";
+import SortControls from "../components/SortControls";
+import { Suspense } from "react";
+import { sortByDate } from "../utils/eventSorting";
+import { filterUpcomingEvents, filterPastEvents } from "../utils/eventFiltering";
 
-export const revalidate = 0;
-
-const EventsPage = async () => {
+const EventsPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ sortUpcomingEvent?: string; sortPastEvent?: string }>;
+}) => {
+  const { sortUpcomingEvent = "asc", sortPastEvent = "desc" } =
+    await searchParams;
   const events = await getEvents();
 
   const allEvents = events.map((event) => ({
@@ -15,16 +22,17 @@ const EventsPage = async () => {
     imageUrl: event.imageUrl,
   }));
 
-  const upcomingEvents = allEvents.filter(
-    (event) => new Date(event.eventDate).getTime() >= new Date().getTime(),
-  );
+  const upcomingEvents = filterUpcomingEvents(allEvents);
+  const pastEvents = filterPastEvents(allEvents);
 
-  const pastEvents = allEvents.filter(
-    (event) => new Date(event.eventDate).getTime() < new Date().getTime(),
-  );
+  sortByDate(upcomingEvents, sortUpcomingEvent);
+  sortByDate(pastEvents, sortPastEvent);
 
   return (
     <div className="flex flex-col gap-12 max-w-4xl mx-auto">
+      <Suspense>
+        <SortControls />
+      </Suspense>
       <section className="flex flex-col gap-4">
         <h1 className="text-subtitle">Upcoming Events</h1>
         {upcomingEvents.length === 0 ? (
