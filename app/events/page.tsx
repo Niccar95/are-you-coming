@@ -3,7 +3,10 @@ import EventCard from "../components/EventCard";
 import SortControls from "../components/SortControls";
 import { Suspense } from "react";
 import { sortByDate } from "../utils/eventSorting";
-import { filterUpcomingEvents, filterPastEvents } from "../utils/eventFiltering";
+import {
+  filterUpcomingEvents,
+  filterPastEvents,
+} from "../utils/eventFiltering";
 
 const EventsPage = async ({
   searchParams,
@@ -30,11 +33,11 @@ const EventsPage = async ({
 
   return (
     <div className="flex flex-col gap-12 max-w-4xl mx-auto">
-      <Suspense>
-        <SortControls />
-      </Suspense>
-      <section className="flex flex-col gap-4">
-        <h1 className="text-subtitle">Upcoming Events</h1>
+      <section className="flex flex-col gap-6">
+        <h1 className="text-title">Upcoming Events</h1>
+        <Suspense>
+          <SortControls section="upcoming" />
+        </Suspense>
         {upcomingEvents.length === 0 ? (
           <p className="text-meta">No upcoming events to show.</p>
         ) : (
@@ -54,8 +57,11 @@ const EventsPage = async ({
         )}
       </section>
 
-      <section className="flex flex-col gap-4">
-        <h1 className="text-subtitle">Past Events</h1>
+      <section className="flex flex-col gap-6">
+        <h1 className="text-title">Past Events</h1>
+        <Suspense>
+          <SortControls section="past" />
+        </Suspense>
         {pastEvents.length === 0 ? (
           <p className="text-meta">No past events to show.</p>
         ) : (

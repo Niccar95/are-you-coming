@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowDownUp } from "lucide-react";
 
-const SortControls = () => {
+const SortControls = ({ section }: { section: "upcoming" | "past" }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -17,13 +17,12 @@ const SortControls = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-2 text-xs font-semibold text-zinc-400 uppercase tracking-wide">
+    <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 uppercase tracking-wide">
         <ArrowDownUp size={13} />
         Sort
       </div>
-      <section className="flex items-center justify-between">
-        <p className="text-sm font-medium text-zinc-600">Upcoming</p>
+      {section === "upcoming" && (
         <div className="flex rounded-md overflow-hidden border border-zinc-200">
           <button
             onClick={() => updateSort("sortUpcomingEvent", "asc")}
@@ -46,10 +45,8 @@ const SortControls = () => {
             Latest first
           </button>
         </div>
-      </section>
-      <hr className="border-zinc-100" />
-      <section className="flex items-center justify-between">
-        <p className="text-sm font-medium text-zinc-600">Past</p>
+      )}
+      {section === "past" && (
         <div className="flex rounded-md overflow-hidden border border-zinc-200">
           <button
             onClick={() => updateSort("sortPastEvent", "desc")}
@@ -72,7 +69,7 @@ const SortControls = () => {
             Oldest first
           </button>
         </div>
-      </section>
+      )}
     </div>
   );
 };

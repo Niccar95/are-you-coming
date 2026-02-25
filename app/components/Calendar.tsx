@@ -137,9 +137,9 @@ const Calendar = ({ allEvents }: EventListProps) => {
         >
           <ChevronLeft size={18} />
         </button>
-        <span className="text-sm lg:text-lg font-semibold text-zinc-800 min-w-32 lg:min-w-48 text-center">
+        <h2 className="text-subtitle text-sm lg:text-lg min-w-32 lg:min-w-48 text-center">
           {month[monthIndex]} {year}
-        </span>
+        </h2>
         <button
           onClick={handleNextMonth}
           className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"

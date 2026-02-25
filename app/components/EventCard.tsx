@@ -38,7 +38,7 @@ const EventCard = ({
           </div>
         )}
         <div className="p-5">
-          <h3 className="text-subtitle">{name}</h3>
+          <h3 className="text-subtitle mb-1">{name}</h3>
           <time
             dateTime={new Date(eventDate).toISOString()}
             className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
