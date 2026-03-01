@@ -9,7 +9,7 @@ export const getEvents = async (): Promise<Event[]> => {
   if (!userId) return [];
 
   const { rows } = await pool.query(
-    "SELECT * FROM events WHERE user_id = $1 ORDER BY id ASC",
+    "SELECT * FROM events WHERE user_id = $1 ORDER BY id DESC",
     [userId],
   );
 
