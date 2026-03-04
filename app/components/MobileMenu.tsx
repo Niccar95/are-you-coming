@@ -56,7 +56,7 @@ export default function MobileMenu({ name, signOutAction }: MobileMenuProps) {
           <form action={signOutAction}>
             <button
               type="submit"
-              className="btn-danger w-full px-3 py-2 text-sm flex items-center justify-center gap-2"
+              className="btn-danger w-full"
             >
               <LogOut size={14} />
               Sign out

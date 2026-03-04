@@ -7,7 +7,7 @@ interface EventListProps {
 
 const Events = ({ allEvents }: EventListProps) => {
   if (allEvents.length === 0) {
-    return <p className="text-meta">No events to show.</p>;
+    return <p className="text-meta text-center">No events to show.</p>;
   }
 
   return (

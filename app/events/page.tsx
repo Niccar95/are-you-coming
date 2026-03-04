@@ -1,5 +1,4 @@
 import { getEvents } from "../services/eventService";
-import EventCard from "../components/EventCard";
 import SortControls from "../components/SortControls";
 import { Suspense } from "react";
 import { sortByDate } from "../utils/eventSorting";
@@ -7,6 +6,8 @@ import {
   filterUpcomingEvents,
   filterPastEvents,
 } from "../utils/eventFiltering";
+import EventCard from "../components/EventCard";
+import UpcomingEvents from "../components/UpcomingEvents";
 
 const EventsPage = async ({
   searchParams,
@@ -38,23 +39,7 @@ const EventsPage = async ({
         <Suspense>
           <SortControls section="upcoming" />
         </Suspense>
-        {upcomingEvents.length === 0 ? (
-          <p className="text-meta">No upcoming events to show.</p>
-        ) : (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 list-none">
-            {upcomingEvents.map((event) => (
-              <li key={event.id}>
-                <EventCard
-                  id={event.id}
-                  name={event.name}
-                  eventDate={event.eventDate}
-                  description={event.description}
-                  imageUrl={event.imageUrl}
-                />
-              </li>
-            ))}
-          </ul>
-        )}
+        <UpcomingEvents events={upcomingEvents} />
       </section>
 
       <section className="flex flex-col gap-6">

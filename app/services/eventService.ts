@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { del } from "@vercel/blob";
 import pool from "../lib/db";
 import { Event } from "../lib/models/Event";
 
@@ -67,4 +68,13 @@ export const addEvent = async (
     rows[0].user_id,
     rows[0].image_url,
   );
+};
+
+export const deleteEvent = async (id: number) => {
+  const { rows } = await pool.query("SELECT image_url FROM events WHERE id = $1", [id]);
+  const imageUrl = rows[0]?.image_url;
+
+  if (imageUrl) await del(imageUrl);
+
+  await pool.query("DELETE FROM events WHERE id = $1", [id]);
 };
