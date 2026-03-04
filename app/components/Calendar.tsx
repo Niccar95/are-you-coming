@@ -20,8 +20,12 @@ const Calendar = ({ allEvents }: EventListProps) => {
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [showEventCard, setShowEventCard] = useState<boolean>(false);
   const [activeCellIndex, setActiveCellIndex] = useState<number | null>(null);
-
   const [selectedEvents, setSelectedEvents] = useState<EventType[]>([]);
+
+  const today = new Date();
+  const currentDate = today.getDate();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
 
   const month = [
     "January",
@@ -98,7 +102,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
     cellList.push(
       <div
         key={i}
-        className={`border border-zinc-100 p-1 lg:p-2 min-h-14 lg:min-h-28 text-xs lg:text-sm transition-colors ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"} ${events.length > 0 ? "cursor-pointer hover:border-violet-300" : ""}`}
+        className={`border border-zinc-100 p-1 lg:p-2 min-h-14 lg:min-h-28 text-xs lg:text-sm transition-colors ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"} ${events.length > 0 ? "cursor-pointer hover:border-violet-300" : ""} ${currentDate === monthDate && currentMonth === monthIndex && currentYear === year ? "bg-violet-50" : ""}`}
         onClick={() => handleEventCard(events, i)}
       >
         {monthDate > 0 && (
