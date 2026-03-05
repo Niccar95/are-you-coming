@@ -36,7 +36,7 @@ const Navbar = async () => {
       {/* Desktop: left sidebar */}
       <nav className="hidden lg:flex fixed top-0 left-0 h-screen w-56 bg-white border-r border-zinc-200 flex-col justify-between p-4 z-50">
         <section className="flex flex-col gap-2">
-          <Link href="/dashboard" className="mb-4">
+          <Link href="/dashboard" className="pb-4 mb-2 border-b border-zinc-200 block">
             <Image
               src="/are-you-coming-logo-light-q.svg"
               alt="Are You Coming?"
@@ -44,6 +44,12 @@ const Navbar = async () => {
               height={47}
             />
           </Link>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-full bg-zinc-200 shrink-0" />
+            <p className="text-xs text-zinc-500 truncate">
+              {session?.user?.name}
+            </p>
+          </div>
           <ul className="flex flex-col gap-2 list-none">
             <li>
               <Link
@@ -75,9 +81,6 @@ const Navbar = async () => {
           </ul>
         </section>
         <section className="flex flex-col gap-2 border-t border-zinc-200 pt-4">
-          <p className="text-xs text-zinc-500 truncate">
-            {session?.user?.name}
-          </p>
           <form
             action={async () => {
               "use server";
