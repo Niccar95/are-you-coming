@@ -151,14 +151,14 @@ const EventForm = () => {
           />
         </div>
         <div className="flex justify-between lg:justify-start gap-3 mt-2">
-          <button type="submit" className="btn-primary flex items-center gap-2 text-xs py-1.5 px-3 lg:py-3 lg:px-6 lg:text-base">
+          <button type="submit" className="btn-primary flex items-center gap-2">
             <CalendarPlus size={16} />
             Create Event
           </button>
           <button
             type="button"
             onClick={() => setOpenEventForm(false)}
-            className="btn-secondary flex items-center gap-2 text-xs py-1.5 px-3 lg:py-3 lg:px-6 lg:text-base"
+            className="btn-secondary flex items-center gap-2"
           >
             <X size={16} />
             Cancel
