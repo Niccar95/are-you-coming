@@ -10,6 +10,10 @@ export const POST = async (req: NextRequest) => {
   }
   const { name, event_date, description, image_url } = await req.json();
 
+  if (!name || !event_date || !description) {
+    return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+  }
+
   const event = await addEvent(
     name,
     new Date(event_date),

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useCallback, useRef, useState } from "react";
-import { Plus, X, CalendarPlus, ImagePlus } from "lucide-react";
+import { Plus, X, CalendarPlus, ImagePlus, CheckCircle } from "lucide-react";
 import { upload } from "@vercel/blob/client";
 import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
@@ -15,6 +15,8 @@ const EventForm = () => {
 
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<boolean>(false);
   const onClose = useCallback(() => setOpenEventForm(false), []);
   const formRef = useClickOutside(openEventForm, onClose);
 
@@ -27,7 +29,9 @@ const EventForm = () => {
 
   const addNewEvent = async (e: FormEvent) => {
     e.preventDefault();
-    if (!eventName || !eventDate) return;
+    if (!eventName || !eventDate || !description) { setError("Please fill in all required fields."); return; }
+    if (new Date(eventDate) <= new Date()) { setError("Event date must be in the future."); return; }
+    setError("");
 
     let imageUrl: string | null = null;
 
@@ -62,7 +66,10 @@ const EventForm = () => {
       setEventDate("");
       setDescription("");
       setFileName("");
+      setSuccess(true);
+      setOpenEventForm(false);
       router.refresh();
+      setTimeout(() => setSuccess(false), 4000);
     } catch (error) {
       console.error("Error adding new event:", error);
     } finally {
@@ -83,6 +90,12 @@ const EventForm = () => {
         <Plus size={16} />
         New Event
       </button>
+      {success && (
+        <p className="flex items-center gap-2 text-sm text-violet-600">
+          <CheckCircle size={16} />
+          Event created successfully!
+        </p>
+      )}
 
       <form
         onSubmit={addNewEvent}
@@ -95,7 +108,7 @@ const EventForm = () => {
         <h3 className="form-heading">Create Event</h3>
         <div className="flex flex-col gap-2">
           <label htmlFor="name" className="form-label">
-            Event Name
+            Event Name <span className="text-red-500">*</span>
           </label>
           <input
             id="name"
@@ -104,7 +117,6 @@ const EventForm = () => {
             type="text"
             placeholder="Enter event name"
             className="form-input"
-            required
           />
         </div>
 
@@ -133,7 +145,7 @@ const EventForm = () => {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="eventDate" className="form-label">
-            Event Date
+            Event Date <span className="text-red-500">*</span>
           </label>
           <input
             id="eventDate"
@@ -141,12 +153,11 @@ const EventForm = () => {
             onChange={(e) => setEventDate(e.target.value)}
             type="datetime-local"
             className="form-input"
-            required
           />
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="description" className="form-label">
-            Description
+            Description <span className="text-red-500">*</span>
           </label>
           <textarea
             id="description"
@@ -157,6 +168,7 @@ const EventForm = () => {
             className="form-textarea"
           />
         </div>
+        {error && <p className="text-xs text-red-500">{error}</p>}
         <div className="flex justify-between lg:justify-start gap-3 mt-2">
           <button type="submit" className="btn-primary flex items-center gap-2">
             <CalendarPlus size={16} />
