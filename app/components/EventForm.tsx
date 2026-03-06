@@ -5,6 +5,7 @@ import { FormEvent, useCallback, useRef, useState } from "react";
 import { Plus, X, CalendarPlus, ImagePlus } from "lucide-react";
 import { upload } from "@vercel/blob/client";
 import useClickOutside from "../hooks/useClickOutside";
+import Spinner from "./Spinner";
 
 const EventForm = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const EventForm = () => {
   const [description, setDescription] = useState<string>("");
 
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const onClose = useCallback(() => setOpenEventForm(false), []);
   const formRef = useClickOutside(openEventForm, onClose);
 
@@ -28,6 +30,8 @@ const EventForm = () => {
     if (!eventName || !eventDate) return;
 
     let imageUrl: string | null = null;
+
+    setLoading(true);
 
     const file = inputFileRef.current?.files?.[0];
     if (file) {
@@ -61,6 +65,8 @@ const EventForm = () => {
       router.refresh();
     } catch (error) {
       console.error("Error adding new event:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,6 +75,7 @@ const EventForm = () => {
       ref={formRef}
       className="w-full max-w-2xl flex flex-col items-center gap-4"
     >
+      {loading && <Spinner />}
       <button
         onClick={toggleEventForm}
         className="btn-outline-violet flex items-center gap-2"
