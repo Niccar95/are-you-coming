@@ -1,4 +1,9 @@
-import { addEvent, deleteEvent } from "@/app/services/eventService";
+import {
+  addEvent,
+  deleteEvent,
+  getEventById,
+  updateEvent,
+} from "@/app/services/eventService";
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,7 +16,10 @@ export const POST = async (req: NextRequest) => {
   const { name, event_date, description, image_url } = await req.json();
 
   if (!name || !event_date || !description) {
-    return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing required fields." },
+      { status: 400 },
+    );
   }
 
   const event = await addEvent(
@@ -25,6 +33,40 @@ export const POST = async (req: NextRequest) => {
   return NextResponse.json(event, { status: 201 });
 };
 
+export const PATCH = async (req: NextRequest) => {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const { id, name, event_date, description, image_url } = await req.json();
+
+  if (!id || !name || !event_date || !description) {
+    return NextResponse.json(
+      { error: "Missing required fields." },
+      { status: 400 },
+    );
+  }
+
+  const existingId = await getEventById(id);
+  if (!existingId) {
+    return NextResponse.json({ error: "Event not found." }, { status: 404 });
+  }
+  if (String(existingId.userId) !== String(session.user.id)) {
+    return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+  }
+
+  const event = await updateEvent(
+    id,
+    name,
+    new Date(event_date),
+    description,
+    image_url || null,
+  );
+
+  return NextResponse.json(event, { status: 201 });
+};
+
 export const DELETE = async (req: NextRequest) => {
   const session = await auth();
 
@@ -32,6 +74,14 @@ export const DELETE = async (req: NextRequest) => {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { id } = await req.json();
+
+  const event = await getEventById(id);
+  if (!event) {
+    return NextResponse.json({ error: "Event not found." }, { status: 404 });
+  }
+  if (String(event.userId) !== String(session.user.id)) {
+    return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+  }
 
   await deleteEvent(id);
 

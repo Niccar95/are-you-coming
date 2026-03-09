@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { EventType } from "../lib/types";
 import EventCard from "./EventCard";
-import DeleteButton from "./DeleteButton";
+import EventActions from "./EventActions";
 import { Settings2, Check } from "lucide-react";
 
 interface UpcomingEventsProps {
@@ -47,7 +47,15 @@ const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
               description={event.description}
               imageUrl={event.imageUrl}
             />
-            {manageMode && <DeleteButton id={event.id} />}
+            {manageMode && (
+                <EventActions
+                  id={event.id}
+                  eventName={event.name}
+                  eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
+                  description={event.description}
+                  imageUrl={event.imageUrl ?? null}
+                />
+              )}
           </li>
         ))}
       </ul>

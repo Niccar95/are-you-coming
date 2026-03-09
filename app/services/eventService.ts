@@ -70,8 +70,39 @@ export const addEvent = async (
   );
 };
 
+export const updateEvent = async (
+  id: number,
+  name: string,
+  eventDate: Date,
+  description: string,
+  imageUrl: string | null,
+): Promise<Event> => {
+  const { rows: existing } = await pool.query(
+    "SELECT image_url FROM events WHERE id = $1",
+    [id],
+  );
+  const oldImageUrl = existing[0]?.image_url;
+  if (oldImageUrl && oldImageUrl !== imageUrl) await del(oldImageUrl);
+
+  const { rows } = await pool.query(
+    "UPDATE events SET name = $1, event_date = $2, description = $3, image_url = $4 WHERE id = $5 RETURNING *",
+    [name, eventDate, description, imageUrl, id],
+  );
+  return new Event(
+    rows[0].id,
+    rows[0].name,
+    rows[0].event_date,
+    rows[0].description,
+    rows[0].user_id,
+    rows[0].image_url,
+  );
+};
+
 export const deleteEvent = async (id: number) => {
-  const { rows } = await pool.query("SELECT image_url FROM events WHERE id = $1", [id]);
+  const { rows } = await pool.query(
+    "SELECT image_url FROM events WHERE id = $1",
+    [id],
+  );
   const imageUrl = rows[0]?.image_url;
 
   if (imageUrl) await del(imageUrl);
