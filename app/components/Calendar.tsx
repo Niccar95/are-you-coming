@@ -102,11 +102,11 @@ const Calendar = ({ allEvents }: EventListProps) => {
     cellList.push(
       <div
         key={i}
-        className={`border border-zinc-100 p-1 lg:p-2 min-h-14 lg:min-h-28 text-xs lg:text-sm transition-colors ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"} ${events.length > 0 ? "cursor-pointer hover:border-violet-300" : ""} ${currentDate === monthDate && currentMonth === monthIndex && currentYear === year ? "bg-violet-50" : ""}`}
+        className={`border border-zinc-100 p-1 lg:p-2 h-20 lg:h-28 text-xs lg:text-sm transition-colors flex flex-col ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"} ${events.length > 0 ? "cursor-pointer hover:border-violet-300" : ""} ${currentDate === monthDate && currentMonth === monthIndex && currentYear === year ? "bg-violet-50" : ""}`}
         onClick={() => handleEventCard(events, i)}
       >
         {monthDate > 0 && (
-          <p className="font-medium flex items-center gap-1">
+          <p className="font-medium flex items-center gap-1 shrink-0">
             {monthDate}
             {events.length > 0 && (
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
@@ -115,16 +115,18 @@ const Calendar = ({ allEvents }: EventListProps) => {
         )}
         {monthDate <= 0 && <p></p>}
 
-        <p className="text-subtle">{day}</p>
+        <p className="text-subtle shrink-0">{day}</p>
 
-        {events.map((e) => (
-          <p
-            key={e.id}
-            className="mt-1 text-[10px] lg:text-xs bg-violet-100 text-violet-700 font-medium px-1 lg:px-2 py-0.5 rounded truncate"
-          >
-            {e.name}
-          </p>
-        ))}
+        <div className="overflow-hidden flex-1 flex flex-col gap-0.5 mt-1">
+          {events.map((e) => (
+            <p
+              key={e.id}
+              className="text-[10px] lg:text-xs bg-violet-100 text-violet-700 font-medium px-1 lg:px-2 py-0.5 rounded truncate shrink-0"
+            >
+              {e.name}
+            </p>
+          ))}
+        </div>
       </div>,
     );
   }
@@ -136,7 +138,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
       cellList.push(
         <div
           key={`trail-${j}`}
-          className="border border-zinc-100 p-1 lg:p-2 min-h-14 lg:min-h-28 bg-zinc-50"
+          className="border border-zinc-100 p-1 lg:p-2 h-20 lg:h-28 bg-zinc-50 overflow-hidden"
         >
           <p className="text-subtle">{remainingWeekDays}</p>
         </div>,
