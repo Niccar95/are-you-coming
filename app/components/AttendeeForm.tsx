@@ -5,7 +5,12 @@ import { useRouter } from "next/navigation";
 import { UserPlus, CheckCircle } from "lucide-react";
 import Spinner from "./Spinner";
 
-const AttendeeForm = ({ eventId }: { eventId: number }) => {
+interface EventFormProps {
+  eventId: number;
+  eventDate: number;
+}
+
+const AttendeeForm = ({ eventId, eventDate }: EventFormProps) => {
   const router = useRouter();
   const [attendeeName, setAttendeeName] = useState<string>("");
   const [attendeeEmail, setAttendeeEmail] = useState<string>("");
@@ -13,9 +18,14 @@ const AttendeeForm = ({ eventId }: { eventId: number }) => {
   const [error, setError] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
 
+  const currentDate = new Date().getTime();
+
   const submitAttendance = async (e: FormEvent) => {
     e.preventDefault();
-    if (!attendeeName || !attendeeEmail) { setError("Please fill in all required fields."); return; }
+    if (!attendeeName || !attendeeEmail) {
+      setError("Please fill in all required fields.");
+      return;
+    }
     setError("");
     setLoading(true);
 
@@ -49,7 +59,19 @@ const AttendeeForm = ({ eventId }: { eventId: number }) => {
         <h3 className="form-heading flex items-center justify-center gap-2">
           You&apos;re in! <CheckCircle size={20} className="text-violet-500" />
         </h3>
-        <p className="text-subtle">We&apos;ll send you a reminder before the event.</p>
+        <p className="text-subtle">
+          We&apos;ll send you a reminder before the event.
+        </p>
+      </div>
+    );
+  }
+
+  if (currentDate > eventDate) {
+    return (
+      <div className="form-card flex flex-col items-center gap-3 text-center">
+        <h3 className="form-heading flex items-center justify-center gap-2">
+          Event ended.
+        </h3>
       </div>
     );
   }

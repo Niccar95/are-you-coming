@@ -1,9 +1,7 @@
-// import { auth } from "@/auth";
 import Calendar from "../components/Calendar";
 import { getEvents } from "../services/eventService";
 
 const CalendarPage = async () => {
-  //   const session = await auth();
   const events = await getEvents();
 
   const allEvents = events.map((event) => ({

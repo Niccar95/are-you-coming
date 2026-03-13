@@ -119,7 +119,12 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <p className="text-subtle">No Attendees</p>
         )}
       </article>
-      {!session && <AttendeeForm eventId={event.id} />}
+      {!session && (
+        <AttendeeForm
+          eventId={event.id}
+          eventDate={new Date(event.eventDate).getTime()}
+        />
+      )}
     </div>
   );
 };
