@@ -11,6 +11,7 @@ interface EventActionsProps {
   eventDate: string;
   description: string;
   imageUrl: string | null;
+  redirect?: string;
 }
 
 const EventActions = ({
@@ -19,6 +20,7 @@ const EventActions = ({
   eventDate,
   description,
   imageUrl,
+  redirect,
 }: EventActionsProps) => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
@@ -29,20 +31,27 @@ const EventActions = ({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
-    router.refresh();
+    if (redirect) {
+      router.push(redirect);
+    } else {
+      router.refresh();
+    }
   };
 
   return (
     <>
-      <div className="absolute top-2 right-2 flex gap-1">
+      <div className="absolute top-2 right-2 flex gap-2">
         <button
           onClick={() => setIsEditing(true)}
-          className="btn-secondary py-1! px-1.5! bg-white! text-zinc-700! hover:bg-zinc-100!"
+          className="btn-secondary py-1.5! px-2! lg:py-1! lg:px-1.5! bg-white! text-zinc-700! hover:bg-zinc-100!"
         >
-          <Pencil size={14} />
+          <Pencil size={16} className="lg:w-3.5 lg:h-3.5" />
         </button>
-        <button onClick={handleDelete} className="btn-danger py-1! px-1.5!">
-          <Trash2 size={14} />
+        <button
+          onClick={handleDelete}
+          className="btn-danger py-1.5! px-2! lg:py-1! lg:px-1.5!"
+        >
+          <Trash2 size={16} className="lg:w-3.5 lg:h-3.5" />
         </button>
       </div>
 

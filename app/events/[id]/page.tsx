@@ -7,9 +7,11 @@ import ShareButton from "@/app/components/ShareButton";
 import { getAttendeesByEventId } from "@/app/services/attendeeService";
 import { getEventById } from "@/app/services/eventService";
 import { auth } from "@/auth";
+import EventActions from "@/app/components/EventActions";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
+
   const event = await getEventById(Number(id));
 
   const eventAttendees = await getAttendeesByEventId(Number(id));
@@ -125,6 +127,17 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           eventDate={new Date(event.eventDate).getTime()}
         />
       )}
+      {session?.user?.id &&
+        String(event.userId) === String(session.user.id) && (
+          <EventActions
+            id={event.id}
+            eventName={event.name}
+            eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
+            description={event.description}
+            imageUrl={event.imageUrl ?? null}
+            redirect={"/dashboard"}
+          />
+        )}
     </div>
   );
 };
