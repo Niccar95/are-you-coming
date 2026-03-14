@@ -48,14 +48,15 @@ const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
               imageUrl={event.imageUrl}
             />
             {manageMode && (
-                <EventActions
-                  id={event.id}
-                  eventName={event.name}
-                  eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
-                  description={event.description}
-                  imageUrl={event.imageUrl ?? null}
-                />
-              )}
+              <EventActions
+                id={event.id}
+                eventName={event.name}
+                eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
+                description={event.description}
+                spotifyUrl={event.spotifyUrl ?? null}
+                imageUrl={event.imageUrl ?? null}
+              />
+            )}
           </li>
         ))}
       </ul>

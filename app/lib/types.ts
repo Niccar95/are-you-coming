@@ -3,5 +3,6 @@ export type EventType = {
   name: string;
   eventDate: string;
   description: string;
+  spotifyUrl: string | null;
   imageUrl: string | null;
 };
