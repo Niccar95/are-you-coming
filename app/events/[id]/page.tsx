@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Users, FileText, CalendarDays } from "lucide-react";
+import { Users, FileText, CalendarDays, Music } from "lucide-react";
 import AttendeeForm from "@/app/components/AttendeeForm";
 import CountDown from "@/app/components/CountDown";
 import ShareButton from "@/app/components/ShareButton";
@@ -132,23 +132,31 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <p className="text-subtle">No Attendees</p>
         )}
       </article>
-      {!session && (
-        event.isAFutureDate()
-          ? <AttendeeForm eventId={event.id} />
-          : <div className="form-card flex flex-col items-center gap-3 text-center">
-              <p className="text-body">You can no longer sign up to this event.</p>
-            </div>
-      )}
+      {!session &&
+        (event.isAFutureDate() ? (
+          <AttendeeForm eventId={event.id} />
+        ) : (
+          <div className="form-card flex flex-col items-center gap-3 text-center">
+            <p className="text-body">
+              You can no longer sign up to this event.
+            </p>
+          </div>
+        ))}
       {playlistId && (
-        <iframe
-          style={{ borderRadius: "12px" }}
-          src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`}
-          width="100%"
-          height="352"
-          allowFullScreen
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-        />
+        <div>
+          <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
+            <Music size={18} /> Event Playlist
+          </h2>
+          <iframe
+            style={{ borderRadius: "12px" }}
+            src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`}
+            width="100%"
+            height="352"
+            allowFullScreen
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          />
+        </div>
       )}
     </div>
   );
