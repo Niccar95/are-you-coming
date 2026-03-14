@@ -12,7 +12,8 @@ const EventForm = () => {
   const [eventName, setEventName] = useState<string>("");
   const [eventDate, setEventDate] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-
+  const [fileName, setFileName] = useState<string>("");
+  const [spotifyUrl, setSpotifyUrl] = useState<string>("");
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -21,7 +22,6 @@ const EventForm = () => {
   const formRef = useClickOutside(openEventForm, onClose);
 
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const [fileName, setFileName] = useState<string>("");
 
   const toggleEventForm = () => {
     setOpenEventForm(!openEventForm);
@@ -29,8 +29,14 @@ const EventForm = () => {
 
   const addNewEvent = async (e: FormEvent) => {
     e.preventDefault();
-    if (!eventName || !eventDate || !description) { setError("Please fill in all required fields."); return; }
-    if (new Date(eventDate) <= new Date()) { setError("Event date must be in the future."); return; }
+    if (!eventName || !eventDate || !description) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+    if (new Date(eventDate) <= new Date()) {
+      setError("Event date must be in the future.");
+      return;
+    }
     setError("");
 
     let imageUrl: string | null = null;
@@ -55,6 +61,7 @@ const EventForm = () => {
           event_date: eventDate,
           description: description,
           image_url: imageUrl,
+          spotify_url: spotifyUrl,
         }),
       });
 
@@ -65,6 +72,7 @@ const EventForm = () => {
       setEventName("");
       setEventDate("");
       setDescription("");
+      setSpotifyUrl("");
       setFileName("");
       setSuccess(true);
       setOpenEventForm(false);
@@ -168,6 +176,21 @@ const EventForm = () => {
             className="form-textarea"
           />
         </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="spotifyUrl" className="form-label">
+            Spotify Playlist URL (Optional)
+          </label>
+          <input
+            id="spotifyUrl"
+            value={spotifyUrl}
+            onChange={(e) => setSpotifyUrl(e.target.value)}
+            type="text"
+            placeholder="Enter Spotify playlist URL"
+            className="form-input"
+          />
+        </div>
+
         {error && <p className="text-xs text-red-500">{error}</p>}
         <div className="flex justify-between lg:justify-start gap-3 mt-2">
           <button type="submit" className="btn-primary flex items-center gap-2">

@@ -22,6 +22,7 @@ export const getEvents = async (): Promise<Event[]> => {
       description: string;
       user_id: string;
       image_url: string | null;
+      spotify_url: string | null;
     }) =>
       new Event(
         event.id,
@@ -30,6 +31,7 @@ export const getEvents = async (): Promise<Event[]> => {
         event.description,
         event.user_id,
         event.image_url,
+        event.spotify_url,
       ),
   );
 };
@@ -46,6 +48,7 @@ export const getEventById = async (id: number): Promise<Event | null> => {
     rows[0].description,
     rows[0].user_id,
     rows[0].image_url,
+    rows[0].spotify_url,
   );
 };
 
@@ -55,10 +58,11 @@ export const addEvent = async (
   description: string,
   userId: string,
   imageUrl: string | null,
+  spotifyUrl: string | null,
 ): Promise<Event> => {
   const { rows } = await pool.query(
-    "INSERT INTO events (name, event_date, description, user_id, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-    [name, eventDate, description, userId, imageUrl],
+    "INSERT INTO events (name, event_date, description, user_id, image_url, spotify_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+    [name, eventDate, description, userId, imageUrl, spotifyUrl],
   );
   return new Event(
     rows[0].id,
@@ -67,6 +71,7 @@ export const addEvent = async (
     rows[0].description,
     rows[0].user_id,
     rows[0].image_url,
+    rows[0].spotify_url,
   );
 };
 
@@ -76,6 +81,7 @@ export const updateEvent = async (
   eventDate: Date,
   description: string,
   imageUrl: string | null,
+  spotifyUrl: string | null,
 ): Promise<Event> => {
   const { rows: existing } = await pool.query(
     "SELECT image_url FROM events WHERE id = $1",
@@ -85,8 +91,8 @@ export const updateEvent = async (
   if (oldImageUrl && oldImageUrl !== imageUrl) await del(oldImageUrl);
 
   const { rows } = await pool.query(
-    "UPDATE events SET name = $1, event_date = $2, description = $3, image_url = $4 WHERE id = $5 RETURNING *",
-    [name, eventDate, description, imageUrl, id],
+    "UPDATE events SET name = $1, event_date = $2, description = $3, image_url = $4, spotify_url = $5 WHERE id = $6 RETURNING *",
+    [name, eventDate, description, imageUrl, spotifyUrl, id],
   );
   return new Event(
     rows[0].id,
@@ -95,6 +101,7 @@ export const updateEvent = async (
     rows[0].description,
     rows[0].user_id,
     rows[0].image_url,
+    rows[0].spotify_url,
   );
 };
 

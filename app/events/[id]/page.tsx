@@ -13,10 +13,10 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
   const event = await getEventById(Number(id));
-
   const eventAttendees = await getAttendeesByEventId(Number(id));
-
   const session = await auth();
+
+  const playlistId = event?.spotifyUrl?.split("/").at(-1)?.split("?")[0];
 
   if (!event) {
     return <p>Event not found.</p>;
@@ -48,6 +48,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
                 description={event.description}
                 imageUrl={event.imageUrl ?? null}
+                spotifyUrl={event.spotifyUrl ?? null}
                 redirect={"/dashboard"}
               />
             )}
@@ -135,6 +136,17 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <AttendeeForm
           eventId={event.id}
           eventDate={new Date(event.eventDate).getTime()}
+        />
+      )}
+      {playlistId && (
+        <iframe
+          style={{ borderRadius: "12px" }}
+          src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`}
+          width="100%"
+          height="352"
+          allowFullScreen
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
         />
       )}
     </div>

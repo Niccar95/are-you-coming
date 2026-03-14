@@ -12,6 +12,7 @@ interface EventActionsProps {
   eventDate: string;
   description: string;
   imageUrl: string | null;
+  spotifyUrl: string | null;
   redirect?: string;
 }
 
@@ -21,6 +22,7 @@ const EventActions = ({
   eventDate,
   description,
   imageUrl,
+  spotifyUrl,
   redirect,
 }: EventActionsProps) => {
   const router = useRouter();
@@ -94,6 +96,7 @@ const EventActions = ({
           initialDate={eventDate}
           initialDescription={description}
           initialImageUrl={imageUrl}
+          initialSpotifyUrl={spotifyUrl}
           onClose={() => setIsEditing(false)}
         />
       )}
