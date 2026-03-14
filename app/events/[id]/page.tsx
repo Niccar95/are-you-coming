@@ -40,6 +40,17 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       )}
       {event.imageUrl ? (
         <figure className="relative rounded-lg overflow-hidden">
+          {session?.user?.id &&
+            String(event.userId) === String(session.user.id) && (
+              <EventActions
+                id={event.id}
+                eventName={event.name}
+                eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
+                description={event.description}
+                imageUrl={event.imageUrl ?? null}
+                redirect={"/dashboard"}
+              />
+            )}
           <Image
             src={event.imageUrl}
             alt={event.name}
@@ -48,7 +59,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             sizes="100vw"
             className="w-full h-72 object-cover"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent pointer-events-none" />
           <figcaption className="absolute bottom-0 left-0 right-0 p-6">
             <h1 className="text-4xl font-bold text-white">{event.name}</h1>
             <time
@@ -87,7 +98,6 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       )}
       <article>
         <CountDown eventDate={event.eventDate} />
-
         {event.description && (
           <>
             <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
@@ -127,17 +137,6 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           eventDate={new Date(event.eventDate).getTime()}
         />
       )}
-      {session?.user?.id &&
-        String(event.userId) === String(session.user.id) && (
-          <EventActions
-            id={event.id}
-            eventName={event.name}
-            eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
-            description={event.description}
-            imageUrl={event.imageUrl ?? null}
-            redirect={"/dashboard"}
-          />
-        )}
     </div>
   );
 };

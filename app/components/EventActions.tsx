@@ -1,9 +1,10 @@
 "use client";
 
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import EditEventForm from "./EditEventForm";
+import useClickOutside from "../hooks/useClickOutside";
 
 interface EventActionsProps {
   id: number;
@@ -24,6 +25,12 @@ const EventActions = ({
 }: EventActionsProps) => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const closeModal = () => {
+    setConfirmDelete(false);
+  };
+  const modalRef = useClickOutside(confirmDelete, closeModal);
 
   const handleDelete = async () => {
     await fetch("/api/events", {
@@ -48,12 +55,37 @@ const EventActions = ({
           <Pencil size={16} className="lg:w-3.5 lg:h-3.5" />
         </button>
         <button
-          onClick={handleDelete}
+          onClick={() => setConfirmDelete(true)}
           className="btn-danger py-1.5! px-2! lg:py-1! lg:px-1.5!"
         >
           <Trash2 size={16} className="lg:w-3.5 lg:h-3.5" />
         </button>
       </div>
+
+      {confirmDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div ref={modalRef} className="form-card w-full max-w-sm">
+            <h3 className="form-heading">Delete Event</h3>
+            <p className="text-body mb-6">
+              Are you sure you want to delete this event? This cannot be undone.
+            </p>
+            <div className="flex justify-between lg:justify-start gap-3">
+              <button
+                onClick={handleDelete}
+                className="btn-danger flex items-center gap-2"
+              >
+                <Trash2 size={16} /> Delete
+              </button>
+              <button
+                onClick={closeModal}
+                className="btn-secondary flex items-center gap-2"
+              >
+                <X size={16} /> Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isEditing && (
         <EditEventForm
