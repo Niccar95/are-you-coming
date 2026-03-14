@@ -7,18 +7,15 @@ import Spinner from "./Spinner";
 
 interface EventFormProps {
   eventId: number;
-  eventDate: number;
 }
 
-const AttendeeForm = ({ eventId, eventDate }: EventFormProps) => {
+const AttendeeForm = ({ eventId }: EventFormProps) => {
   const router = useRouter();
   const [attendeeName, setAttendeeName] = useState<string>("");
   const [attendeeEmail, setAttendeeEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
-
-  const currentDate = new Date().getTime();
 
   const submitAttendance = async (e: FormEvent) => {
     e.preventDefault();
@@ -62,16 +59,6 @@ const AttendeeForm = ({ eventId, eventDate }: EventFormProps) => {
         <p className="text-subtle">
           We&apos;ll send you a reminder before the event.
         </p>
-      </div>
-    );
-  }
-
-  if (currentDate > eventDate) {
-    return (
-      <div className="form-card flex flex-col items-center gap-3 text-center">
-        <h3 className="form-heading flex items-center justify-center gap-2">
-          Event ended.
-        </h3>
       </div>
     );
   }

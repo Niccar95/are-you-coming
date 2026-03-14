@@ -9,6 +9,7 @@ const CalendarPage = async () => {
     name: event.name,
     eventDate: event.eventDate.toISOString(),
     description: event.description,
+    spotifyUrl: event.spotifyUrl,
     imageUrl: event.imageUrl,
   }));
 

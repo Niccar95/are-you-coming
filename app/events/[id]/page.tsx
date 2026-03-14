@@ -133,10 +133,11 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         )}
       </article>
       {!session && (
-        <AttendeeForm
-          eventId={event.id}
-          eventDate={new Date(event.eventDate).getTime()}
-        />
+        event.isAFutureDate()
+          ? <AttendeeForm eventId={event.id} />
+          : <div className="form-card flex flex-col items-center gap-3 text-center">
+              <p className="text-body">You can no longer sign up to this event.</p>
+            </div>
       )}
       {playlistId && (
         <iframe
