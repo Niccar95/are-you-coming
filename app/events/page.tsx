@@ -24,6 +24,7 @@ const EventsPage = async ({
     eventDate: event.eventDate.toISOString(),
     description: event.description,
     spotifyUrl: event.spotifyUrl,
+    spotifyInviteUrl: event.spotifyInviteUrl,
     imageUrl: event.imageUrl,
   }));
 
