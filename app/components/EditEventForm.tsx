@@ -14,6 +14,7 @@ interface EditEventFormProps {
   initialDescription: string;
   initialImageUrl: string | null;
   initialSpotifyUrl: string | null;
+  initialSpotifyInviteUrl: string | null;
   onClose: () => void;
 }
 
@@ -24,6 +25,7 @@ const EditEventForm = ({
   initialDescription,
   initialImageUrl,
   initialSpotifyUrl,
+  initialSpotifyInviteUrl,
   onClose,
 }: EditEventFormProps) => {
   const router = useRouter();
@@ -32,6 +34,9 @@ const EditEventForm = ({
   const [description, setDescription] = useState<string>(initialDescription);
   const [spotifyUrl, setSpotifyUrl] = useState<string | null>(
     initialSpotifyUrl,
+  );
+  const [spotifyInviteUrl, setSpotifyInviteUrl] = useState<string | null>(
+    initialSpotifyInviteUrl,
   );
 
   const [loading, setLoading] = useState(false);
@@ -72,6 +77,7 @@ const EditEventForm = ({
           description: description,
           image_url: imageUrl,
           spotify_url: spotifyUrl,
+          spotify_invite_url: spotifyInviteUrl,
         }),
       });
 
@@ -89,22 +95,39 @@ const EditEventForm = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
       {loading && <Spinner />}
-      <div ref={modalRef} className="form-card w-full max-w-2xl">
+      <div ref={modalRef} className="form-card w-full max-w-2xl max-h-[90vh]">
         <h3 className="form-heading">Edit Event</h3>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="edit-name" className="form-label">
-              Event Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="edit-name"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
-              type="text"
-              placeholder="Enter event name"
-              className="form-input"
-            />
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 overflow-y-auto"
+        >
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-2 flex-1">
+              <label htmlFor="edit-name" className="form-label">
+                Event Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="edit-name"
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+                type="text"
+                placeholder="Enter event name"
+                className="form-input"
+              />
+            </div>
+            <div className="flex flex-col gap-2 flex-1">
+              <label htmlFor="edit-eventDate" className="form-label">
+                Event Date <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="edit-eventDate"
+                value={eventDate}
+                onChange={(e) => setEventDate(e.target.value)}
+                type="datetime-local"
+                className="form-input"
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -133,19 +156,6 @@ const EditEventForm = ({
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="edit-eventDate" className="form-label">
-              Event Date <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="edit-eventDate"
-              value={eventDate}
-              onChange={(e) => setEventDate(e.target.value)}
-              type="datetime-local"
-              className="form-input"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
             <label htmlFor="edit-description" className="form-label">
               Description <span className="text-red-500">*</span>
             </label>
@@ -161,14 +171,34 @@ const EditEventForm = ({
 
           <div className="flex flex-col gap-2">
             <label htmlFor="spotifyUrl" className="form-label">
-              Spotify Playlist URL (Optional)
+              Spotify Playlist (Optional)
             </label>
+            <p className="text-xs text-zinc-400">
+              Embeds the playlist so attendees can listen.
+            </p>
             <input
               id="spotifyUrl"
               value={spotifyUrl ?? ""}
               onChange={(e) => setSpotifyUrl(e.target.value)}
               type="text"
-              placeholder="Enter Spotify playlist URL"
+              placeholder="https://open.spotify.com/playlist/..."
+              className="form-input"
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label htmlFor="spotifyInviteUrl" className="form-label">
+              Spotify Collab Invite (Optional)
+            </label>
+            <p className="text-xs text-zinc-400">
+              Lets attendees add songs as collaborators.
+            </p>
+            <input
+              id="spotifyInviteUrl"
+              value={spotifyInviteUrl ?? ""}
+              onChange={(e) => setSpotifyInviteUrl(e.target.value)}
+              type="text"
+              placeholder="https://open.spotify.com/invite/..."
               className="form-input"
             />
           </div>

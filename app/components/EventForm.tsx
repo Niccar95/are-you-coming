@@ -14,6 +14,7 @@ const EventForm = () => {
   const [description, setDescription] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [spotifyUrl, setSpotifyUrl] = useState<string>("");
+  const [spotifyInviteUrl, setSpotifyInviteUrl] = useState<string>("");
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -62,6 +63,7 @@ const EventForm = () => {
           description: description,
           image_url: imageUrl,
           spotify_url: spotifyUrl,
+          spotify_invite_url: spotifyInviteUrl,
         }),
       });
 
@@ -73,6 +75,7 @@ const EventForm = () => {
       setEventDate("");
       setDescription("");
       setSpotifyUrl("");
+      setSpotifyInviteUrl("");
       setFileName("");
       setSuccess(true);
       setOpenEventForm(false);
@@ -86,10 +89,7 @@ const EventForm = () => {
   };
 
   return (
-    <div
-      ref={formRef}
-      className="w-full max-w-2xl flex flex-col items-center gap-4"
-    >
+    <div className="w-full max-w-2xl flex flex-col items-center gap-4">
       {loading && <Spinner />}
       <button
         onClick={toggleEventForm}
@@ -105,108 +105,138 @@ const EventForm = () => {
         </p>
       )}
 
-      <form
-        onSubmit={addNewEvent}
-        className={`form-card max-w-2xl transition-all duration-300 ${
-          openEventForm
-            ? "opacity-100 max-h-screen"
-            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
-        }`}
-      >
-        <h3 className="form-heading">Create Event</h3>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="form-label">
-            Event Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            id="name"
-            value={eventName}
-            onChange={(e) => setEventName(e.target.value)}
-            type="text"
-            placeholder="Enter event name"
-            className="form-input"
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <span className="form-label">Event Image (Optional)</span>
-          <label
-            htmlFor="imageFile"
-            className={`flex items-center gap-2 px-4 py-2 border border-dashed rounded-lg text-sm cursor-pointer transition-colors ${
-              fileName
-                ? "border-violet-400 text-violet-600"
-                : "border-zinc-300 text-zinc-500 hover:border-violet-400 hover:text-violet-600"
-            }`}
+      {openEventForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div
+            ref={formRef}
+            className="form-card w-full max-w-2xl max-h-[90vh]"
           >
-            <ImagePlus size={16} />
-            {fileName || "Choose image..."}
-          </label>
-          <input
-            id="imageFile"
-            name="file"
-            ref={inputFileRef}
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            className="hidden"
-            onChange={(e) => setFileName(e.target.files?.[0]?.name || "")}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="eventDate" className="form-label">
-            Event Date <span className="text-red-500">*</span>
-          </label>
-          <input
-            id="eventDate"
-            value={eventDate}
-            onChange={(e) => setEventDate(e.target.value)}
-            type="datetime-local"
-            className="form-input"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="description" className="form-label">
-            Description <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter event description"
-            rows={3}
-            className="form-textarea"
-          />
-        </div>
+            <h3 className="form-heading">Create Event</h3>
+            <form
+              onSubmit={addNewEvent}
+              className="flex flex-col gap-4 overflow-y-auto"
+            >
+              <div className="flex flex-col gap-2">
+                <label htmlFor="name" className="form-label">
+                  Event Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="name"
+                  value={eventName}
+                  onChange={(e) => setEventName(e.target.value)}
+                  type="text"
+                  placeholder="Enter event name"
+                  className="form-input"
+                />
+              </div>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="spotifyUrl" className="form-label">
-            Spotify Playlist URL (Optional)
-          </label>
-          <input
-            id="spotifyUrl"
-            value={spotifyUrl}
-            onChange={(e) => setSpotifyUrl(e.target.value)}
-            type="text"
-            placeholder="Enter Spotify playlist URL"
-            className="form-input"
-          />
-        </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="eventDate" className="form-label">
+                  Event Date <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="eventDate"
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  type="datetime-local"
+                  className="form-input"
+                />
+              </div>
 
-        {error && <p className="text-xs text-red-500">{error}</p>}
-        <div className="flex justify-between lg:justify-start gap-3 mt-2">
-          <button type="submit" className="btn-primary flex items-center gap-2">
-            <CalendarPlus size={16} />
-            Create Event
-          </button>
-          <button
-            type="button"
-            onClick={() => setOpenEventForm(false)}
-            className="btn-secondary flex items-center gap-2"
-          >
-            <X size={16} />
-            Cancel
-          </button>
+              <div className="flex flex-col gap-2">
+                <span className="form-label">Event Image (Optional)</span>
+                <label
+                  htmlFor="imageFile"
+                  className={`flex items-center gap-2 px-4 py-2 border border-dashed rounded-lg text-sm cursor-pointer transition-colors ${
+                    fileName
+                      ? "border-violet-400 text-violet-600"
+                      : "border-zinc-300 text-zinc-500 hover:border-violet-400 hover:text-violet-600"
+                  }`}
+                >
+                  <ImagePlus size={16} />
+                  {fileName || "Choose image..."}
+                </label>
+                <input
+                  id="imageFile"
+                  name="file"
+                  ref={inputFileRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  onChange={(e) => setFileName(e.target.files?.[0]?.name || "")}
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="description" className="form-label">
+                  Description <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Enter event description"
+                  rows={3}
+                  className="form-textarea"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="spotifyUrl" className="form-label">
+                  Spotify Playlist (Optional)
+                </label>
+                <p className="text-xs text-zinc-400">
+                  Embeds the playlist so attendees can listen.
+                </p>
+                <input
+                  id="spotifyUrl"
+                  value={spotifyUrl}
+                  onChange={(e) => setSpotifyUrl(e.target.value)}
+                  type="text"
+                  placeholder="https://open.spotify.com/playlist/..."
+                  className="form-input"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="spotifyInviteUrl" className="form-label">
+                  Spotify Collab Invite (Optional)
+                </label>
+                <p className="text-xs text-zinc-400">
+                  Lets attendees add songs as collaborators.
+                </p>
+                <input
+                  id="spotifyInviteUrl"
+                  value={spotifyInviteUrl}
+                  onChange={(e) => setSpotifyInviteUrl(e.target.value)}
+                  type="text"
+                  placeholder="https://open.spotify.com/invite/..."
+                  className="form-input"
+                />
+              </div>
+
+              {error && <p className="text-xs text-red-500">{error}</p>}
+              <div className="flex justify-between lg:justify-start gap-3 mt-2">
+                <button
+                  type="submit"
+                  className="btn-primary flex items-center gap-2"
+                >
+                  <CalendarPlus size={16} />
+                  Create Event
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOpenEventForm(false)}
+                  className="btn-secondary flex items-center gap-2"
+                >
+                  <X size={16} />
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
+      )}
     </div>
   );
 };

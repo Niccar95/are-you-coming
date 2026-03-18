@@ -13,6 +13,7 @@ interface EventActionsProps {
   description: string;
   imageUrl: string | null;
   spotifyUrl: string | null;
+  spotifyInviteUrl: string | null;
   redirect?: string;
 }
 
@@ -23,6 +24,7 @@ const EventActions = ({
   description,
   imageUrl,
   spotifyUrl,
+  spotifyInviteUrl,
   redirect,
 }: EventActionsProps) => {
   const router = useRouter();
@@ -97,6 +99,7 @@ const EventActions = ({
           initialDescription={description}
           initialImageUrl={imageUrl}
           initialSpotifyUrl={spotifyUrl}
+          initialSpotifyInviteUrl={spotifyInviteUrl}
           onClose={() => setIsEditing(false)}
         />
       )}

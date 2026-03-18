@@ -49,6 +49,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 description={event.description}
                 imageUrl={event.imageUrl ?? null}
                 spotifyUrl={event.spotifyUrl ?? null}
+                spotifyInviteUrl={event.spotifyInviteUrl ?? null}
                 redirect={"/dashboard"}
               />
             )}

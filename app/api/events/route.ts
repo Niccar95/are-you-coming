@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { name, event_date, description, image_url, spotify_url } =
+  const { name, event_date, description, image_url, spotify_url, spotify_invite_url } =
     await req.json();
 
   if (!name || !event_date || !description) {
@@ -30,6 +30,7 @@ export const POST = async (req: NextRequest) => {
     session.user.id,
     image_url || null,
     spotify_url || null,
+    spotify_invite_url || null,
   );
 
   return NextResponse.json(event, { status: 201 });
@@ -41,7 +42,7 @@ export const PATCH = async (req: NextRequest) => {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { id, name, event_date, description, image_url, spotify_url } =
+  const { id, name, event_date, description, image_url, spotify_url, spotify_invite_url } =
     await req.json();
 
   if (!id || !name || !event_date || !description) {
@@ -66,6 +67,7 @@ export const PATCH = async (req: NextRequest) => {
     description,
     image_url || null,
     spotify_url || null,
+    spotify_invite_url || null,
   );
 
   return NextResponse.json(event, { status: 201 });
