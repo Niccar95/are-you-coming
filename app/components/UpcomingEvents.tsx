@@ -54,6 +54,7 @@ const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
                 eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
                 description={event.description}
                 spotifyUrl={event.spotifyUrl ?? null}
+                spotifyInviteUrl={event.spotifyInviteUrl ?? null}
                 imageUrl={event.imageUrl ?? null}
               />
             )}
