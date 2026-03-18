@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Users, FileText, CalendarDays, Music } from "lucide-react";
+import { Users, FileText, CalendarDays, Music, UserPlus } from "lucide-react";
 import AttendeeForm from "@/app/components/AttendeeForm";
 import CountDown from "@/app/components/CountDown";
 import ShareButton from "@/app/components/ShareButton";
@@ -8,6 +8,7 @@ import { getAttendeesByEventId } from "@/app/services/attendeeService";
 import { getEventById } from "@/app/services/eventService";
 import { auth } from "@/auth";
 import EventActions from "@/app/components/EventActions";
+import QRCode from "@/app/components/QRCode";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -148,15 +149,38 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
             <Music size={18} /> Event Playlist
           </h2>
-          <iframe
-            style={{ borderRadius: "12px" }}
-            src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`}
-            width="100%"
-            height="352"
-            allowFullScreen
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-          />
+          <div className="flex flex-col md:flex-row gap-4 items-start w-full">
+            <iframe
+              style={{ borderRadius: "12px" }}
+              src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`}
+              width="100%"
+              height="352"
+              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              className="w-full min-w-0 md:flex-1"
+            />
+            {event.spotifyInviteUrl && (
+              <div className="form-card md:w-fit! items-center shrink-0">
+                <p className="text-xs text-zinc-400">
+                  Scan to join as collaborator
+                </p>
+                <QRCode spotifyInviteUrl={event.spotifyInviteUrl} />
+                <p className="text-xs text-zinc-400">
+                  Or click to join as collaborator
+                </p>
+                <a
+                  href={event.spotifyInviteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 btn-outline-violet"
+                >
+                  <UserPlus size={16} />
+                  Join as collaborator
+                </a>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
