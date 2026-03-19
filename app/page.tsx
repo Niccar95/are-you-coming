@@ -3,7 +3,7 @@ import SignInButton from "./components/SignInButton";
 
 const HomePage = () => {
   return (
-    <section className="min-h-[calc(100vh-3rem)] flex flex-col items-center text-center pt-32 lg:pt-0 lg:justify-center">
+    <section className="min-h-[calc(100vh-3rem)] flex flex-col items-center text-center pt-32 md:pt-0 md:justify-center">
       <Image
         src="/are-you-coming-logo-light-q.svg"
         alt="Are You Coming?"

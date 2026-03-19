@@ -13,7 +13,7 @@ const Navbar = async () => {
   return (
     <>
       {/* Mobile: top bar */}
-      <nav className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-zinc-200 flex items-center justify-between px-4 z-50">
+      <nav className="md:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-zinc-200 flex items-center justify-between px-4 z-50">
         <div className="flex items-center gap-4">
           <MobileMenu
             name={session?.user?.name || ""}
@@ -35,7 +35,7 @@ const Navbar = async () => {
       </nav>
 
       {/* Desktop: left sidebar */}
-      <nav className="hidden lg:flex fixed top-0 left-0 h-screen w-56 bg-white border-r border-zinc-200 flex-col justify-between p-4 z-50">
+      <nav className="hidden md:flex fixed top-0 left-0 h-screen w-56 bg-white border-r border-zinc-200 flex-col justify-between p-4 z-50">
         <section className="flex flex-col gap-2">
           <Link href="/dashboard" className="pb-4 mb-2 border-b border-zinc-200 block">
             <Image

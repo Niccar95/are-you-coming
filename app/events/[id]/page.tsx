@@ -25,7 +25,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div
-      className={`max-w-2xl mx-auto flex flex-col gap-8 ${!session ? "pt-20" : ""}`}
+      className={`max-w-3xl mx-auto flex flex-col gap-8 ${!session ? "pt-20" : ""}`}
     >
       {!session && (
         <nav className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-zinc-200 flex items-center px-6 z-50">
@@ -158,10 +158,10 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               allowFullScreen
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
-              className="w-full min-w-0 md:flex-1"
+              className="w-full md:w-1/2"
             />
             {event.spotifyInviteUrl && (
-              <div className="form-card md:w-fit! items-center shrink-0">
+              <div className="card flex flex-col gap-4 items-center w-full md:w-1/2">
                 <p className="text-xs text-zinc-400">
                   Scan to join as collaborator
                 </p>

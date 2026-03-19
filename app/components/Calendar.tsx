@@ -102,7 +102,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
     cellList.push(
       <div
         key={i}
-        className={`border border-zinc-100 p-1 lg:p-2 h-20 lg:h-28 text-xs lg:text-sm transition-colors flex flex-col ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"} ${events.length > 0 ? "cursor-pointer hover:border-violet-300" : ""} ${currentDate === monthDate && currentMonth === monthIndex && currentYear === year ? "bg-violet-50" : ""}`}
+        className={`border border-zinc-100 p-1 md:p-2 h-20 md:h-28 text-xs md:text-sm transition-colors flex flex-col ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"} ${events.length > 0 ? "cursor-pointer hover:border-violet-300" : ""} ${currentDate === monthDate && currentMonth === monthIndex && currentYear === year ? "bg-violet-50" : ""}`}
         onClick={() => handleEventCard(events, i)}
       >
         {monthDate > 0 && (
@@ -121,7 +121,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
           {events.map((e) => (
             <p
               key={e.id}
-              className="text-[10px] lg:text-xs bg-violet-100 text-violet-700 font-medium px-1 lg:px-2 py-0.5 rounded truncate shrink-0"
+              className="text-[10px] md:text-xs bg-violet-100 text-violet-700 font-medium px-1 md:px-2 py-0.5 rounded truncate shrink-0"
             >
               {e.name}
             </p>
@@ -138,7 +138,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
       cellList.push(
         <div
           key={`trail-${j}`}
-          className="border border-zinc-100 p-1 lg:p-2 h-20 lg:h-28 bg-zinc-50 overflow-hidden"
+          className="border border-zinc-100 p-1 md:p-2 h-20 md:h-28 bg-zinc-50 overflow-hidden"
         >
           <p className="text-subtle">{remainingWeekDays}</p>
         </div>,
@@ -148,32 +148,32 @@ const Calendar = ({ allEvents }: EventListProps) => {
 
   return (
     <>
-      <div className="form-card p-2! lg:p-6! max-w-4xl mx-auto mb-8">
-        <div className="flex items-center justify-center gap-1 lg:gap-2 mb-3 lg:mb-4">
+      <div className="flex flex-col gap-4 max-w-4xl mx-auto mb-8 p-2 md:p-6 bg-white rounded-lg shadow-lg">
+        <div className="flex items-center justify-center gap-1 md:gap-2 mb-3 md:mb-4">
           <button
             onClick={handlePreviousYear}
-            className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"
+            className="btn-secondary py-1! px-1.5! md:py-1.5! md:px-2.5!"
           >
             <ChevronsLeft size={18} />
           </button>
           <button
             onClick={handlePreviousMonth}
-            className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"
+            className="btn-secondary py-1! px-1.5! md:py-1.5! md:px-2.5!"
           >
             <ChevronLeft size={18} />
           </button>
-          <h2 className="text-subtitle text-sm lg:text-lg min-w-32 lg:min-w-48 text-center">
+          <h2 className="text-subtitle text-sm md:text-lg min-w-32 md:min-w-48 text-center">
             {month[monthIndex]} {year}
           </h2>
           <button
             onClick={handleNextMonth}
-            className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"
+            className="btn-secondary py-1! px-1.5! md:py-1.5! md:px-2.5!"
           >
             <ChevronRight size={18} />
           </button>
           <button
             onClick={handleNextYear}
-            className="btn-secondary py-1! px-1.5! lg:py-1.5! lg:px-2.5!"
+            className="btn-secondary py-1! px-1.5! md:py-1.5! md:px-2.5!"
           >
             <ChevronsRight size={18} />
           </button>
@@ -188,7 +188,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
           <article
             key={event.id}
             style={{ transitionDelay: `${index * 100}ms` }}
-            className={`flex flex-row items-start gap-4 p-6 bg-white rounded-lg shadow-lg border-l-4 border-violet-500 transition-all duration-300 ${showEventCard ? "opacity-100 max-h-screen" : "opacity-0 max-h-0 overflow-hidden pointer-events-none"}`}
+            className={`card flex flex-row items-start gap-4 border-l-4 border-violet-500 transition-all duration-300 ${showEventCard ? "opacity-100 max-h-screen" : "opacity-0 max-h-0 overflow-hidden pointer-events-none"}`}
           >
             {event.imageUrl ? (
               <Image

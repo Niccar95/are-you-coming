@@ -75,7 +75,11 @@ button, input, textarea, select {
 }
 
 .form-card {
-  @apply flex flex-col gap-4 w-full p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg;
+  @apply flex flex-col gap-4 w-full p-3 bg-white dark:bg-zinc-900 rounded-lg shadow-lg;
+}
+
+.card {
+  @apply p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg;
 }
 
 

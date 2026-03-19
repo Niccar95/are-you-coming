@@ -52,6 +52,14 @@ const EditEventForm = ({
       setError("Please fill in all required fields.");
       return;
     }
+    const spotifyFieldsMismatch =
+      Boolean(spotifyUrl) !== Boolean(spotifyInviteUrl);
+    if (spotifyFieldsMismatch) {
+      setError(
+        "Both Spotify fields are required. Please fill in the playlist URL and the collab invite URL.",
+      );
+      return;
+    }
     setError("");
     setLoading(true);
 
@@ -100,7 +108,7 @@ const EditEventForm = ({
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 overflow-y-auto"
+          className="flex flex-col gap-4 p-3 overflow-y-auto"
         >
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex flex-col gap-2 flex-1">
@@ -169,43 +177,54 @@ const EditEventForm = ({
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="spotifyUrl" className="form-label">
-              Spotify Playlist (Optional)
-            </label>
-            <p className="text-xs text-zinc-400">
-              Embeds the playlist so attendees can listen.
-            </p>
-            <input
-              id="spotifyUrl"
-              value={spotifyUrl ?? ""}
-              onChange={(e) => setSpotifyUrl(e.target.value)}
-              type="text"
-              placeholder="https://open.spotify.com/playlist/..."
-              className="form-input"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="spotifyInviteUrl" className="form-label">
-              Spotify Collab Invite (Optional)
-            </label>
-            <p className="text-xs text-zinc-400">
-              Lets attendees add songs as collaborators.
-            </p>
-            <input
-              id="spotifyInviteUrl"
-              value={spotifyInviteUrl ?? ""}
-              onChange={(e) => setSpotifyInviteUrl(e.target.value)}
-              type="text"
-              placeholder="https://open.spotify.com/invite/..."
-              className="form-input"
-            />
+          <div className="flex flex-col gap-4 border border-zinc-200 rounded-lg p-4">
+            <div>
+              <p className="form-label mb-1">Spotify (Optional)</p>
+              <p className="text-xs text-zinc-400">
+                Add a collaborative playlist so attendees can listen and
+                contribute songs. Both fields are required.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="spotifyUrl" className="form-label">
+                Playlist URL
+              </label>
+              <p className="text-xs text-zinc-400">
+                Copy the playlist URL from Spotify. A playlist widget will be
+                embedded on the event page.
+              </p>
+              <input
+                id="spotifyUrl"
+                value={spotifyUrl ?? ""}
+                onChange={(e) => setSpotifyUrl(e.target.value)}
+                type="text"
+                placeholder="https://open.spotify.com/playlist/..."
+                className="form-input"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="spotifyInviteUrl" className="form-label">
+                Collab Invite URL
+              </label>
+              <p className="text-xs text-zinc-400">
+                Get this link from Spotify by selecting Invite Collaborators on
+                your playlist. A QR code and link will appear so attendees can
+                join as collaborators and add songs.
+              </p>
+              <input
+                id="spotifyInviteUrl"
+                value={spotifyInviteUrl ?? ""}
+                onChange={(e) => setSpotifyInviteUrl(e.target.value)}
+                type="text"
+                placeholder="https://open.spotify.com/invite/..."
+                className="form-input"
+              />
+            </div>
           </div>
 
           {error && <p className="text-xs text-red-500">{error}</p>}
 
-          <div className="flex justify-between lg:justify-start gap-3 mt-2">
+          <div className="flex justify-between md:justify-start gap-3 mt-2">
             <button
               type="submit"
               className="btn-primary flex items-center gap-2"

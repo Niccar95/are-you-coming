@@ -36,16 +36,16 @@ const RootLayout = async ({
       <body className="antialiased">
         <Navbar />
         <div
-          className={`${session ? "lg:ml-56 pt-14 lg:pt-0" : ""} min-h-screen flex flex-col`}
+          className={`${session ? "md:ml-56 pt-14 md:pt-0" : ""} min-h-screen flex flex-col`}
         >
           <main
-            className={`${session ? "min-h-[calc(100vh-3.5rem)] lg:min-h-screen" : "min-h-screen"} flex-1 px-3 py-6 lg:p-6 bg-linear-to-br from-white to-violet-50`}
+            className={`${session ? "min-h-[calc(100vh-3.5rem)] md:min-h-screen" : "min-h-screen"} flex-1 px-3 py-6 md:p-6 bg-linear-to-br from-white to-violet-50`}
           >
             {children}
           </main>
           {session && (
-            <footer className="border-t border-zinc-200 pt-10 pb-6 lg:pt-16 lg:pb-8 px-6">
-              <nav className="max-w-4xl mx-auto flex flex-col lg:flex-row items-start justify-between gap-10">
+            <footer className="border-t border-zinc-200 pt-10 pb-6 md:pt-16 md:pb-8 px-6">
+              <nav className="max-w-4xl mx-auto flex flex-col md:flex-row items-start justify-between gap-10">
                 <section className="flex flex-col gap-2">
                   <Image
                     src="/are-you-coming-logo-light-q.svg"

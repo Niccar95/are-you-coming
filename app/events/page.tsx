@@ -35,7 +35,7 @@ const EventsPage = async ({
   sortByDate(pastEvents, sortPastEvent);
 
   return (
-    <div className="flex flex-col gap-12 max-w-4xl mx-auto">
+    <div className="flex flex-col gap-12 max-w-3xl mx-auto">
       <section className="flex flex-col gap-6">
         <h1 className="text-title">Upcoming Events</h1>
         <Suspense>
@@ -52,7 +52,7 @@ const EventsPage = async ({
         {pastEvents.length === 0 ? (
           <p className="text-meta">No past events to show.</p>
         ) : (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 list-none">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 list-none">
             {pastEvents.map((event) => (
               <li key={event.id} className="grayscale opacity-80">
                 <EventCard

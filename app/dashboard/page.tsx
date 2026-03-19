@@ -22,12 +22,11 @@ const DashboardPage = async () => {
 
   return (
     <div
-      className={`max-w-2xl mx-auto flex flex-col gap-8 ${!session ? "pt-28" : ""}`}
+      className={`max-w-3xl mx-auto flex flex-col gap-8 ${!session ? "pt-28" : ""}`}
     >
       <p className="text-sm text-gray-600 self-center">
         Welcome, {session?.user?.name}
       </p>
-
       <SendRemindersButton />
       <EventForm />
       <Events allEvents={allEvents} />

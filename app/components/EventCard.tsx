@@ -41,7 +41,7 @@ const EventCard = ({
           <h3 className="text-subtitle mb-1">{name}</h3>
           <time
             dateTime={new Date(eventDate).toISOString()}
-            className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
+            className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-block max-w-full truncate"
           >
             {new Date(eventDate).toLocaleDateString("en-US", {
               weekday: "long",

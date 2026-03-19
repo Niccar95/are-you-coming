@@ -37,7 +37,7 @@ const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
           </>
         )}
       </button>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 list-none">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 list-none">
         {events.map((event) => (
           <li key={event.id} className="relative">
             <EventCard
