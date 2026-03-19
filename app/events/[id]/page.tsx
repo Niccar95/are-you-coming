@@ -25,7 +25,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div
-      className={`max-w-3xl mx-auto flex flex-col gap-8 ${!session ? "pt-20" : ""}`}
+      className={`max-w-3xl mx-auto flex flex-col gap-8 ${!session ? "pt-14" : ""}`}
     >
       {!session && (
         <nav className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-zinc-200 flex items-center px-6 z-50">
