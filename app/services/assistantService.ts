@@ -10,7 +10,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 export const sendPrompt = async (userPrompt: string): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash",
       config: {
         systemInstruction:
           "You are an event planning assistant. Give one short, direct answer. No lists, no alternatives, no explanations. Just the suggestion itself, ready to use.",
