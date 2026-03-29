@@ -74,12 +74,18 @@ button, input, textarea, select {
   @apply text-lg font-semibold text-zinc-800 dark:text-white mb-2;
 }
 
+.shadow-even {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
 .form-card {
-  @apply flex flex-col gap-4 w-full p-3 bg-white dark:bg-zinc-900 rounded-lg shadow-lg;
+  @apply flex flex-col gap-4 w-full p-3 bg-white dark:bg-zinc-900 rounded-lg;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .card {
-  @apply p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg;
+  @apply p-6 bg-white dark:bg-zinc-900 rounded-lg;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 

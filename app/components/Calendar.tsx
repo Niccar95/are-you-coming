@@ -148,7 +148,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
 
   return (
     <>
-      <div className="flex flex-col gap-4 max-w-4xl mx-auto mb-8 p-2 md:p-6 bg-white rounded-lg shadow-lg">
+      <div className="flex flex-col gap-4 max-w-4xl mx-auto mb-8 p-2 md:p-6 bg-white rounded-lg shadow-even">
         <div className="flex items-center justify-center gap-1 md:gap-2 mb-3 md:mb-4">
           <button
             onClick={handlePreviousYear}

@@ -21,7 +21,6 @@ export const sendPrompt = async (userPrompt: string): Promise<string> => {
     return response.text;
   } catch (error) {
     console.error("Gemini error:", error);
-    console.log("GROQ_API_KEY:", process.env.GROQ_API_KEY);
 
     const fallback = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",

@@ -51,12 +51,12 @@ const Asssistant = () => {
 
   return (
     <div className="card flex flex-col h-[400px] md:w-[400px] pt-0!">
-      <div className="w-full h-fit p-1 flex items-center gap-2">
+      <div className="w-full h-fit p-2 flex items-center gap-2">
         <Image
           src="/AI-assistant.svg"
           alt="AI Assistant"
-          width={40}
-          height={40}
+          width={30}
+          height={30}
         />
         <span className="font-semibold text-zinc-800">Aria AI</span>
 

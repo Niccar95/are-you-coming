@@ -21,7 +21,7 @@ const EventCard = ({
     <Link href={`/events/${id}`} className="block w-full">
       <article
         key={id}
-        className="h-[300px] w-full bg-white dark:bg-zinc-900 rounded-lg shadow-lg cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 overflow-hidden"
+        className="shadow-even h-[300px] w-full bg-white dark:bg-zinc-900 rounded-lg cursor-pointer hover:scale-[1.02] transition-all duration-300 overflow-hidden"
       >
         {imageUrl ? (
           <Image
