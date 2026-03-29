@@ -1,0 +1,25 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  
+  <!-- Circular Background -->
+  <circle cx="64" cy="64" r="56" fill="#8e51ff"></circle>
+
+  <!-- Robot head -->
+  <rect x="32" y="38" width="64" height="54" rx="16" fill="#ffffff"></rect>
+
+  <!-- Eyes -->
+  <circle cx="52" cy="64" r="6" fill="#8e51ff"></circle>
+  <circle cx="76" cy="64" r="6" fill="#8e51ff"></circle>
+
+  <!-- Smile -->
+  <path d="M50 78 Q64 88 78 78" stroke="#8e51ff" stroke-width="3" fill="none" stroke-linecap="round"></path>
+
+  <!-- Antenna -->
+  <line x1="64" y1="38" x2="64" y2="26" stroke="#ffffff" stroke-width="3" stroke-linecap="round"></line>
+  <circle cx="64" cy="22" r="4" fill="#ffffff"></circle>
+
+  <!-- Asymmetrical sparks -->
+  <path d="M26 56 L28 60 L32 62 L28 64 L26 68 L24 64 L20 62 L24 60 Z" fill="#FFD76A"></path>
+  <path d="M92 36 L94 40 L98 42 L94 44 L92 48 L90 44 L86 42 L90 40 Z" fill="#FFD76A"></path>
+  <path d="M100 80 L101.5 83 L105 84.5 L101.5 86 L100 89 L98.5 86 L95 84.5 L98.5 83 Z" fill="#FFD76A"></path>
+
+</svg>
