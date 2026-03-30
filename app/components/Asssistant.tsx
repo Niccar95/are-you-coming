@@ -8,7 +8,6 @@ const Asssistant = () => {
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openChat, setOpenChat] = useState<boolean>(false);
-
   const [visiblePrompts, setVisiblePrompts] = useState<
     { role: "user" | "assistant"; content: string }[]
   >([]);
