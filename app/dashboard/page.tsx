@@ -3,7 +3,6 @@ import { auth } from "@/auth";
 import EventForm from "../components/EventForm";
 import Events from "../components/Events";
 import { getEvents } from "../services/eventService";
-import Asssistant from "../components/Asssistant";
 
 export const revalidate = 0;
 
@@ -31,7 +30,7 @@ const DashboardPage = async () => {
       <SendRemindersButton />
       <EventForm />
       <Events allEvents={allEvents} />
-      <Asssistant />
+
     </div>
   );
 };
