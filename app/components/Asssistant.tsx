@@ -3,7 +3,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { SendHorizonal } from "lucide-react";
 import Image from "next/image";
-import Spinner from "./Spinner";
 
 const Asssistant = () => {
   const [userPrompt, setUserPrompt] = useState<string>("");
@@ -21,7 +20,10 @@ const Asssistant = () => {
 
   const ScrollDown = () => {
     if (bottomRef.current) {
-      bottomRef.current.scrollTo({ top: bottomRef.current.scrollHeight, behavior: "smooth" });
+      bottomRef.current.scrollTo({
+        top: bottomRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -73,8 +75,6 @@ const Asssistant = () => {
           height={30}
         />
         <span className="font-semibold text-zinc-800">Aria AI</span>
-
-        {loading && <Spinner />}
       </div>
 
       <div
@@ -89,6 +89,13 @@ const Asssistant = () => {
             {visiblePrompt.content}
           </article>
         ))}
+        {loading && (
+          <div className="text-sm text-zinc-700 max-w-[80%] bg-zinc-100 self-end rounded-lg p-3 flex gap-1">
+            <span className="w-2 h-2 rounded-full bg-zinc-400 animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full bg-zinc-400 animate-pulse [animation-delay:200ms]"></span>
+            <span className="w-2 h-2 rounded-full bg-zinc-400 animate-pulse [animation-delay:400ms]"></span>
+          </div>
+        )}
       </div>
 
       <form onSubmit={handlePrompt} className="form-card rounded-t-none!">

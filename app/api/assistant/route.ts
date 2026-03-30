@@ -17,7 +17,7 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
-  const prompt = await sendPrompt(userPrompt);
+const prompt = await sendPrompt(userPrompt);
 
   return NextResponse.json(prompt, { status: 200 });
 };
