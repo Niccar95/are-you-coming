@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { SendHorizonal } from "lucide-react";
 import Image from "next/image";
 import Spinner from "./Spinner";
@@ -12,6 +12,18 @@ const Asssistant = () => {
   const [visiblePrompts, setVisiblePrompts] = useState<
     { role: "user" | "assistant"; content: string }[]
   >([]);
+
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    ScrollDown();
+  }, [visiblePrompts]);
+
+  const ScrollDown = () => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollTo({ top: bottomRef.current.scrollHeight, behavior: "smooth" });
+    }
+  };
 
   const handlePrompt = async (e: FormEvent) => {
     e.preventDefault();
@@ -42,6 +54,8 @@ const Asssistant = () => {
         ...prev,
         { role: "assistant", content: data },
       ]);
+
+      ScrollDown();
     } catch (error) {
       console.error("Error prompting AI assistant:", error);
     } finally {
@@ -63,11 +77,14 @@ const Asssistant = () => {
         {loading && <Spinner />}
       </div>
 
-      <div className="flex flex-col h-full rounded-t-lg border-[0.5px] border-zinc-200 bg-zinc-50 p-3 gap-2 overflow-auto">
+      <div
+        ref={bottomRef}
+        className="flex flex-col h-full rounded-t-lg border-[0.5px] border-zinc-200 bg-zinc-50 p-3 gap-2 overflow-auto"
+      >
         {visiblePrompts.map((visiblePrompt, i) => (
           <article
             key={i}
-            className={`text-sm text-zinc-700 ${visiblePrompt.role === "user" ? "bg-violet-100 self-start" : "bg-zinc-100 self-end"} rounded-lg p-3`}
+            className={`text-sm text-zinc-700 max-w-[80%] ${visiblePrompt.role === "user" ? "bg-violet-100 self-start" : "bg-zinc-100 self-end"} rounded-lg p-3`}
           >
             {visiblePrompt.content}
           </article>
