@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useCallback, useRef, useState } from "react";
 import { Plus, X, CalendarPlus, ImagePlus, CheckCircle } from "lucide-react";
+import Image from "next/image";
 import { upload } from "@vercel/blob/client";
 import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
@@ -125,9 +126,14 @@ const EventForm = () => {
               className="flex flex-col gap-4 p-3 overflow-y-auto"
             >
               <div className="flex flex-col gap-2">
-                <label htmlFor="name" className="form-label">
-                  Event Name <span className="text-red-500">*</span>
-                </label>
+                <div className="flex items-center gap-2">
+                  <label htmlFor="name" className="form-label">
+                    Event Name <span className="text-red-500">*</span>
+                  </label>
+                  <button type="button" className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                    <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
+                  </button>
+                </div>
                 <input
                   id="name"
                   value={eventName}
@@ -176,9 +182,14 @@ const EventForm = () => {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="description" className="form-label">
-                  Description <span className="text-red-500">*</span>
-                </label>
+                <div className="flex items-center gap-2">
+                  <label htmlFor="description" className="form-label">
+                    Description <span className="text-red-500">*</span>
+                  </label>
+                  <button type="button" className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                    <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
+                  </button>
+                </div>
                 <textarea
                   id="description"
                   value={description}

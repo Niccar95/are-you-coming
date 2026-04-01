@@ -3,6 +3,7 @@
 import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { X, Save, ImagePlus } from "lucide-react";
+import Image from "next/image";
 import { upload } from "@vercel/blob/client";
 import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
@@ -110,11 +111,16 @@ const EditEventForm = ({
           onSubmit={handleSubmit}
           className="flex flex-col gap-4 p-3 overflow-y-auto"
         >
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex flex-col gap-2 flex-1">
-              <label htmlFor="edit-name" className="form-label">
-                Event Name <span className="text-red-500">*</span>
-              </label>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <label htmlFor="edit-name" className="form-label">
+                  Event Name <span className="text-red-500">*</span>
+                </label>
+                <button type="button" className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                  <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
+                </button>
+              </div>
               <input
                 id="edit-name"
                 value={eventName}
@@ -124,7 +130,7 @@ const EditEventForm = ({
                 className="form-input"
               />
             </div>
-            <div className="flex flex-col gap-2 flex-1">
+            <div className="flex flex-col gap-2">
               <label htmlFor="edit-eventDate" className="form-label">
                 Event Date <span className="text-red-500">*</span>
               </label>
@@ -164,9 +170,14 @@ const EditEventForm = ({
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="edit-description" className="form-label">
-              Description <span className="text-red-500">*</span>
-            </label>
+            <div className="flex items-center gap-2">
+              <label htmlFor="edit-description" className="form-label">
+                Description <span className="text-red-500">*</span>
+              </label>
+              <button type="button" className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
+              </button>
+            </div>
             <textarea
               id="edit-description"
               value={description}
