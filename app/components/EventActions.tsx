@@ -2,7 +2,7 @@
 
 import { Pencil, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import EditEventForm from "./EditEventForm";
 import useClickOutside from "../hooks/useClickOutside";
 
@@ -31,9 +31,8 @@ const EventActions = ({
   const [isEditing, setIsEditing] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const closeModal = () => {
-    setConfirmDelete(false);
-  };
+  const closeModal = useCallback(() => setConfirmDelete(false), []);
+  const onClose = useCallback(() => setIsEditing(false), []);
   const modalRef = useClickOutside(confirmDelete, closeModal);
 
   const handleDelete = async () => {
@@ -100,7 +99,7 @@ const EventActions = ({
           initialImageUrl={imageUrl}
           initialSpotifyUrl={spotifyUrl}
           initialSpotifyInviteUrl={spotifyInviteUrl}
-          onClose={() => setIsEditing(false)}
+          onClose={onClose}
         />
       )}
     </>

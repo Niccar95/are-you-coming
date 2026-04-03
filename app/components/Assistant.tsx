@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { SendHorizonal, X } from "lucide-react";
 import Image from "next/image";
 
-const Asssistant = () => {
+const Assistant = () => {
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openChat, setOpenChat] = useState<boolean>(false);
@@ -143,4 +143,4 @@ const Asssistant = () => {
   );
 };
 
-export default Asssistant;
+export default Assistant;

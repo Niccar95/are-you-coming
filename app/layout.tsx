@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import Asssistant from "./components/Asssistant";
+import Assistant from "./components/Assistant";
 import {
   LayoutDashboard,
   CalendarDays,
@@ -44,7 +44,7 @@ const RootLayout = async ({
           >
             {children}
           </main>
-          {session && <Asssistant />}
+          {session && <Assistant />}
           {session && (
             <footer className="border-t border-zinc-200 pt-10 pb-6 md:pt-16 md:pb-8 px-6">
               <nav className="max-w-4xl mx-auto flex flex-col md:flex-row items-start justify-between gap-10">

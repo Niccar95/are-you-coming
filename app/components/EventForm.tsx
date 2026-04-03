@@ -7,6 +7,7 @@ import Image from "next/image";
 import { upload } from "@vercel/blob/client";
 import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
+import MiniAssistant from "./MiniAssistant";
 
 const EventForm = () => {
   const router = useRouter();
@@ -22,7 +23,8 @@ const EventForm = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const onClose = useCallback(() => setOpenEventForm(false), []);
   const formRef = useClickOutside(openEventForm, onClose);
-
+  const [nameAssistantOpen, setNameAssistantOpen] = useState<boolean>(false);
+  const [descriptionAssistantOpen, setDescriptionAssistantOpen] = useState<boolean>(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const toggleEventForm = () => {
@@ -130,7 +132,7 @@ const EventForm = () => {
                   <label htmlFor="name" className="form-label">
                     Event Name <span className="text-red-500">*</span>
                   </label>
-                  <button type="button" className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                  <button type="button" onClick={() => setNameAssistantOpen(!nameAssistantOpen)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
                     <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
                   </button>
                 </div>
@@ -142,6 +144,7 @@ const EventForm = () => {
                   placeholder="Enter event name"
                   className="form-input"
                 />
+                <MiniAssistant isOpen={nameAssistantOpen} suggestion={(value) => setEventName(value)} />
               </div>
 
               <div className="flex flex-col gap-2">
@@ -186,7 +189,7 @@ const EventForm = () => {
                   <label htmlFor="description" className="form-label">
                     Description <span className="text-red-500">*</span>
                   </label>
-                  <button type="button" className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                  <button type="button" onClick={() => setDescriptionAssistantOpen(!descriptionAssistantOpen)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
                     <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
                   </button>
                 </div>
@@ -198,6 +201,7 @@ const EventForm = () => {
                   rows={3}
                   className="form-textarea"
                 />
+                <MiniAssistant isOpen={descriptionAssistantOpen} suggestion={(value) => setDescription(value)} placeholder="e.g. A description for a birthday party..." />
               </div>
 
               <div className="flex flex-col gap-4 border border-zinc-200 rounded-lg p-4">
