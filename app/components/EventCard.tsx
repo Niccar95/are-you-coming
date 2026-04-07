@@ -21,7 +21,7 @@ const EventCard = ({
     <Link href={`/events/${id}`} className="block w-full">
       <article
         key={id}
-        className="shadow-even h-[300px] w-full bg-white dark:bg-zinc-900 rounded-lg cursor-pointer hover:scale-[1.02] transition-all duration-300 overflow-hidden"
+        className="shadow-even h-80 w-full bg-white dark:bg-zinc-900 rounded-lg cursor-pointer hover:scale-[1.02] transition-all duration-300 overflow-hidden"
       >
         {imageUrl ? (
           <Image
@@ -38,7 +38,9 @@ const EventCard = ({
           </div>
         )}
         <div className="p-5">
-          <h3 className="text-subtitle mb-1">{name}</h3>
+          <h3 className="text-subtitle mb-2 line-clamp-2 md:line-clamp-1">
+            {name}
+          </h3>
           <time
             dateTime={new Date(eventDate).toISOString()}
             className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-block max-w-full truncate"
