@@ -8,7 +8,7 @@ export const POST = async (req: NextRequest) => {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { userPrompt } = await req.json();
+  const { userPrompt, fieldType } = await req.json();
 
   if (!userPrompt) {
     return NextResponse.json(
@@ -17,7 +17,7 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
-const prompt = await sendPrompt(userPrompt);
+const prompt = await sendPrompt(userPrompt, fieldType);
 
   return NextResponse.json(prompt, { status: 200 });
 };

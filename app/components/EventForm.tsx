@@ -144,7 +144,7 @@ const EventForm = () => {
                   placeholder="Enter event name"
                   className="form-input"
                 />
-                <MiniAssistant isOpen={nameAssistantOpen} suggestion={(value) => setEventName(value)} />
+                <MiniAssistant isOpen={nameAssistantOpen} fieldType="name" suggestion={(value) => setEventName(value)} />
               </div>
 
               <div className="flex flex-col gap-2">
@@ -201,7 +201,7 @@ const EventForm = () => {
                   rows={3}
                   className="form-textarea"
                 />
-                <MiniAssistant isOpen={descriptionAssistantOpen} suggestion={(value) => setDescription(value)} placeholder="e.g. A description for a birthday party..." />
+                <MiniAssistant isOpen={descriptionAssistantOpen} fieldType="description" suggestion={(value) => setDescription(value)} placeholder="e.g. A description for a birthday party..." />
               </div>
 
               <div className="flex flex-col gap-4 border border-zinc-200 rounded-lg p-4">

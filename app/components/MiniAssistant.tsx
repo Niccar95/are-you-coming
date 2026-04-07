@@ -6,10 +6,11 @@ import Spinner from "./Spinner";
 interface MiniAssistantProps {
   isOpen: boolean;
   suggestion: (value: string) => void;
+  fieldType: "name" | "description";
   placeholder?: string;
 }
 
-const MiniAssistant = ({ isOpen, suggestion, placeholder }: MiniAssistantProps) => {
+const MiniAssistant = ({ isOpen, suggestion, fieldType, placeholder }: MiniAssistantProps) => {
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -20,7 +21,7 @@ const MiniAssistant = ({ isOpen, suggestion, placeholder }: MiniAssistantProps) 
       const response = await fetch("api/assistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userPrompt }),
+        body: JSON.stringify({ userPrompt, fieldType }),
       });
 
       if (!response.ok) throw new Error("Failed to get a response.");

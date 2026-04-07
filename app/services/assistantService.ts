@@ -7,12 +7,21 @@ const ai = new GoogleGenAI({
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-export const sendPrompt = async (userPrompt: string): Promise<string> => {
+export const sendPrompt = async (
+  userPrompt: string,
+  fieldType?: "name" | "description",
+): Promise<string> => {
+  const fieldInstruction = fieldType
+    ? `You are helping a user fill in an event ${fieldType} field. Return ONLY the suggested ${fieldType} text. No explanations, no questions, no alternatives. Just the text itself, ready to use.`
+    : null;
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       config: {
-        systemInstruction: `You are Aria, an assistant for the "Are You Coming?" app, an event planning tool. Help users with event planning suggestions AND app navigation questions.
+        systemInstruction:
+          fieldInstruction ??
+          `You are Aria, an assistant for the "Are You Coming?" app, an event planning tool. Help users with event planning suggestions AND app navigation questions.
 
 App overview:
 - Sign in with Google on the home page to get started.
@@ -37,7 +46,9 @@ For app questions: give a clear, concise answer about how to use the app.`,
       messages: [
         {
           role: "system",
-          content: `You are Aria, an assistant for the "Are You Coming?" app, an event planning tool. Help users with event planning suggestions AND app navigation questions.
+          content:
+            fieldInstruction ??
+            `You are Aria, an assistant for the "Are You Coming?" app, an event planning tool. Help users with event planning suggestions AND app navigation questions.
 
 App overview:
 - Sign in with Google on the home page to get started.
