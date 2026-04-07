@@ -23,8 +23,8 @@ const EventForm = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const onClose = useCallback(() => setOpenEventForm(false), []);
   const formRef = useClickOutside(openEventForm, onClose);
-  const [nameAssistantOpen, setNameAssistantOpen] = useState<boolean>(false);
-  const [descriptionAssistantOpen, setDescriptionAssistantOpen] = useState<boolean>(false);
+  const [openNameAssistant, setOpenNameAssistant] = useState<boolean>(false);
+  const [openDescriptionAssistant, setOpenDescriptionAssistant] = useState<boolean>(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const toggleEventForm = () => {
@@ -132,7 +132,7 @@ const EventForm = () => {
                   <label htmlFor="name" className="form-label">
                     Event Name <span className="text-red-500">*</span>
                   </label>
-                  <button type="button" onClick={() => setNameAssistantOpen(!nameAssistantOpen)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                  <button type="button" onClick={() => setOpenNameAssistant(!openNameAssistant)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
                     <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
                   </button>
                 </div>
@@ -144,7 +144,7 @@ const EventForm = () => {
                   placeholder="Enter event name"
                   className="form-input"
                 />
-                <MiniAssistant isOpen={nameAssistantOpen} fieldType="name" suggestion={(value) => setEventName(value)} />
+                <MiniAssistant isOpen={openNameAssistant} fieldType="name" suggestion={(value) => setEventName(value)} />
               </div>
 
               <div className="flex flex-col gap-2">
@@ -189,7 +189,7 @@ const EventForm = () => {
                   <label htmlFor="description" className="form-label">
                     Description <span className="text-red-500">*</span>
                   </label>
-                  <button type="button" onClick={() => setDescriptionAssistantOpen(!descriptionAssistantOpen)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                  <button type="button" onClick={() => setOpenDescriptionAssistant(!openDescriptionAssistant)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
                     <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
                   </button>
                 </div>
@@ -201,7 +201,7 @@ const EventForm = () => {
                   rows={3}
                   className="form-textarea"
                 />
-                <MiniAssistant isOpen={descriptionAssistantOpen} fieldType="description" suggestion={(value) => setDescription(value)} placeholder="e.g. A description for a birthday party..." />
+                <MiniAssistant isOpen={openDescriptionAssistant} fieldType="description" suggestion={(value) => setDescription(value)} placeholder="e.g. A description for a birthday party..." />
               </div>
 
               <div className="flex flex-col gap-4 border border-zinc-200 rounded-lg p-4">

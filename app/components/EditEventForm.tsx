@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useRef, useState } from "react";
+import MiniAssistant from "./MiniAssistant";
 import { useRouter } from "next/navigation";
 import { X, Save, ImagePlus } from "lucide-react";
 import Image from "next/image";
@@ -40,6 +41,8 @@ const EditEventForm = ({
     initialSpotifyInviteUrl,
   );
 
+  const [openNameAssistant, setOpenNameAssistant] = useState<boolean>(false);
+  const [openDescriptionAssistant, setOpenDescriptionAssistant] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [fileName, setFileName] = useState<string>("");
@@ -117,7 +120,7 @@ const EditEventForm = ({
                 <label htmlFor="edit-name" className="form-label">
                   Event Name <span className="text-red-500">*</span>
                 </label>
-                <button type="button" className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+                <button type="button" onClick={() => setOpenNameAssistant(!openNameAssistant)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
                   <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
                 </button>
               </div>
@@ -129,6 +132,7 @@ const EditEventForm = ({
                 placeholder="Enter event name"
                 className="form-input"
               />
+              <MiniAssistant isOpen={openNameAssistant} fieldType="name" suggestion={(value) => setEventName(value)} />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="edit-eventDate" className="form-label">
@@ -174,7 +178,7 @@ const EditEventForm = ({
               <label htmlFor="edit-description" className="form-label">
                 Description <span className="text-red-500">*</span>
               </label>
-              <button type="button" className="cursor-pointer shadow-even border border-violet-200 rounded-full">
+              <button type="button" onClick={() => setOpenDescriptionAssistant(!openDescriptionAssistant)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
                 <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
               </button>
             </div>
@@ -186,6 +190,7 @@ const EditEventForm = ({
               rows={3}
               className="form-textarea"
             />
+            <MiniAssistant isOpen={openDescriptionAssistant} fieldType="description" suggestion={(value) => setDescription(value)} placeholder="e.g. A description for a birthday party..." />
           </div>
 
           <div className="flex flex-col gap-4 border border-zinc-200 rounded-lg p-4">
