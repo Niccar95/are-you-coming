@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Users, FileText, CalendarDays, Music, UserPlus } from "lucide-react";
+import { Users, FileText, CalendarDays, Music, UserPlus, MapPin } from "lucide-react";
 import AttendeeForm from "@/app/components/AttendeeForm";
 import CountDown from "@/app/components/CountDown";
 import ShareButton from "@/app/components/ShareButton";
@@ -51,6 +51,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 imageUrl={event.imageUrl ?? null}
                 spotifyUrl={event.spotifyUrl ?? null}
                 spotifyInviteUrl={event.spotifyInviteUrl ?? null}
+                eventLocation={event.eventLocation}
                 redirect={"/dashboard"}
               />
             )}
@@ -65,37 +66,67 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent pointer-events-none" />
           <figcaption className="absolute bottom-0 left-0 right-0 p-6">
             <h1 className="text-4xl font-bold text-white">{event.name}</h1>
-            <time
-              dateTime={new Date(event.eventDate).toISOString()}
-              className="inline-block mt-3 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full"
-            >
-              {new Date(event.eventDate).toLocaleDateString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
+            <div className="flex flex-wrap gap-2 mt-3">
+              <time
+                dateTime={new Date(event.eventDate).toISOString()}
+                className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full"
+              >
+                <CalendarDays size={12} />
+                {new Date(event.eventDate).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+              {event.eventLocation && (
+                <p className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full m-0">
+                  <MapPin size={12} />{event.eventLocation}
+                </p>
+              )}
+            </div>
           </figcaption>
         </figure>
       ) : (
         <figure className="relative rounded-lg overflow-hidden">
+          {session?.user?.id &&
+            String(event.userId) === String(session.user.id) && (
+              <EventActions
+                id={event.id}
+                eventName={event.name}
+                eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
+                description={event.description}
+                imageUrl={null}
+                spotifyUrl={event.spotifyUrl ?? null}
+                spotifyInviteUrl={event.spotifyInviteUrl ?? null}
+                eventLocation={event.eventLocation}
+                redirect={"/dashboard"}
+              />
+            )}
           <div className="flex items-center justify-center bg-violet-50 w-full h-72">
             <CalendarDays size={80} className="text-violet-300" />
           </div>
           <figcaption className="absolute bottom-0 left-0 right-0 p-6">
             <h1 className="text-4xl font-bold text-zinc-800">{event.name}</h1>
-            <time
-              dateTime={new Date(event.eventDate).toISOString()}
-              className="inline-block mt-3 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
-            >
-              {new Date(event.eventDate).toLocaleDateString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
+            <div className="flex flex-wrap gap-2 mt-3">
+              <time
+                dateTime={new Date(event.eventDate).toISOString()}
+                className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
+              >
+                <CalendarDays size={12} />
+                {new Date(event.eventDate).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+              {event.eventLocation && (
+                <p className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full m-0">
+                  <MapPin size={12} />{event.eventLocation}
+                </p>
+              )}
+            </div>
           </figcaption>
         </figure>
       )}
@@ -109,6 +140,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="text-body leading-relaxed">{event.description}</p>
           </>
         )}
+
 
         {session && (
           <div className="mt-6">

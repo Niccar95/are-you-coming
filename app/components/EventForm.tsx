@@ -15,6 +15,7 @@ const EventForm = () => {
   const [eventDate, setEventDate] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
+  const [eventLocation, setEventLocation] = useState<string>("");
   const [spotifyUrl, setSpotifyUrl] = useState<string>("");
   const [spotifyInviteUrl, setSpotifyInviteUrl] = useState<string>("");
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
@@ -33,7 +34,7 @@ const EventForm = () => {
 
   const addNewEvent = async (e: FormEvent) => {
     e.preventDefault();
-    if (!eventName || !eventDate || !description) {
+    if (!eventName || !eventDate || !description || !eventLocation) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -75,6 +76,7 @@ const EventForm = () => {
           image_url: imageUrl,
           spotify_url: spotifyUrl,
           spotify_invite_url: spotifyInviteUrl,
+          event_location: eventLocation || null,
         }),
       });
 
@@ -85,6 +87,7 @@ const EventForm = () => {
       setEventName("");
       setEventDate("");
       setDescription("");
+      setEventLocation("");
       setSpotifyUrl("");
       setSpotifyInviteUrl("");
       setFileName("");
@@ -156,6 +159,20 @@ const EventForm = () => {
                   value={eventDate}
                   onChange={(e) => setEventDate(e.target.value)}
                   type="datetime-local"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="eventLocation" className="form-label">
+                  Location <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="eventLocation"
+                  value={eventLocation}
+                  onChange={(e) => setEventLocation(e.target.value)}
+                  type="text"
+                  placeholder="Enter event location"
                   className="form-input"
                 />
               </div>

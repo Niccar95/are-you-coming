@@ -56,6 +56,7 @@ const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
                 spotifyUrl={event.spotifyUrl ?? null}
                 spotifyInviteUrl={event.spotifyInviteUrl ?? null}
                 imageUrl={event.imageUrl ?? null}
+                eventLocation={event.eventLocation}
               />
             )}
           </li>

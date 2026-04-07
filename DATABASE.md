@@ -69,6 +69,13 @@ ALTER TABLE events DROP COLUMN column_name;
 DROP TABLE your_table_name;
 ```
 
+**Change column property:**
+
+```sql
+UPDATE events SET event_location = '' WHERE event_location IS NULL;
+ALTER TABLE events ALTER COLUMN event_location SET NOT NULL;
+```
+
 ## Database Endpoints
 
 - Dev (pooler): `ep-shiny-frog-ablw3k4r-pooler.eu-west-2.aws.neon.tech`

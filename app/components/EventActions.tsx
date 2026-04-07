@@ -14,6 +14,7 @@ interface EventActionsProps {
   imageUrl: string | null;
   spotifyUrl: string | null;
   spotifyInviteUrl: string | null;
+  eventLocation: string;
   redirect?: string;
 }
 
@@ -25,6 +26,7 @@ const EventActions = ({
   imageUrl,
   spotifyUrl,
   spotifyInviteUrl,
+  eventLocation,
   redirect,
 }: EventActionsProps) => {
   const router = useRouter();
@@ -99,6 +101,7 @@ const EventActions = ({
           initialImageUrl={imageUrl}
           initialSpotifyUrl={spotifyUrl}
           initialSpotifyInviteUrl={spotifyInviteUrl}
+          initialEventLocation={eventLocation}
           onClose={onClose}
         />
       )}

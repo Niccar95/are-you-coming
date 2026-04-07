@@ -17,6 +17,7 @@ interface EditEventFormProps {
   initialImageUrl: string | null;
   initialSpotifyUrl: string | null;
   initialSpotifyInviteUrl: string | null;
+  initialEventLocation: string;
   onClose: () => void;
 }
 
@@ -28,12 +29,14 @@ const EditEventForm = ({
   initialImageUrl,
   initialSpotifyUrl,
   initialSpotifyInviteUrl,
+  initialEventLocation,
   onClose,
 }: EditEventFormProps) => {
   const router = useRouter();
   const [eventName, setEventName] = useState<string>(initialName);
   const [eventDate, setEventDate] = useState<string>(initialDate);
   const [description, setDescription] = useState<string>(initialDescription);
+  const [eventLocation, setEventLocation] = useState<string>(initialEventLocation);
   const [spotifyUrl, setSpotifyUrl] = useState<string | null>(
     initialSpotifyUrl,
   );
@@ -52,7 +55,7 @@ const EditEventForm = ({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!eventName || !eventDate || !description) {
+    if (!eventName || !eventDate || !description || !eventLocation) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -90,6 +93,7 @@ const EditEventForm = ({
           image_url: imageUrl,
           spotify_url: spotifyUrl,
           spotify_invite_url: spotifyInviteUrl,
+          event_location: eventLocation || null,
         }),
       });
 
@@ -146,6 +150,20 @@ const EditEventForm = ({
                 className="form-input"
               />
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label htmlFor="edit-eventLocation" className="form-label">
+              Location <span className="text-red-500">*</span>
+            </label>
+            <input
+              id="edit-eventLocation"
+              value={eventLocation}
+              onChange={(e) => setEventLocation(e.target.value)}
+              type="text"
+              placeholder="Enter event location"
+              className="form-input"
+            />
           </div>
 
           <div className="flex flex-col gap-2">

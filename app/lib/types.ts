@@ -6,4 +6,5 @@ export type EventType = {
   spotifyUrl: string | null;
   spotifyInviteUrl: string | null;
   imageUrl: string | null;
+  eventLocation: string;
 };

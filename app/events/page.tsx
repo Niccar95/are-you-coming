@@ -26,6 +26,7 @@ const EventsPage = async ({
     spotifyUrl: event.spotifyUrl,
     spotifyInviteUrl: event.spotifyInviteUrl,
     imageUrl: event.imageUrl,
+    eventLocation: event.eventLocation,
   }));
 
   const upcomingEvents = filterUpcomingEvents(allEvents);
