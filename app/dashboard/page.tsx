@@ -18,7 +18,7 @@ const DashboardPage = async () => {
     spotifyUrl: event.spotifyUrl,
     spotifyInviteUrl: event.spotifyInviteUrl,
     imageUrl: event.imageUrl,
-    eventLocation: event.eventLocation ?? "",
+    eventLocation: event.eventLocation,
   }));
 
   return (
