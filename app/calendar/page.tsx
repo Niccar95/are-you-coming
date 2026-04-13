@@ -12,6 +12,7 @@ const CalendarPage = async () => {
     spotifyUrl: event.spotifyUrl,
     spotifyInviteUrl: event.spotifyInviteUrl,
     imageUrl: event.imageUrl,
+    eventLocation: event.eventLocation,
   }));
 
   return <Calendar allEvents={allEvents} />;
