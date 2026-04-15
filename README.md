@@ -21,7 +21,7 @@ A simple event planning app. Create events, share them with friends, and let the
 
 - Google sign-in
 - Create events with a name, date, description, and optional image
-- Share event pages with guests — no account required to RSVP
+- Share event pages with guests, with no account required to RSVP
 - Live countdown timer on each event
 - Attendee list with email reminders
 - Calendar view with events highlighted on the right day. Built from scratch, no calendar library.
