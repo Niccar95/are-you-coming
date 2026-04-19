@@ -8,6 +8,7 @@ export class Event {
   spotifyUrl: string | null;
   spotifyInviteUrl: string | null;
   eventLocation: string;
+  hostName: string | null;
 
   constructor(
     id: number,
@@ -19,6 +20,7 @@ export class Event {
     spotifyUrl: string | null,
     spotifyInviteUrl: string | null,
     eventLocation: string,
+    hostName: string | null = null,
   ) {
     this.id = id;
     this.name = name;
@@ -29,6 +31,7 @@ export class Event {
     this.spotifyUrl = spotifyUrl;
     this.spotifyInviteUrl = spotifyInviteUrl;
     this.eventLocation = eventLocation;
+    this.hostName = hostName;
   }
 
   displayEvent(): string {

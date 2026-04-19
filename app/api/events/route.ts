@@ -32,6 +32,7 @@ export const POST = async (req: NextRequest) => {
     spotify_url || null,
     spotify_invite_url || null,
     event_location,
+    session.user.name ?? null,
   );
 
   return NextResponse.json(event, { status: 201 });

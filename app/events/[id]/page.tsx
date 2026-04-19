@@ -1,6 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Users, FileText, CalendarDays, Music, UserPlus, MapPin } from "lucide-react";
+import {
+  Users,
+  FileText,
+  CalendarDays,
+  Music,
+  UserPlus,
+  MapPin,
+} from "lucide-react";
 import AttendeeForm from "@/app/components/AttendeeForm";
 import CountDown from "@/app/components/CountDown";
 import ShareButton from "@/app/components/ShareButton";
@@ -81,7 +88,8 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </time>
               {event.eventLocation && (
                 <p className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full m-0">
-                  <MapPin size={12} />{event.eventLocation}
+                  <MapPin size={12} />
+                  {event.eventLocation}
                 </p>
               )}
             </div>
@@ -123,7 +131,8 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </time>
               {event.eventLocation && (
                 <p className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full m-0">
-                  <MapPin size={12} />{event.eventLocation}
+                  <MapPin size={12} />
+                  {event.eventLocation}
                 </p>
               )}
             </div>
@@ -132,6 +141,15 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       )}
       <article>
         <CountDown eventDate={event.eventDate} />
+        {event.hostName && (
+          <div className="flex items-center gap-3 mt-6">
+            <div className="w-10 h-10 rounded-full bg-zinc-200 shrink-0" />
+            <div>
+              <p className="text-xs text-zinc-400">Hosted by</p>
+              <p className="text-sm font-medium text-zinc-700">{event.hostName}</p>
+            </div>
+          </div>
+        )}
         {event.description && (
           <>
             <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
@@ -140,7 +158,6 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="text-body leading-relaxed">{event.description}</p>
           </>
         )}
-
 
         {session && (
           <div className="mt-6">

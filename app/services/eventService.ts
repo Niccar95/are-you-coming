@@ -25,6 +25,7 @@ export const getEvents = async (): Promise<Event[]> => {
       spotify_url: string | null;
       spotify_invite_url: string | null;
       event_location: string;
+      event_host: string | null;
     }) =>
       new Event(
         event.id,
@@ -36,6 +37,7 @@ export const getEvents = async (): Promise<Event[]> => {
         event.spotify_url,
         event.spotify_invite_url,
         event.event_location,
+        event.event_host,
       ),
   );
 };
@@ -55,6 +57,7 @@ export const getEventById = async (id: number): Promise<Event | null> => {
     rows[0].spotify_url,
     rows[0].spotify_invite_url,
     rows[0].event_location,
+    rows[0].event_host,
   );
 };
 
@@ -67,10 +70,11 @@ export const addEvent = async (
   spotifyUrl: string | null,
   spotifyInviteUrl: string | null,
   eventLocation: string,
+  hostName: string | null,
 ): Promise<Event> => {
   const { rows } = await pool.query(
-    "INSERT INTO events (name, event_date, description, user_id, image_url, spotify_url, spotify_invite_url, event_location) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
-    [name, eventDate, description, userId, imageUrl, spotifyUrl, spotifyInviteUrl, eventLocation],
+    "INSERT INTO events (name, event_date, description, user_id, image_url, spotify_url, spotify_invite_url, event_location, event_host) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+    [name, eventDate, description, userId, imageUrl, spotifyUrl, spotifyInviteUrl, eventLocation, hostName],
   );
   return new Event(
     rows[0].id,
@@ -82,6 +86,7 @@ export const addEvent = async (
     rows[0].spotify_url,
     rows[0].spotify_invite_url,
     rows[0].event_location,
+    rows[0].event_host,
   );
 };
 
