@@ -7,6 +7,7 @@ import {
   Music,
   UserPlus,
   MapPin,
+  Clock,
 } from "lucide-react";
 import AttendeeForm from "@/app/components/AttendeeForm";
 import CountDown from "@/app/components/CountDown";
@@ -86,6 +87,15 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   day: "numeric",
                 })}
               </time>
+              <time className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full">
+                <Clock size={12} />
+                {new Date(event.eventDate).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                  timeZone: "UTC",
+                })}
+              </time>
               {event.eventLocation && (
                 <p className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full m-0">
                   <MapPin size={12} />
@@ -127,6 +137,15 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
+                })}
+              </time>
+              <time className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full">
+                <Clock size={12} />
+                {new Date(event.eventDate).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                  timeZone: "UTC",
                 })}
               </time>
               {event.eventLocation && (
