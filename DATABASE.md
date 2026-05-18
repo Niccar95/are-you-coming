@@ -2,10 +2,10 @@
 
 ## Shell Aliases (`~/.zshrc`)
 
-| Alias      | What it does                  |
-| ---------- | ----------------------------- |
-| `ayc-db`   | Connect to dev database       |
-| `ayc-sync` | Sync dev schema to production |
+| Alias      | What it does             |
+| ---------- | ------------------------ |
+| `ayc-db`   | Connect to dev database  |
+| `ayc-prod` | Connect to prod database |
 
 **Full commands (what the aliases run under the hood):**
 
@@ -13,8 +13,8 @@
 # ayc-db
 psql "$DEV_DATABASE_URL"
 
-# ayc-sync
-pg_dump --schema-only "$DEV_DATABASE_URL" | psql "$PROD_DATABASE_URL"
+# ayc-prod
+psql "$PROD_DATABASE_URL"
 ```
 
 > If a new alias doesn't work, run `source ~/.zshrc` to reload the shell config (open terminals don't auto-detect changes).
