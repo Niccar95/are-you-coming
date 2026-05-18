@@ -97,7 +97,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 })}
               </time>
               {event.eventLocation && (
-                <p className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full m-0">
+                <p className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full m-0 max-w-full truncate">
                   <MapPin size={12} />
                   {event.eventLocation}
                 </p>
@@ -149,7 +149,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 })}
               </time>
               {event.eventLocation && (
-                <p className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full m-0">
+                <p className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full m-0 max-w-full truncate">
                   <MapPin size={12} />
                   {event.eventLocation}
                 </p>
@@ -165,7 +165,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <div className="w-10 h-10 rounded-full bg-zinc-200 shrink-0" />
             <div>
               <p className="text-xs text-zinc-400">Hosted by</p>
-              <p className="text-sm font-medium text-zinc-700">{event.hostName}</p>
+              <p className="text-sm font-medium text-zinc-700 truncate">{event.hostName}</p>
             </div>
           </div>
         )}

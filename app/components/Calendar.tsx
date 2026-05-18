@@ -6,9 +6,13 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Clock,
+  MapPin,
 } from "lucide-react";
 import Image from "next/image";
-import { JSX, useState } from "react";
+import Link from "next/link";
+import { JSX, useCallback, useState } from "react";
+import useClickOutside from "../hooks/useClickOutside";
 import { EventType } from "../lib/types";
 
 interface EventListProps {
@@ -21,6 +25,13 @@ const Calendar = ({ allEvents }: EventListProps) => {
   const [showEventCard, setShowEventCard] = useState<boolean>(false);
   const [activeCellIndex, setActiveCellIndex] = useState<number | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<EventType[]>([]);
+
+  const closePopup = useCallback(() => {
+    setShowEventCard(false);
+    setActiveCellIndex(null);
+  }, []);
+
+  const popupRef = useClickOutside(showEventCard, closePopup);
 
   const today = new Date();
   const currentDate = today.getDate();
@@ -183,43 +194,57 @@ const Calendar = ({ allEvents }: EventListProps) => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto flex flex-col gap-4">
-        {selectedEvents.map((event, index) => (
-          <article
-            key={event.id}
-            style={{ transitionDelay: `${index * 100}ms` }}
-            className={`card flex flex-row items-start gap-4 border-l-4 border-violet-500 transition-all duration-300 ${showEventCard ? "opacity-100 max-h-screen" : "opacity-0 max-h-0 overflow-hidden pointer-events-none"}`}
-          >
-            {event.imageUrl ? (
-              <Image
-                src={event.imageUrl}
-                alt={event.name}
-                width={96}
-                height={96}
-                className="w-24 h-24 rounded-lg object-cover shrink-0"
-              />
-            ) : (
-              <div className="flex items-center justify-center bg-violet-50 rounded-lg w-24 h-24 shrink-0">
-                <CalendarDays size={40} className="text-violet-300" />
+      {showEventCard && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div ref={popupRef} className="card w-full max-w-lg flex flex-col gap-3">
+            {selectedEvents.map((event) => (
+              <div key={event.id} className="flex flex-col gap-3">
+                <div className="flex items-start gap-4">
+                  {event.imageUrl ? (
+                    <Image
+                      src={event.imageUrl}
+                      alt={event.name}
+                      width={96}
+                      height={96}
+                      className="w-32 h-32 rounded-lg object-cover shrink-0"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center bg-violet-50 rounded-lg w-32 h-32 shrink-0">
+                      <CalendarDays size={40} className="text-violet-300" />
+                    </div>
+                  )}
+                  <div className="flex flex-col gap-2 min-w-0">
+                    <h3 className="text-subtitle line-clamp-2 md:line-clamp-1">{event.name}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
+                        <Clock size={12} />
+                        {new Date(event.eventDate).toLocaleTimeString("en-US", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false,
+                          timeZone: "UTC",
+                        })}
+                      </time>
+                      {event.eventLocation && (
+                        <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
+                          <MapPin size={12} />
+                          {event.eventLocation}
+                        </span>
+                      )}
+                    </div>
+                    {event.description && (
+                      <p className="text-body mt-3 line-clamp-2">{event.description}</p>
+                    )}
+                  </div>
+                </div>
+                <Link href={`/events/${event.id}`} className="text-sm font-medium text-violet-600 hover:text-violet-700 transition-colors self-end">
+                  View event →
+                </Link>
               </div>
-            )}
-            <div className="flex flex-col gap-1">
-              <h3 className="text-subtitle">{event.name}</h3>
-              <time className="text-meta">
-                {new Date(event.eventDate).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-              {event.description && (
-                <p className="text-body line-clamp-1">{event.description}</p>
-              )}
-            </div>
-          </article>
-        ))}
-      </div>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 };

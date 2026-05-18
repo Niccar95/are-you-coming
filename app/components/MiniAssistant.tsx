@@ -18,7 +18,7 @@ const MiniAssistant = ({ isOpen, suggestion, fieldType, placeholder }: MiniAssis
     setLoading(true);
 
     try {
-      const response = await fetch("api/assistant", {
+      const response = await fetch("/api/assistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userPrompt, fieldType }),
