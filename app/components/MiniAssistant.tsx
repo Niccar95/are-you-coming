@@ -13,8 +13,10 @@ interface MiniAssistantProps {
 const MiniAssistant = ({ isOpen, suggestion, fieldType, placeholder }: MiniAssistantProps) => {
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const handlePrompt = async () => {
+    setError("");
     setLoading(true);
 
     try {
@@ -29,8 +31,8 @@ const MiniAssistant = ({ isOpen, suggestion, fieldType, placeholder }: MiniAssis
       const data = await response.json();
       suggestion(data);
       setUserPrompt("");
-    } catch (error) {
-      console.error("Error prompting AI assistant:", error);
+    } catch {
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -50,7 +52,7 @@ const MiniAssistant = ({ isOpen, suggestion, fieldType, placeholder }: MiniAssis
           onChange={(e) => setUserPrompt(e.target.value)}
           type="text"
           placeholder={placeholder ?? "e.g. A name for a birthday party..."}
-          className="form-input"
+          className="form-input w-full"
         />
         <button
           type="button"
@@ -60,6 +62,7 @@ const MiniAssistant = ({ isOpen, suggestion, fieldType, placeholder }: MiniAssis
           Send <SendHorizonal size={16} />
         </button>
       </div>
+      {error && <p className="text-xs text-red-500">{error}</p>}
       {loading && <Spinner />}
     </div>
   );

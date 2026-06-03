@@ -83,6 +83,8 @@ const [error, setError] = useState("");
 
 Error display: `{error && <p className="text-xs text-red-500">{error}</p>}`
 
+This is the single pattern for all validation and error messages — `text-xs text-red-500`. Always clear the error on a new submission attempt with `setError("")`.
+
 **File input:**
 ```jsx
 <label htmlFor="file" className="border border-dashed rounded-lg px-4 py-2 text-sm cursor-pointer border-zinc-300 text-zinc-500 hover:border-violet-400 hover:text-violet-600">
