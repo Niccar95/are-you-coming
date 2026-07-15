@@ -1,4 +1,4 @@
-export class Event {
+export class EventClass {
   id: number;
   name: string;
   eventDate: Date;
@@ -44,5 +44,20 @@ export class Event {
 
   isAFutureDate(): boolean {
     return this.hasValidDate() && this.eventDate > new Date();
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      eventDate: this.eventDate.toISOString(),
+      description: this.description,
+      userId: this.userId,
+      imageUrl: this.imageUrl,
+      spotifyUrl: this.spotifyUrl,
+      spotifyInviteUrl: this.spotifyInviteUrl,
+      eventLocation: this.eventLocation,
+      hostName: this.hostName,
+    };
   }
 }

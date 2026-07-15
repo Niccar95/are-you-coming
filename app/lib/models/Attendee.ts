@@ -1,9 +1,9 @@
-export class Attendee {
+export class AttendeeClass {
   id: number;
   name: string;
-  email?: string;
+  email: string;
 
-  constructor(id: number, name: string, email?: string) {
+  constructor(id: number, name: string, email: string) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -15,5 +15,13 @@ export class Attendee {
 
   hasValidEmail(): boolean {
     return !!this.email && /\S+@\S+\.\S+/.test(this.email);
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+    };
   }
 }

@@ -1,8 +1,8 @@
-import SendRemindersButton from "../components/SendRemindersButton";
 import { auth } from "@/auth";
 import EventForm from "../components/EventForm";
 import Events from "../components/Events";
 import { getEvents } from "../services/eventService";
+import { toPlainObjects } from "../utils/toPlainObject";
 
 export const revalidate = 0;
 
@@ -10,16 +10,7 @@ const DashboardPage = async () => {
   const session = await auth();
   const events = await getEvents();
 
-  const allEvents = events.map((event) => ({
-    id: event.id,
-    name: event.name,
-    eventDate: event.eventDate.toISOString(),
-    description: event.description,
-    spotifyUrl: event.spotifyUrl,
-    spotifyInviteUrl: event.spotifyInviteUrl,
-    imageUrl: event.imageUrl,
-    eventLocation: event.eventLocation,
-  }));
+  const allEvents = toPlainObjects(events);
 
   return (
     <div
@@ -28,10 +19,8 @@ const DashboardPage = async () => {
       <p className="text-sm text-gray-600 self-center">
         Welcome, {session?.user?.name}
       </p>
-      <SendRemindersButton />
       <EventForm />
       <Events allEvents={allEvents} />
-
     </div>
   );
 };

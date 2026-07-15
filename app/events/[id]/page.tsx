@@ -17,6 +17,8 @@ import { getEventById } from "@/app/services/eventService";
 import { auth } from "@/auth";
 import EventActions from "@/app/components/EventActions";
 import QRCode from "@/app/components/QRCode";
+import { toPlainObjects } from "@/app/utils/toPlainObject";
+import SendInvitationsButton from "@/app/components/SendInvitationsButton";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -24,6 +26,8 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const event = await getEventById(Number(id));
   const eventAttendees = await getAttendeesByEventId(Number(id));
   const session = await auth();
+
+  const allAttendees = toPlainObjects(eventAttendees);
 
   const playlistId = event?.spotifyUrl?.split("/").at(-1)?.split("?")[0];
 
@@ -165,7 +169,9 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <div className="w-10 h-10 rounded-full bg-zinc-200 shrink-0" />
             <div>
               <p className="text-xs text-zinc-400">Hosted by</p>
-              <p className="text-sm font-medium text-zinc-700 truncate">{event.hostName}</p>
+              <p className="text-sm font-medium text-zinc-700 truncate">
+                {event.hostName}
+              </p>
             </div>
           </div>
         )}
@@ -179,8 +185,9 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         )}
 
         {session && (
-          <div className="mt-6">
+          <div className="flex gap-6 mt-6">
             <ShareButton />
+            <SendInvitationsButton attendees={allAttendees} />
           </div>
         )}
 

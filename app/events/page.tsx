@@ -8,6 +8,7 @@ import {
 } from "../utils/eventFiltering";
 import EventCard from "../components/EventCard";
 import UpcomingEvents from "../components/UpcomingEvents";
+import { toPlainObjects } from "../utils/toPlainObject";
 
 const EventsPage = async ({
   searchParams,
@@ -18,16 +19,7 @@ const EventsPage = async ({
     await searchParams;
   const events = await getEvents();
 
-  const allEvents = events.map((event) => ({
-    id: event.id,
-    name: event.name,
-    eventDate: event.eventDate.toISOString(),
-    description: event.description,
-    spotifyUrl: event.spotifyUrl,
-    spotifyInviteUrl: event.spotifyInviteUrl,
-    imageUrl: event.imageUrl,
-    eventLocation: event.eventLocation,
-  }));
+  const allEvents = toPlainObjects(events);
 
   const upcomingEvents = filterUpcomingEvents(allEvents);
   const pastEvents = filterPastEvents(allEvents);
