@@ -1,19 +1,11 @@
 import Calendar from "../components/Calendar";
 import { getEvents } from "../services/eventService";
+import { toPlainObjects } from "../utils/toPlainObject";
 
 const CalendarPage = async () => {
   const events = await getEvents();
 
-  const allEvents = events.map((event) => ({
-    id: event.id,
-    name: event.name,
-    eventDate: event.eventDate.toISOString(),
-    description: event.description,
-    spotifyUrl: event.spotifyUrl,
-    spotifyInviteUrl: event.spotifyInviteUrl,
-    imageUrl: event.imageUrl,
-    eventLocation: event.eventLocation,
-  }));
+  const allEvents = toPlainObjects(events);
 
   return <Calendar allEvents={allEvents} />;
 };
