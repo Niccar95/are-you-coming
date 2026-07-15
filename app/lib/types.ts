@@ -1,5 +1,3 @@
-import { DateTime } from "next-auth/providers/kakao";
-
 export type EventType = {
   id: number;
   name: string;

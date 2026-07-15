@@ -1,6 +1,6 @@
 import emailjs from "@emailjs/nodejs";
 import pool from "../lib/db";
-import { Attendee } from "../lib/models/Attendee";
+import { AttendeeClass } from "../lib/models/Attendee";
 
 export const sendReminders = async () => {
   try {
@@ -8,8 +8,8 @@ export const sendReminders = async () => {
       "SELECT * FROM attendees ORDER BY id ASC",
     );
     const attendees = rows.map(
-      (attendee: Attendee) =>
-        new Attendee(attendee.id, attendee.name, attendee.email),
+      (attendee: AttendeeClass) =>
+        new AttendeeClass(attendee.id, attendee.name, attendee.email),
     );
 
     console.log(`Found ${attendees.length} attendees to send reminders to`);
