@@ -1,34 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
-import { Attendee } from "../lib/types";
+import { AttendeeType, EventType } from "../lib/types";
 import { Send } from "lucide-react";
 
 interface ReminderProps {
-  attendees: Attendee[];
+  attendees: AttendeeType[];
+  eventData: EventType;
 }
 
-const SendInvitationsButton = ({ attendees }: ReminderProps) => {
+const SendInvitationsButton = ({ attendees, eventData }: ReminderProps) => {
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
 
-  const sendReminders = async () => {
+  const sendInvitations = async () => {
     setSending(true);
     setMessage("");
 
     try {
-      for (const attendee of attendees) {
-        await emailjs.send(
-          "service_6vz097q",
-          "template_kgecsxe",
-          {
-            to_email: attendee.email,
-          },
-          "_TeZKUhH8wHVx8a5J",
-        );
-        console.log(`Sent to ${attendee.email}`);
-      }
+      const response = await fetch("/api/invitations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ attendees, eventData }),
+      });
+
+      if (!response.ok) throw new Error("Server error");
 
       setMessage(
         `Successfully sent ${attendees.length} ${attendees.length > 1 ? "invitations" : "invitation"}`,
@@ -44,9 +40,9 @@ const SendInvitationsButton = ({ attendees }: ReminderProps) => {
   return (
     <>
       <button
-        onClick={sendReminders}
+        onClick={sendInvitations}
         disabled={sending || !attendees}
-        className="btn-primary flex items-center gap-2 self-start"
+        className="btn-primary flex items-center gap-2"
       >
         <Send size={16} /> {sending ? "Sending..." : "Send Invitations"}
       </button>

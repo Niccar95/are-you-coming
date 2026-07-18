@@ -43,11 +43,7 @@ const CountDown = ({ eventDate }: DateProps) => {
   }, [target]);
 
   if (timeLeft.expired) {
-    return (
-      <div className="countdown-expired">
-        🎉 IT&apos;S PARTY TIME! 🎉
-      </div>
-    );
+    return <div className="countdown-expired">🎉 IT&apos;S PARTY TIME! 🎉</div>;
   }
 
   return (

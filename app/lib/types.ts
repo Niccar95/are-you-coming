@@ -11,7 +11,7 @@ export type EventType = {
   hostName: string | null;
 };
 
-export type Attendee = {
+export type AttendeeType = {
   id: number;
   name: string;
   email: string;

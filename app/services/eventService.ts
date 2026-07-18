@@ -42,10 +42,8 @@ export const getEvents = async (): Promise<EventClass[]> => {
   );
 };
 
-export const getEventById = async (id: number): Promise<EventClass | null> => {
+export const getEventById = async (id: number): Promise<EventClass> => {
   const { rows } = await pool.query("SELECT * FROM events WHERE id = $1", [id]);
-
-  if (rows.length === 0) return null;
 
   return new EventClass(
     rows[0].id,

@@ -17,7 +17,7 @@ import { getEventById } from "@/app/services/eventService";
 import { auth } from "@/auth";
 import EventActions from "@/app/components/EventActions";
 import QRCode from "@/app/components/QRCode";
-import { toPlainObjects } from "@/app/utils/toPlainObject";
+import { toPlainObject, toPlainObjects } from "@/app/utils/toPlainObject";
 import SendInvitationsButton from "@/app/components/SendInvitationsButton";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -30,6 +30,9 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const allAttendees = toPlainObjects(eventAttendees);
 
   const playlistId = event?.spotifyUrl?.split("/").at(-1)?.split("?")[0];
+
+  //Converting this to plain object to send to the InvitationButton
+  const eventData = toPlainObject(event);
 
   if (!event) {
     return <p>Event not found.</p>;
@@ -187,7 +190,10 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         {session && (
           <div className="flex gap-6 mt-6">
             <ShareButton />
-            <SendInvitationsButton attendees={allAttendees} />
+            <SendInvitationsButton
+              attendees={allAttendees}
+              eventData={eventData}
+            />
           </div>
         )}
 
