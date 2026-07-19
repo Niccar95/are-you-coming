@@ -20,7 +20,10 @@ const DeleteButton = ({ id }: DeleteButtonProps) => {
   };
 
   return (
-    <button onClick={handleDelete} className="btn-danger absolute top-2 right-2">
+    <button
+      onClick={handleDelete}
+      className="btn-danger absolute top-2 right-2"
+    >
       <X size={16} />
     </button>
   );

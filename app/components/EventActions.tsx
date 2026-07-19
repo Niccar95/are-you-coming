@@ -69,12 +69,12 @@ const EventActions = ({
 
       {confirmDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div ref={modalRef} className="form-card w-full max-w-sm">
+          <div ref={modalRef} className="card w-full max-w-sm">
             <h3 className="form-heading">Delete Event</h3>
             <p className="text-body mb-6">
               Are you sure you want to delete this event? This cannot be undone.
             </p>
-            <div className="flex justify-between md:justify-start gap-3">
+            <div className="flex gap-3">
               <button
                 onClick={handleDelete}
                 className="btn-danger flex items-center gap-2"

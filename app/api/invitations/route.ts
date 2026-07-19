@@ -32,14 +32,15 @@ export const POST = async (req: NextRequest) => {
         "template_kgecsxe",
         {
           to_email: attendee.email,
-          message: `You have been invited the upcoming event:<br><br><b>${eventData.name}</b><br><br>${eventData.description}<br><br><b>Location and date</b><br><br>${eventData.eventLocation}<br>${formattedDate}<br><br><b>Best regards,</b><br>${eventData.hostName}`,
+          event_id: eventData.id,
+          message: `Here's a reminder that you have been invited the upcoming event:<br><br><b>${eventData.name}</b><br><br>${eventData.description}<br><br><b>Location and date</b><br><br>${eventData.eventLocation}<br>${formattedDate}<br><br><i><b>Best regards,</b><br>${eventData.hostName}</i>`,
         },
         {
           publicKey: "_TeZKUhH8wHVx8a5J",
           privateKey: process.env.EMAILJS_PRIVATE_KEY,
         },
       );
-      console.log(`Sent to ${attendee.email}`);
+      console.log(`Reminder sent to ${attendee.email}`);
 
       await new Promise((resolve) => setTimeout(resolve, 200));
     }

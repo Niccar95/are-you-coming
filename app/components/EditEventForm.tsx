@@ -35,8 +35,10 @@ const EditEventForm = ({
   const router = useRouter();
   const [eventName, setEventName] = useState<string>(initialName);
   const [eventDate, setEventDate] = useState<string>(initialDate);
+
   const [description, setDescription] = useState<string>(initialDescription);
-  const [eventLocation, setEventLocation] = useState<string>(initialEventLocation);
+  const [eventLocation, setEventLocation] =
+    useState<string>(initialEventLocation);
   const [spotifyUrl, setSpotifyUrl] = useState<string | null>(
     initialSpotifyUrl,
   );
@@ -45,7 +47,8 @@ const EditEventForm = ({
   );
 
   const [openNameAssistant, setOpenNameAssistant] = useState<boolean>(false);
-  const [openDescriptionAssistant, setOpenDescriptionAssistant] = useState<boolean>(false);
+  const [openDescriptionAssistant, setOpenDescriptionAssistant] =
+    useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [fileName, setFileName] = useState<string>("");
@@ -55,10 +58,17 @@ const EditEventForm = ({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
     if (!eventName || !eventDate || !description || !eventLocation) {
       setError("Please fill in all required fields.");
       return;
     }
+
+    if (new Date(eventDate) <= new Date()) {
+      setError("Event date must be in the future.");
+      return;
+    }
+
     const spotifyFieldsMismatch =
       Boolean(spotifyUrl) !== Boolean(spotifyInviteUrl);
     if (spotifyFieldsMismatch) {
@@ -67,28 +77,35 @@ const EditEventForm = ({
       );
       return;
     }
+
     setError("");
     setLoading(true);
 
     let imageUrl: string | null = initialImageUrl;
 
-    const file = inputFileRef.current?.files?.[0];
-    if (file) {
-      const newBlob = await upload(file.name, file, {
-        access: "public",
-        handleUploadUrl: "/api/upload",
-      });
-      imageUrl = newBlob.url;
-    }
-
     try {
+      const localDate = new Date(eventDate);
+
+      const utcDate = new Date(
+        localDate.getTime() - localDate.getTimezoneOffset() * 60000,
+      );
+
+      const file = inputFileRef.current?.files?.[0];
+      if (file) {
+        const newBlob = await upload(file.name, file, {
+          access: "public",
+          handleUploadUrl: "/api/upload",
+        });
+        imageUrl = newBlob.url;
+      }
+
       const response = await fetch("/api/events", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id,
           name: eventName,
-          event_date: eventDate,
+          event_date: utcDate.toISOString(),
           description: description,
           image_url: imageUrl,
           spotify_url: spotifyUrl,
@@ -124,8 +141,17 @@ const EditEventForm = ({
                 <label htmlFor="edit-name" className="form-label">
                   Event Name <span className="text-red-500">*</span>
                 </label>
-                <button type="button" onClick={() => setOpenNameAssistant(!openNameAssistant)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
-                  <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
+                <button
+                  type="button"
+                  onClick={() => setOpenNameAssistant(!openNameAssistant)}
+                  className="cursor-pointer shadow-even border border-violet-200 rounded-full"
+                >
+                  <Image
+                    src="/AI-assistant.svg"
+                    alt="Aria AI"
+                    width={28}
+                    height={28}
+                  />
                 </button>
               </div>
               <input
@@ -136,7 +162,11 @@ const EditEventForm = ({
                 placeholder="Enter event name"
                 className="form-input"
               />
-              <MiniAssistant isOpen={openNameAssistant} fieldType="name" suggestion={(value) => setEventName(value)} />
+              <MiniAssistant
+                isOpen={openNameAssistant}
+                fieldType="name"
+                suggestion={(value) => setEventName(value)}
+              />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="edit-eventDate" className="form-label">
@@ -196,8 +226,19 @@ const EditEventForm = ({
               <label htmlFor="edit-description" className="form-label">
                 Description <span className="text-red-500">*</span>
               </label>
-              <button type="button" onClick={() => setOpenDescriptionAssistant(!openDescriptionAssistant)} className="cursor-pointer shadow-even border border-violet-200 rounded-full">
-                <Image src="/AI-assistant.svg" alt="Aria AI" width={28} height={28} />
+              <button
+                type="button"
+                onClick={() =>
+                  setOpenDescriptionAssistant(!openDescriptionAssistant)
+                }
+                className="cursor-pointer shadow-even border border-violet-200 rounded-full"
+              >
+                <Image
+                  src="/AI-assistant.svg"
+                  alt="Aria AI"
+                  width={28}
+                  height={28}
+                />
               </button>
             </div>
             <textarea
@@ -208,7 +249,12 @@ const EditEventForm = ({
               rows={3}
               className="form-textarea"
             />
-            <MiniAssistant isOpen={openDescriptionAssistant} fieldType="description" suggestion={(value) => setDescription(value)} placeholder="e.g. A description for a birthday party..." />
+            <MiniAssistant
+              isOpen={openDescriptionAssistant}
+              fieldType="description"
+              suggestion={(value) => setDescription(value)}
+              placeholder="e.g. A description for a birthday party..."
+            />
           </div>
 
           <div className="flex flex-col gap-4 border border-zinc-200 rounded-lg p-4">

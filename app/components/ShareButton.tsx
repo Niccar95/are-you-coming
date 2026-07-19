@@ -22,9 +22,12 @@ const ShareButton = () => {
   };
 
   return (
-    <button onClick={handleShare} className="btn-outline-violet flex items-center gap-2 self-start">
+    <button
+      onClick={handleShare}
+      className="btn-outline-violet flex items-center gap-2 self-start"
+    >
       <Share2 size={16} />
-      Share event
+      Share
     </button>
   );
 };

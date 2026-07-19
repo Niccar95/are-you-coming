@@ -18,7 +18,7 @@ import { auth } from "@/auth";
 import EventActions from "@/app/components/EventActions";
 import QRCode from "@/app/components/QRCode";
 import { toPlainObject, toPlainObjects } from "@/app/utils/toPlainObject";
-import SendInvitationsButton from "@/app/components/SendInvitationsButton";
+import ReminderActions from "@/app/components/ReminderActions";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -188,12 +188,9 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         )}
 
         {session && (
-          <div className="flex gap-6 mt-6">
+          <div className="flex gap-3 mt-6">
             <ShareButton />
-            <SendInvitationsButton
-              attendees={allAttendees}
-              eventData={eventData}
-            />
+            <ReminderActions attendees={allAttendees} eventData={eventData} />
           </div>
         )}
 
