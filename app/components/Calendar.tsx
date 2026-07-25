@@ -14,6 +14,8 @@ import Link from "next/link";
 import { JSX, useCallback, useState } from "react";
 import useClickOutside from "../hooks/useClickOutside";
 import { EventType } from "../lib/types";
+import EventForm from "./EventForm";
+import { formatDateForUI } from "../utils/dateTimeFormatters";
 
 interface EventListProps {
   allEvents: EventType[];
@@ -25,6 +27,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
   const [showEventCard, setShowEventCard] = useState<boolean>(false);
   const [activeCellIndex, setActiveCellIndex] = useState<number | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<EventType[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const closePopup = useCallback(() => {
     setShowEventCard(false);
@@ -87,7 +90,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
     }
   };
 
-  const handleEventCard = (event: EventType[], key: number) => {
+  const handleEventCard = (event: EventType[], key: number, date: Date) => {
     if (key === activeCellIndex) {
       setShowEventCard(false);
       setActiveCellIndex(null);
@@ -95,6 +98,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
       setShowEventCard(true);
       setActiveCellIndex(key);
       setSelectedEvents(event);
+      setSelectedDate(date);
     }
   };
 
@@ -110,11 +114,13 @@ const Calendar = ({ allEvents }: EventListProps) => {
         new Date(item.eventDate).getFullYear() === year,
     );
 
+    const cellDate = new Date(year, monthIndex, monthDate);
+
     cellList.push(
       <div
         key={i}
-        className={`border border-zinc-100 p-1 md:p-2 h-20 md:h-28 text-xs md:text-sm transition-colors flex flex-col ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300" : "text-zinc-700"} ${events.length > 0 ? "cursor-pointer hover:border-violet-300" : ""} ${currentDate === monthDate && currentMonth === monthIndex && currentYear === year ? "bg-violet-50" : ""}`}
-        onClick={() => handleEventCard(events, i)}
+        className={`border border-zinc-100 p-1 md:p-2 h-20 md:h-28 text-xs md:text-sm transition-colors flex flex-col cursor-pointer ${i < firstMonthDay ? "bg-zinc-50 text-zinc-300 cursor-default!" : "text-zinc-700 hover:border-violet-200"} ${events.length > 0 ? " hover:border-violet-300" : ""} ${currentDate === monthDate && currentMonth === monthIndex && currentYear === year ? "bg-violet-50" : ""}`}
+        onClick={() => handleEventCard(events, i, cellDate)}
       >
         {monthDate > 0 && (
           <p className="font-medium flex items-center gap-1 shrink-0">
@@ -196,52 +202,92 @@ const Calendar = ({ allEvents }: EventListProps) => {
 
       {showEventCard && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div ref={popupRef} className="card w-full max-w-lg flex flex-col gap-3">
-            {selectedEvents.map((event) => (
-              <div key={event.id} className="flex flex-col gap-3">
-                <div className="flex items-start gap-4">
-                  {event.imageUrl ? (
-                    <Image
-                      src={event.imageUrl}
-                      alt={event.name}
-                      width={96}
-                      height={96}
-                      className="w-32 h-32 rounded-lg object-cover shrink-0"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center bg-violet-50 rounded-lg w-32 h-32 shrink-0">
-                      <CalendarDays size={40} className="text-violet-300" />
-                    </div>
-                  )}
-                  <div className="flex flex-col gap-2 min-w-0">
-                    <h3 className="text-subtitle line-clamp-2 md:line-clamp-1">{event.name}</h3>
-                    <div className="flex flex-wrap gap-2">
-                      <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
-                        <Clock size={12} />
-                        {new Date(event.eventDate).toLocaleTimeString("en-US", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: false,
-                          timeZone: "UTC",
-                        })}
-                      </time>
-                      {event.eventLocation && (
-                        <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
-                          <MapPin size={12} />
-                          {event.eventLocation}
-                        </span>
+          <div
+            ref={popupRef}
+            className="card flex flex-col w-full max-w-lg max-h-[90vh] overflow-y-auto gap-6"
+          >
+            {selectedEvents?.length > 0 ? (
+              selectedEvents.map((event) => (
+                <div key={event.id} className="flex flex-col gap-3">
+                  <div className="flex items-start gap-4">
+                    {event.imageUrl ? (
+                      <Image
+                        src={event.imageUrl}
+                        alt={event.name}
+                        width={96}
+                        height={96}
+                        className="w-32 h-32 rounded-lg object-cover shrink-0"
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center bg-violet-50 rounded-lg w-32 h-32 shrink-0">
+                        <CalendarDays size={40} className="text-violet-300" />
+                      </div>
+                    )}
+                    <div className="flex flex-col gap-2 min-w-0">
+                      <h3 className="text-subtitle line-clamp-2 md:line-clamp-1">
+                        {event.name}
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        <time
+                          dateTime={new Date(event.eventDate).toISOString()}
+                          className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate"
+                        >
+                          <CalendarDays size={12} />
+                          {formatDateForUI(selectedDate)}
+                        </time>
+                        <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
+                          <Clock size={12} />
+                          {new Date(event.eventDate).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: false,
+                              timeZone: "UTC",
+                            },
+                          )}
+                        </time>
+                        {event.eventLocation && (
+                          <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
+                            <MapPin size={12} />
+                            {event.eventLocation}
+                          </span>
+                        )}
+                      </div>
+                      {event.description && (
+                        <p className="text-body mt-3 line-clamp-2">
+                          {event.description}
+                        </p>
                       )}
                     </div>
-                    {event.description && (
-                      <p className="text-body mt-3 line-clamp-2">{event.description}</p>
-                    )}
                   </div>
+                  <Link
+                    href={`/events/${event.id}`}
+                    className="text-sm font-medium text-violet-600 hover:text-violet-700 transition-colors self-end"
+                  >
+                    View event →
+                  </Link>
                 </div>
-                <Link href={`/events/${event.id}`} className="text-sm font-medium text-violet-600 hover:text-violet-700 transition-colors self-end">
-                  View event →
-                </Link>
-              </div>
-            ))}
+              ))
+            ) : (
+              <>
+                {selectedDate && (
+                  <>
+                    <time
+                      dateTime={selectedDate.toISOString()}
+                      className="flex items-center gap-2 text-meta border-l-2 border-violet-500 pl-3 py-0.5"
+                    >
+                      <CalendarDays size={14} className="text-violet-500" />
+                      <span className="font-medium text-zinc-700">
+                        {formatDateForUI(selectedDate)}
+                      </span>
+                    </time>
+                  </>
+                )}
+              </>
+            )}
+
+            {selectedDate && <EventForm selectedDate={selectedDate} />}
           </div>
         </div>
       )}

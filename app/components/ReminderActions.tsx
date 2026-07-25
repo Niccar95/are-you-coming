@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { AttendeeType, EventType } from "../lib/types";
-import { CheckCircle, ListChecks, Send, X } from "lucide-react";
+import { CheckCircle, ListChecks, Pencil, Send, X } from "lucide-react";
 import useClickOutside from "../hooks/useClickOutside";
 import { EmailPreview } from "./EmailPreview";
 import Link from "next/link";
@@ -66,7 +66,10 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
             className="card w-full max-w-lg max-h-[90vh] overflow-y-auto"
           >
             <h3 className="text-subtitle mb-4">Manage reminders</h3>
-            <div className="mb-6">
+            <div className="flex flex-col gap-4 mb-6">
+              <h4 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                Attendee list
+              </h4>
               {attendees.map((attendee) => (
                 <div
                   key={attendee.id}
@@ -84,10 +87,18 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
               </h4>
 
               <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg p-6 shadow-even">
-                <div className="border-l-4 border-violet-500 pl-3 mb-6">
-                  <h1 className="text-xl font-bold text-zinc-700 dark:text-white tracking-wide">
-                    Event reminder!
-                  </h1>
+                <div className="flex justify-between items-start">
+                  <div className="border-l-4 border-violet-500 pl-3 mb-6">
+                    <h1 className="text-xl font-bold text-zinc-700 dark:text-white tracking-wide">
+                      Event reminder!
+                    </h1>
+                  </div>
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="btn-secondary py-1.5! px-2! md:py-1! md:px-1.5! bg-white! text-zinc-700! hover:bg-zinc-100!"
+                  >
+                    <Pencil size={16} className="md:w-3.5 md:h-3.5" />
+                  </button>
                 </div>
 
                 <EmailPreview eventData={eventData} />

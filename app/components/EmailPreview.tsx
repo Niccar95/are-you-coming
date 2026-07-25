@@ -16,7 +16,7 @@ export const EmailPreview = ({ eventData }: PreviewProps) => {
   );
 
   return (
-    <div className="text-body">
+    <div className="text-body relative">
       <p className="pb-6">
         Here&apos;s a reminder that you have been invited to the upcoming event:
       </p>

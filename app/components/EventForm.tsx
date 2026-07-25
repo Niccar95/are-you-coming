@@ -1,15 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useCallback, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Plus, X, CalendarPlus, ImagePlus, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import { upload } from "@vercel/blob/client";
 import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
 import MiniAssistant from "./MiniAssistant";
+import { formatDate, formatDateToUtc } from "../utils/dateTimeFormatters";
 
-const EventForm = () => {
+interface FormProps {
+  selectedDate?: Date;
+}
+
+const EventForm = ({ selectedDate }: FormProps) => {
   const router = useRouter();
   const [eventName, setEventName] = useState<string>("");
   const [eventDate, setEventDate] = useState<string>("");
@@ -28,6 +33,12 @@ const EventForm = () => {
   const [openDescriptionAssistant, setOpenDescriptionAssistant] =
     useState<boolean>(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (selectedDate) {
+      setEventDate(formatDate(selectedDate));
+    }
+  }, [selectedDate]);
 
   const toggleEventForm = () => {
     setOpenEventForm(!openEventForm);
@@ -56,11 +67,7 @@ const EventForm = () => {
     setLoading(true);
 
     try {
-      const localDate = new Date(eventDate);
-
-      const utcDate = new Date(
-        localDate.getTime() - localDate.getTimezoneOffset() * 60000,
-      );
+      const utcDate = formatDateToUtc(eventDate);
 
       let imageUrl: string | null = null;
       const file = inputFileRef.current?.files?.[0];
@@ -173,6 +180,7 @@ const EventForm = () => {
                 <label htmlFor="eventDate" className="form-label">
                   Event Date <span className="text-red-500">*</span>
                 </label>
+
                 <input
                   id="eventDate"
                   value={eventDate}
