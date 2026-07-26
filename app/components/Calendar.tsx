@@ -204,10 +204,23 @@ const Calendar = ({ allEvents }: EventListProps) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
           <div
             ref={popupRef}
-            className="card flex flex-col w-full max-w-lg max-h-[90vh] overflow-y-auto gap-6"
+            className="card flex flex-col w-full max-w-lg max-h-[90vh] gap-3"
           >
-            {selectedEvents?.length > 0 ? (
-              selectedEvents.map((event) => (
+            <h3 className="text-subtitle mb-2">
+              {selectedDate && (
+                <time
+                  dateTime={selectedDate.toISOString()}
+                  className="flex items-center gap-2 border-l-2 border-violet-500 pl-3 py-0.5"
+                >
+                  <CalendarDays size={14} className="text-violet-500" />
+                  <span className="font-medium text-zinc-700">
+                    {formatDateForUI(selectedDate)}
+                  </span>
+                </time>
+              )}
+            </h3>
+            <div className="flex flex-col gap-6 overflow-y-auto">
+              {selectedEvents?.map((event) => (
                 <div key={event.id} className="flex flex-col gap-3">
                   <div className="flex items-start gap-4">
                     {event.imageUrl ? (
@@ -268,25 +281,8 @@ const Calendar = ({ allEvents }: EventListProps) => {
                     View event →
                   </Link>
                 </div>
-              ))
-            ) : (
-              <>
-                {selectedDate && (
-                  <>
-                    <time
-                      dateTime={selectedDate.toISOString()}
-                      className="flex items-center gap-2 text-meta border-l-2 border-violet-500 pl-3 py-0.5"
-                    >
-                      <CalendarDays size={14} className="text-violet-500" />
-                      <span className="font-medium text-zinc-700">
-                        {formatDateForUI(selectedDate)}
-                      </span>
-                    </time>
-                  </>
-                )}
-              </>
-            )}
-
+              ))}
+            </div>
             {selectedDate && <EventForm selectedDate={selectedDate} />}
           </div>
         </div>
