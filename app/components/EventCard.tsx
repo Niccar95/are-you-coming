@@ -1,6 +1,7 @@
 import { CalendarDays } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { formatDateForUI } from "../utils/dateTimeFormatters";
 
 interface EventProps {
   id: number;
@@ -46,12 +47,7 @@ const EventCard = ({
             className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate"
           >
             <CalendarDays size={12} />
-            {new Date(eventDate).toLocaleDateString("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {formatDateForUI(eventDate)}
           </time>
           {description && (
             <p className="text-body mt-3 line-clamp-2">{description}</p>

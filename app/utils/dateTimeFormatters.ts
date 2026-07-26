@@ -30,3 +30,16 @@ export const formatDateForUI = (date?: Date | string | null): string => {
     day: "numeric",
   });
 };
+
+export const formatTimeForUI = (time?: Date | string | null): string => {
+  if (!time) return "";
+
+  const parsedTime = typeof time === "string" ? new Date(time) : time;
+
+  return parsedTime.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "UTC",
+  });
+};

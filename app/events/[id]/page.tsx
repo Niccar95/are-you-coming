@@ -19,6 +19,10 @@ import EventActions from "@/app/components/EventActions";
 import QRCode from "@/app/components/QRCode";
 import { toPlainObject, toPlainObjects } from "@/app/utils/toPlainObject";
 import ReminderActions from "@/app/components/ReminderActions";
+import {
+  formatDateForUI,
+  formatTimeForUI,
+} from "@/app/utils/dateTimeFormatters";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -87,21 +91,12 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full"
               >
                 <CalendarDays size={12} />
-                {new Date(event.eventDate).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                {formatDateForUI(eventData.eventDate)}
               </time>
+
               <time className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full">
                 <Clock size={12} />
-                {new Date(event.eventDate).toLocaleTimeString("en-US", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                  timeZone: "UTC",
-                })}
+                {formatTimeForUI(eventData.eventDate)}
               </time>
               {event.eventLocation && (
                 <p className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full m-0 max-w-full truncate">
@@ -139,21 +134,11 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
               >
                 <CalendarDays size={12} />
-                {new Date(event.eventDate).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                {formatDateForUI(eventData.eventDate)}
               </time>
               <time className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full">
                 <Clock size={12} />
-                {new Date(event.eventDate).toLocaleTimeString("en-US", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                  timeZone: "UTC",
-                })}
+                {formatTimeForUI(eventData.eventDate)}
               </time>
               {event.eventLocation && (
                 <p className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full m-0 max-w-full truncate">

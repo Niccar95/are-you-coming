@@ -15,7 +15,7 @@ import { JSX, useCallback, useState } from "react";
 import useClickOutside from "../hooks/useClickOutside";
 import { EventType } from "../lib/types";
 import EventForm from "./EventForm";
-import { formatDateForUI } from "../utils/dateTimeFormatters";
+import { formatDateForUI, formatTimeForUI } from "../utils/dateTimeFormatters";
 
 interface EventListProps {
   allEvents: EventType[];
@@ -213,9 +213,8 @@ const Calendar = ({ allEvents }: EventListProps) => {
                   className="flex items-center gap-2 border-l-2 border-violet-500 pl-3 py-0.5"
                 >
                   <CalendarDays size={14} className="text-violet-500" />
-                  <span className="font-medium text-zinc-700">
-                    {formatDateForUI(selectedDate)}
-                  </span>
+
+                  {formatDateForUI(selectedDate)}
                 </time>
               )}
             </h3>
@@ -246,19 +245,11 @@ const Calendar = ({ allEvents }: EventListProps) => {
                           className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate"
                         >
                           <CalendarDays size={12} />
-                          {formatDateForUI(selectedDate)}
+                          {formatDateForUI(event.eventDate)}
                         </time>
                         <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
                           <Clock size={12} />
-                          {new Date(event.eventDate).toLocaleTimeString(
-                            "en-US",
-                            {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                              hour12: false,
-                              timeZone: "UTC",
-                            },
-                          )}
+                          {formatTimeForUI(event.eventDate)}
                         </time>
                         {event.eventLocation && (
                           <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
