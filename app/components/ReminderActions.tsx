@@ -27,8 +27,8 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
   const eventLink = `${baseUrl}/events/${eventData.id}`;
 
   const sendReminders = async () => {
-    setSending(true);
     setMessage("");
+    setSending(true);
 
     try {
       const response = await fetch("/api/invitations", {
@@ -71,15 +71,19 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
                 <h4 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                   Attendee list
                 </h4>
-                {attendees.map((attendee) => (
-                  <div
-                    key={attendee.id}
-                    className="flex justify-between items-center py-2 border-b border-zinc-200 dark:border-zinc-700"
-                  >
-                    <p className="text-body font-medium">{attendee.name}</p>
-                    <p className="text-meta">{attendee.email}</p>
-                  </div>
-                ))}
+                {attendees.length > 0 ? (
+                  attendees.map((attendee) => (
+                    <div
+                      key={attendee.id}
+                      className="flex justify-between items-center py-2 border-b border-zinc-200 dark:border-zinc-700"
+                    >
+                      <p className="text-body font-medium">{attendee.name}</p>
+                      <p className="text-meta">{attendee.email}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-subtle">No Attendees</p>
+                )}
               </div>
 
               <div className="flex flex-col gap-4 mb-6">
@@ -117,10 +121,10 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
               </div>
               {message && (
                 <p
-                  className={`flex items-center gap-2 text-sm mb-4 ${
+                  className={`flex items-center gap-2 text-sm text-violet-600 ${
                     message.includes("Successfully")
-                      ? "text-green-600 dark:text-green-400"
-                      : "text-red-500 dark:text-red-400"
+                      ? "text-green-600"
+                      : "text-xs text-red-500"
                   }`}
                 >
                   {message.includes("Successfully") && (
@@ -129,10 +133,16 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
                   {message}
                 </p>
               )}
+
+              {attendees.length === 0 && (
+                <p className="text-subtle">
+                  Add at least one attendee to send reminders.
+                </p>
+              )}
               <div className="flex gap-3">
                 <button
                   onClick={sendReminders}
-                  disabled={sending || !attendees.length}
+                  disabled={sending || attendees.length === 0}
                   className="btn-primary flex items-center gap-2"
                 >
                   <Send size={16} /> {sending ? "Sending..." : "Send"}

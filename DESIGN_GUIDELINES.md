@@ -90,6 +90,53 @@ Success messages: `flex items-center gap-2 text-sm text-violet-600` + icon
 
 ---
 
+## Form Validation & Disabled States
+
+---
+
+## Core Principle
+
+Never use `disabled` for validation logic.
+Use it ONLY for system state.
+
+---
+
+## Disabled State (System Only)
+
+Use `disabled` on submit/send buttons when the action is physically not allowed by the system.
+
+### Examples:
+
+- `sending === true`
+- `attendees.length === 0` (no possible action exists)
+- network / API in progress
+
+### UX Rule:
+
+If disabled, the user should feel:
+
+> “this is not available right now”
+
+---
+
+## Error State (Validation Only)
+
+Use errors for EVERYTHING related to input validation.
+
+### Examples:
+
+- empty required fields
+- invalid date
+- backend rejection
+
+### UX Rule:
+
+User always sees:
+
+> “fix this input”
+
+---
+
 ## Pills / Badges
 
 Used for dates, times, locations throughout:

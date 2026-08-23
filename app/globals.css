@@ -43,7 +43,15 @@ button, input, textarea, select {
 
 
 .btn-primary {
-  @apply bg-violet-500 hover:bg-violet-600 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 cursor-pointer;
+  @apply bg-violet-500 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 cursor-pointer;
+}
+
+.btn-primary:hover:not(:disabled) {
+  @apply bg-violet-600;
+}
+
+.btn-primary:disabled {
+  @apply opacity-40 cursor-not-allowed;
 }
 
 .btn-secondary {
