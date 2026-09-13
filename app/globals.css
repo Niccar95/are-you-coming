@@ -123,7 +123,7 @@ button, input, textarea, select {
 }
 
 .countdown-box {
-  @apply flex flex-col items-center bg-linear-to-br from-violet-400 to-violet-600 rounded-lg p-3 shadow-lg md:min-w-[70px];
+  @apply flex flex-col items-center bg-linear-to-br from-violet-400 to-violet-600 rounded-lg p-3 shadow-lg md:min-w-17.5;
 }
 
 .countdown-number {

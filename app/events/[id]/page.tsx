@@ -201,7 +201,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         (event.isAFutureDate() ? (
           <AttendeeForm eventId={event.id} />
         ) : (
-          <div className="card w-1/2 flex flex-col items-center gap-3 text-center">
+          <div className="card md:w-1/2 flex flex-col items-center gap-3 text-center">
             <p className="text-body">
               You can no longer sign up to this event.
             </p>

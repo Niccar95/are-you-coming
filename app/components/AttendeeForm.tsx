@@ -52,7 +52,7 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
 
   if (submitted) {
     return (
-      <div className="card w-1/2 flex flex-col items-center gap-3 text-center">
+      <div className="card md:w-1/2 flex flex-col items-center gap-3 text-center">
         <h3 className="text-title flex items-center justify-center gap-2">
           You&apos;re in! <CheckCircle size={20} className="text-violet-500" />
         </h3>
