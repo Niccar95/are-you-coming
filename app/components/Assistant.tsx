@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SendHorizonal, X } from "lucide-react";
 import Image from "next/image";
 
@@ -27,7 +27,7 @@ const Assistant = () => {
     }
   };
 
-  const handlePrompt = async (e: FormEvent) => {
+  const handlePrompt = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -103,7 +103,7 @@ const Assistant = () => {
 
           <div
             ref={bottomRef}
-            className="flex flex-col h-[200px] rounded-t-lg border-[0.5px] border-zinc-200 bg-zinc-50 p-3 gap-2 overflow-auto"
+            className="flex flex-col h-50 rounded-t-lg border-[0.5px] border-zinc-200 bg-zinc-50 p-3 gap-2 overflow-auto"
           >
             {visiblePrompts.map((visiblePrompt, i) => (
               <article

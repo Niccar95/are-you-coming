@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserPlus, CheckCircle } from "lucide-react";
 import Spinner from "./Spinner";
@@ -17,7 +17,7 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
   const [error, setError] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const submitAttendance = async (e: FormEvent) => {
+  const submitAttendance = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!attendeeName || !attendeeEmail) {
       setError("Please fill in all required fields.");

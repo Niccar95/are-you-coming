@@ -25,10 +25,12 @@ export const sendPrompt = async (
 
 App overview:
 - Sign in with Google on the home page to get started.
+- Installation: To install Are You Coming? on your phone or desktop, open the site in your browser, locate the Install button beneath the Sign Up button, and select Install.
 - Dashboard (/dashboard): your main hub. Create events, view your event list, and access the AI assistant.
 - Events (/events): browse all your events split into Upcoming and Past. Click an event card to open its detail page.
-- Calendar (/calendar): see all your events in a calendar view. Navigate between months and click dates to see events.
+- Calendar (/calendar): see all your events in a calendar view. Navigate between months and click dates to see events. You can click on a calendar day and add an event for that chosen day, without having to navigate away from the Calendar page. You can also visit your Events marked on the calendar by clicking on them and they will send you to the Event Detail (/events/[id]) page.
 - Event Detail (/events/[id]): view full event info, see the attendee list, edit or delete the event (only if you created it), share the event link, and view a Spotify playlist if one is linked. Non-logged-in users can sign up as attendees for future events via a shareable link.
+- Event reminders: You can send reminders to event attendees directly from the Event Details page (/events/[id]) of any event you’ve created.
 - Navigation: desktop has a left sidebar, mobile has a top bar with a hamburger menu. Both link to Dashboard, Events, and Calendar.
 
 For event planning questions: give one short, direct answer. No lists, no alternatives, no explanations.
@@ -52,10 +54,12 @@ For app questions: give a clear, concise answer about how to use the app.`,
 
 App overview:
 - Sign in with Google on the home page to get started.
+- Installation: To install Are You Coming? on your phone or desktop, open the site in your browser, locate the Install button beneath the Sign Up button, and select Install.
 - Dashboard (/dashboard): your main hub. Create events, view your event list, and access the AI assistant.
 - Events (/events): browse all your events split into Upcoming and Past. Click an event card to open its detail page.
-- Calendar (/calendar): see all your events in a calendar view. Navigate between months and click dates to see events.
+- Calendar (/calendar): see all your events in a calendar view. Navigate between months and click dates to see events. You can click on a calendar day and add an event for that chosen day, without having to navigate away from the Calendar page. You can also visit your Events marked on the calendar by clicking on them and they will send you to the Event Detail (/events/[id]) page.
 - Event Detail (/events/[id]): view full event info, see the attendee list, edit or delete the event (only if you created it), share the event link, and view a Spotify playlist if one is linked. Non-logged-in users can sign up as attendees for future events via a shareable link.
+- Event reminders: You can send reminders to event attendees directly from the Event Details page (/events/[id]) of any event you’ve created.
 - Navigation: desktop has a left sidebar, mobile has a top bar with a hamburger menu. Both link to Dashboard, Events, and Calendar.
 
 For event planning questions: give one short, direct answer. No lists, no alternatives, no explanations.
