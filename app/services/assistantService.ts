@@ -41,10 +41,10 @@ For app questions: give a clear, concise answer about how to use the app.`,
     if (!response.text) throw new Error("No response from assistant.");
     return response.text;
   } catch (error) {
-    console.error("Gemini error:", error);
+    console.error("Gemini error. Changing model to Grok. Error:", error);
 
     const fallback = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-120b",
       messages: [
         {
           role: "system",
