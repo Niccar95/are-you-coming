@@ -164,12 +164,12 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         )}
         {event.description && (
-          <>
+          <div>
             <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
               <FileText size={18} /> Event description
             </h2>
             <p className="text-body leading-relaxed">{event.description}</p>
-          </>
+          </div>
         )}
 
         {session && (
@@ -246,6 +246,17 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         </div>
       )}
+
+      <div>
+        <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
+          <MapPin size={18} /> Event Location
+        </h2>
+        <iframe
+          src={`https://maps.google.com/maps?q=${event.eventLocation}&output=embed`}
+          className="w-full h-87.5 border border-zinc-200 rounded-lg"
+          aria-hidden="true"
+        />
+      </div>
     </div>
   );
 };

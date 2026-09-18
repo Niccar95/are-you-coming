@@ -28,8 +28,8 @@ Text truncation: `truncate` (single line), `line-clamp-1` / `line-clamp-2` (mult
 | Soft accent | `violet-50/100`  | Backgrounds, pill badges, hover fills             |
 | Text accent | `violet-700`     | Pill text, active nav links                       |
 | Neutral bg  | `zinc-50/100`    | Page backgrounds, disabled/empty states           |
-| Borders     | `zinc-200/300`   | Cards, inputs, dividers                           |
-| Text dark   | `zinc-700/800`   | Headings and body text                            |
+| Borders     | `zinc-200/300`   | Cards, inputs, dividers, sections                 |
+| Text dark   | `zinc-700`       | Headings and body text                            |
 | Text muted  | `zinc-500`       | Metadata, placeholders                            |
 | Danger      | `red-500/600`    | Delete buttons                                    |
 | Overlay     | `bg-black/40`    | Modal backdrop. `bg-black/60` for heavier overlay |
