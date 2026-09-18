@@ -32,7 +32,7 @@ A simple event planning app. Create events, share them with friends, and let the
 
 ## AI — Aria
 
-Aria is a context aware AI assistant built into the app, powered by **Google Gemini 2.5 Flash** with automatic fallback to **Llama 3.3 70B via Groq** if the primary model is unavailable.
+Aria is a context aware AI assistant built into the app, powered by **Google Gemini 2.5 Flash** with automatic fallback to **openai/gpt-oss-120b via Groq** if the primary model is unavailable.
 
 Aria operates in two modes:
 
