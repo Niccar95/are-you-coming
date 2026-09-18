@@ -9,6 +9,7 @@ import {
 import EventCard from "../components/EventCard";
 import UpcomingEvents from "../components/UpcomingEvents";
 import { toPlainObjects } from "../utils/toPlainObject";
+import PastEvents from "../components/PastEvents";
 
 const EventsPage = async ({
   searchParams,
@@ -42,23 +43,7 @@ const EventsPage = async ({
         <Suspense>
           <SortControls section="past" />
         </Suspense>
-        {pastEvents.length === 0 ? (
-          <p className="text-meta">No past events to show.</p>
-        ) : (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 list-none">
-            {pastEvents.map((event) => (
-              <li key={event.id} className="grayscale opacity-80">
-                <EventCard
-                  id={event.id}
-                  name={event.name}
-                  eventDate={event.eventDate}
-                  description={event.description}
-                  imageUrl={event.imageUrl}
-                />
-              </li>
-            ))}
-          </ul>
-        )}
+        <PastEvents events={pastEvents} />
       </section>
     </div>
   );

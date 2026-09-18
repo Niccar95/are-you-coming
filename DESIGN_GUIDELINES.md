@@ -51,11 +51,11 @@ Size overrides use `!` suffix: `py-1! px-1.5! md:py-1.5! md:px-2.5!`
 
 ## Cards & Surfaces
 
-| Class          | Usage                                                         |
-| -------------- | ------------------------------------------------------------- |
-| `.card`        | Content cards — `p-6 bg-white rounded-lg`                     |
-| `.form-card`   | Form modals — `p-3 bg-white rounded-lg`                       |
-| `.shadow-even` | Applied to all cards — `box-shadow: 0 0 15px rgba(0,0,0,0.1)` |
+| Class          | Usage                                                                                          |
+| -------------- | ---------------------------------------------------------------------------------------------- |
+| `.card`        | Content cards — `p-6 bg-white rounded-lg`                                                      |
+| `.form-card`   | Form modals — `p-3 bg-white rounded-lg`                                                        |
+| `.shadow-even` | Applied to all types of containers that are not cards — `box-shadow: 0 0 15px rgba(0,0,0,0.1)` |
 
 All cards: white background, `rounded-lg`, `shadow-even`. Dark mode: `dark:bg-zinc-900`.
 

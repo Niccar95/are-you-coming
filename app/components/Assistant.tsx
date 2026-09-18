@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SendHorizonal, X } from "lucide-react";
 import Image from "next/image";
 
@@ -27,7 +27,7 @@ const Assistant = () => {
     }
   };
 
-  const handlePrompt = async (e: FormEvent) => {
+  const handlePrompt = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -84,7 +84,7 @@ const Assistant = () => {
       </div>
 
       {openChat && (
-        <div className="card flex flex-col fixed h-fit w-[90%] left-1/2 -translate-x-1/2 bottom-25 md:bottom-30 md:right-10 md:translate-x-0 md:left-auto md:w-[400px] pt-0!">
+        <div className="card flex flex-col fixed h-fit w-[90%] left-1/2 -translate-x-1/2 bottom-25 md:bottom-30 md:right-10 md:translate-x-0 md:left-auto md:w-100 pt-0!">
           <div className="w-full h-fit px-0 py-6 flex items-center gap-2">
             <Image
               src="/AI-assistant.svg"
@@ -103,7 +103,7 @@ const Assistant = () => {
 
           <div
             ref={bottomRef}
-            className="flex flex-col h-[200px] rounded-t-lg border-[0.5px] border-zinc-200 bg-zinc-50 p-3 gap-2 overflow-auto"
+            className="flex flex-col h-50 rounded-t-lg border-[0.5px] border-zinc-200 bg-zinc-50 p-3 gap-2 overflow-auto"
           >
             {visiblePrompts.map((visiblePrompt, i) => (
               <article

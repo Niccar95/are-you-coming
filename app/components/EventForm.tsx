@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Plus, X, CalendarPlus, ImagePlus, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import { upload } from "@vercel/blob/client";
@@ -44,7 +44,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
     setOpenEventForm(!openEventForm);
   };
 
-  const addNewEvent = async (e: FormEvent) => {
+  const addNewEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!eventName || !eventDate || !description || !eventLocation) {
       setError("Please fill in all required fields.");

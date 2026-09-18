@@ -15,7 +15,7 @@ const Events = ({ allEvents }: EventListProps) => {
       <h2 className="text-title mb-4">My latest Events</h2>
       <ul className="flex gap-4 overflow-x-auto scrollbar-hide list-none p-2">
         {allEvents.slice(0, 3).map((event) => (
-          <li key={event.id} className="w-[300px] shrink-0">
+          <li key={event.id} className="w-75 shrink-0">
             <EventCard
               id={event.id}
               name={event.name}

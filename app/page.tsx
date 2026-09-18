@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SignInButton from "./components/SignInButton";
+import InstallCard from "./components/InstallCard";
 
 const HomePage = () => {
   return (
@@ -17,6 +18,7 @@ const HomePage = () => {
       <span className="animate-fade-in-up animation-delay-600">
         <SignInButton />
       </span>
+      <InstallCard />
     </section>
   );
 };

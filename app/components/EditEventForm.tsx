@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import MiniAssistant from "./MiniAssistant";
 import { useRouter } from "next/navigation";
 import { X, Save, ImagePlus } from "lucide-react";
@@ -56,7 +56,7 @@ const EditEventForm = ({
   const inputFileRef = useRef<HTMLInputElement>(null);
   const modalRef = useClickOutside(true, onClose);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!eventName || !eventDate || !description || !eventLocation) {
