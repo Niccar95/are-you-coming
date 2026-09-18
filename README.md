@@ -15,16 +15,17 @@ A simple event planning app. Create events, share them with friends, and let the
 - **[Lucide React](https://lucide.dev)** — icons
 - **[Vercel](https://vercel.com)** — deployment
 - **[Google Gemini 2.5 Flash](https://deepmind.google/technologies/gemini/)** — primary AI model
-- **[Groq](https://groq.com)** (Llama 3.3 70B) — AI fallback
+- **[Groq](https://groq.com)** (openai/gpt-oss-120b) — AI fallback
 
 ## Features
 
 - Google sign-in
+- Are You Coming? is a Progressive Web App (PWA). You can install it on your phone or desktop to add a app icon to your home screen or desktop for quick access
 - Create events with a name, date, description, and optional image
 - Share event pages with guests, with no account required to RSVP
 - Live countdown timer on each event
 - Attendee list with email reminders
-- Calendar view with events highlighted on the right day. Built from scratch, no calendar library.
+- Calendar view with events highlighted on the right day. Built from scratch, no calendar library
 - AI assistant (Aria) for event planning help and app navigation
 - Inline AI suggestions for event name and description fields directly in the form
 - Spotify playlist embed with QR code and collaborator invite link on each event page
