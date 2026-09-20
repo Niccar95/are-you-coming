@@ -17,7 +17,9 @@ interface FormProps {
 const EventForm = ({ selectedDate }: FormProps) => {
   const router = useRouter();
   const [eventName, setEventName] = useState<string>("");
-  const [eventDate, setEventDate] = useState<string>("");
+  const [eventDate, setEventDate] = useState<string>(
+    selectedDate ? formatDate(selectedDate) : "",
+  );
   const [description, setDescription] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [eventLocation, setEventLocation] = useState<string>("");
@@ -33,12 +35,6 @@ const EventForm = ({ selectedDate }: FormProps) => {
   const [openDescriptionAssistant, setOpenDescriptionAssistant] =
     useState<boolean>(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (selectedDate) {
-      setEventDate(formatDate(selectedDate));
-    }
-  }, [selectedDate]);
 
   const toggleEventForm = () => {
     setOpenEventForm(!openEventForm);
@@ -84,7 +80,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: eventName,
-          event_date: utcDate,
+          event_date: utcDate.toISOString(),
           description: description,
           image_url: imageUrl,
           spotify_url: spotifyUrl,

@@ -8,6 +8,7 @@ import Image from "next/image";
 import { upload } from "@vercel/blob/client";
 import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
+import { formatDateToUtc } from "../utils/dateTimeFormatters";
 
 interface EditEventFormProps {
   id: number;
@@ -84,11 +85,7 @@ const EditEventForm = ({
     let imageUrl: string | null = initialImageUrl;
 
     try {
-      const localDate = new Date(eventDate);
-
-      const utcDate = new Date(
-        localDate.getTime() - localDate.getTimezoneOffset() * 60000,
-      );
+      const utcDate = formatDateToUtc(eventDate);
 
       const file = inputFileRef.current?.files?.[0];
       if (file) {

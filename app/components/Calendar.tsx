@@ -274,7 +274,12 @@ const Calendar = ({ allEvents }: EventListProps) => {
                 </div>
               ))}
             </div>
-            {selectedDate && <EventForm selectedDate={selectedDate} />}
+            {selectedDate && (
+              <EventForm
+                key={selectedDate.toISOString()}
+                selectedDate={selectedDate}
+              />
+            )}
           </div>
         </div>
       )}

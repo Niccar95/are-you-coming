@@ -9,14 +9,6 @@ export class AttendeeClass {
     this.email = email;
   }
 
-  displayName(): string {
-    return `${this.name} (${this.email})`;
-  }
-
-  hasValidEmail(): boolean {
-    return !!this.email && /\S+@\S+\.\S+/.test(this.email);
-  }
-
   toJSON() {
     return {
       id: this.id,

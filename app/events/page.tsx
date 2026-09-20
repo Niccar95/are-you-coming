@@ -6,7 +6,6 @@ import {
   filterUpcomingEvents,
   filterPastEvents,
 } from "../utils/eventFiltering";
-import EventCard from "../components/EventCard";
 import UpcomingEvents from "../components/UpcomingEvents";
 import { toPlainObjects } from "../utils/toPlainObject";
 import PastEvents from "../components/PastEvents";

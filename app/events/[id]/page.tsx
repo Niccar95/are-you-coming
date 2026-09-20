@@ -33,10 +33,10 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const allAttendees = toPlainObjects(eventAttendees);
 
-  const playlistId = event?.spotifyUrl?.split("/").at(-1)?.split("?")[0];
-
   //Converting this to plain object to send to the EventActions
   const eventData = toPlainObject(event);
+
+  const playlistId = event?.spotifyUrl?.split("/").at(-1)?.split("?")[0];
 
   if (!event) {
     return <p>Event not found.</p>;
@@ -172,12 +172,24 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         )}
 
-        {session && (
-          <div className="flex gap-3 mt-6">
+        <div className="flex flex-col md:flex-row items-center gap-3 mt-6">
+          <a
+            href={event.getGoogleCalendarUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full md:w-auto flex items-center justify-center btn-outline-violet gap-2"
+          >
+            <CalendarDays size={16} />
+            Add to Google Calendar
+          </a>
+
+          <div className="flex items-center gap-3 w-full md:w-auto">
             <ShareButton />
-            <ReminderActions attendees={allAttendees} eventData={eventData} />
+            {session && (
+              <ReminderActions attendees={allAttendees} eventData={eventData} />
+            )}
           </div>
-        )}
+        </div>
 
         <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
           <Users size={18} /> Attendees

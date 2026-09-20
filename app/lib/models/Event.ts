@@ -34,16 +34,33 @@ export class EventClass {
     this.hostName = hostName;
   }
 
-  displayEvent(): string {
-    return `${this.name} (${this.eventDate})`;
-  }
-
   hasValidDate(): boolean {
     return this.eventDate instanceof Date && !isNaN(this.eventDate.getTime());
   }
 
   isAFutureDate(): boolean {
     return this.hasValidDate() && this.eventDate > new Date();
+  }
+
+  getGoogleCalendarUrl(durationHours: number = 2): string {
+    const start = new Date(this.eventDate);
+    const end = new Date(start.getTime() + durationHours * 60 * 60 * 1000);
+
+    const formatGoogleCalendarDate = (d: Date) => {
+      const pad = (n: number) => String(n).padStart(2, "0");
+
+      return `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}`;
+    };
+
+    const params = new URLSearchParams({
+      action: "TEMPLATE",
+      text: this.name,
+      dates: `${formatGoogleCalendarDate(start)}/${formatGoogleCalendarDate(end)}`,
+      details: this.description || "",
+      location: this.eventLocation || "",
+    });
+
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
   }
 
   toJSON() {
