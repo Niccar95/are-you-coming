@@ -35,7 +35,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const playlistId = event?.spotifyUrl?.split("/").at(-1)?.split("?")[0];
 
-  //Converting this to plain object to send to the InvitationButton
+  //Converting this to plain object to send to the EventActions
   const eventData = toPlainObject(event);
 
   if (!event) {
@@ -181,11 +181,9 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
           <Users size={18} /> Attendees
-          {eventAttendees.length > 0 && (
-            <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
-              {eventAttendees.length}
-            </span>
-          )}
+          <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
+            {eventAttendees?.length ?? 0}
+          </span>
         </h2>
         {eventAttendees.length > 0 ? (
           <ul className="flex gap-1 md:w-1/2 overflow-x-auto scrollbar-hide list-none">

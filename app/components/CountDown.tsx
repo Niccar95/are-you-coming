@@ -43,28 +43,36 @@ const CountDown = ({ eventDate }: DateProps) => {
   }, [target]);
 
   if (timeLeft.expired) {
-    return <div className="countdown-expired">🎉 IT&apos;S PARTY TIME! 🎉</div>;
+    const today = new Date().toDateString();
+    const eventDay = eventDate.toDateString();
+
+    if (eventDay === today) {
+      return <div className="countdown-expired">EVENT HAS STARTED</div>;
+    }
+
+    return <div className="countdown-expired">EVENT HAS PASSED</div>;
   }
 
-  return (
-    <div className="countdown-wrapper">
-      <div className="countdown-box">
-        <p className="countdown-number">{timeLeft.days}</p>
-        <p className="countdown-label">Days</p>
+  if (timeLeft)
+    return (
+      <div className="countdown-wrapper">
+        <div className="countdown-box">
+          <p className="countdown-number">{timeLeft.days}</p>
+          <p className="countdown-label">Days</p>
+        </div>
+        <div className="countdown-box">
+          <p className="countdown-number">{timeLeft.hours}</p>
+          <p className="countdown-label">Hours</p>
+        </div>
+        <div className="countdown-box">
+          <p className="countdown-number">{timeLeft.minutes}</p>
+          <p className="countdown-label">Minutes</p>
+        </div>
+        <div className="countdown-box">
+          <p className="countdown-number">{timeLeft.seconds}</p>
+          <p className="countdown-label">Seconds</p>
+        </div>
       </div>
-      <div className="countdown-box">
-        <p className="countdown-number">{timeLeft.hours}</p>
-        <p className="countdown-label">Hours</p>
-      </div>
-      <div className="countdown-box">
-        <p className="countdown-number">{timeLeft.minutes}</p>
-        <p className="countdown-label">Minutes</p>
-      </div>
-      <div className="countdown-box">
-        <p className="countdown-number">{timeLeft.seconds}</p>
-        <p className="countdown-label">Seconds</p>
-      </div>
-    </div>
-  );
+    );
 };
 export default CountDown;
