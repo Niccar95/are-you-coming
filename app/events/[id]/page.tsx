@@ -172,12 +172,12 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         )}
 
-        <div className="flex flex-col md:flex-row items-center gap-3 mt-6">
+        <div className="flex flex-col md:flex-row gap-3 mt-6">
           <a
             href={event.getGoogleCalendarUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full md:w-auto flex items-center justify-center btn-outline-violet gap-2"
+            className="flex items-center self-start btn-outline-violet gap-2"
           >
             <CalendarDays size={16} />
             Add to Google Calendar
