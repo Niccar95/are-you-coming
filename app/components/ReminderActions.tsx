@@ -54,7 +54,7 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
     <>
       <button
         onClick={() => setIsEditing(!isEditing)}
-        className="btn-primary flex items-center gap-2"
+        className="btn-primary flex items-center gap-2 self-start"
       >
         <ListChecks size={16} /> Manage reminders
       </button>

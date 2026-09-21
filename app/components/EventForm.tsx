@@ -116,7 +116,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
       {loading && <Spinner />}
       <button
         onClick={toggleEventForm}
-        className="btn-outline-violet flex items-center gap-2"
+        className="btn-outline-violet flex items-center gap-2 self-start"
       >
         <Plus size={16} />
         New Event
@@ -309,7 +309,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
               <div className="flex justify-between md:justify-start gap-3 mt-2">
                 <button
                   type="submit"
-                  className="btn-primary flex items-center gap-2"
+                  className="btn-primary flex items-center gap-2 self-start"
                 >
                   <CalendarPlus size={16} />
                   Create Event
@@ -317,7 +317,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
                 <button
                   type="button"
                   onClick={() => setOpenEventForm(false)}
-                  className="btn-secondary flex items-center gap-2"
+                  className="btn-secondary flex items-center gap-2 self start"
                 >
                   <X size={16} />
                   Cancel

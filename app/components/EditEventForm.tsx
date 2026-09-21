@@ -304,7 +304,7 @@ const EditEventForm = ({
           <div className="flex justify-between md:justify-start gap-3 mt-2">
             <button
               type="submit"
-              className="btn-primary flex items-center gap-2"
+              className="btn-primary flex items-center gap-2 self start"
             >
               <Save size={16} />
               Save Changes
@@ -312,7 +312,7 @@ const EditEventForm = ({
             <button
               type="button"
               onClick={onClose}
-              className="btn-secondary flex items-center gap-2"
+              className="btn-secondary flex items-center gap-2 self-start"
             >
               <X size={16} />
               Cancel
