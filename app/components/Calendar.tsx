@@ -41,6 +41,8 @@ const Calendar = ({ allEvents }: EventListProps) => {
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
 
+  console.log(currentMonth, selectedDate?.getDate());
+
   const month = [
     "January",
     "February",
@@ -274,12 +276,18 @@ const Calendar = ({ allEvents }: EventListProps) => {
                 </div>
               ))}
             </div>
-            {selectedDate && (
-              <EventForm
-                key={selectedDate.toISOString()}
-                selectedDate={selectedDate}
-              />
-            )}
+            {selectedDate &&
+              (selectedDate.getTime() >=
+              new Date(currentYear, currentMonth, currentDate).getTime() ? (
+                <EventForm
+                  key={selectedDate.toISOString()}
+                  selectedDate={selectedDate}
+                />
+              ) : (
+                <p className="text-subtle">
+                  Event creation is disabled for past dates.
+                </p>
+              ))}
           </div>
         </div>
       )}

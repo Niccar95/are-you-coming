@@ -116,7 +116,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
       {loading && <Spinner />}
       <button
         onClick={toggleEventForm}
-        className="btn-outline-violet flex items-center gap-2 self-start"
+        className="btn-outline-violet flex items-center gap-2"
       >
         <Plus size={16} />
         New Event

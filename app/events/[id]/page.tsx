@@ -39,7 +39,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const playlistId = event?.spotifyUrl?.split("/").at(-1)?.split("?")[0];
 
   if (!event) {
-    return <p>Event not found.</p>;
+    return <p className="text-subtle">Event not found.</p>;
   }
 
   return (
