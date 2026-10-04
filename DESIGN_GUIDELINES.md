@@ -156,10 +156,11 @@ White/glass variant (on dark image backgrounds): `bg-white/20 backdrop-blur-sm t
 
 ## Modals / Overlays
 
-**Overlay:** `fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4`
+**Overlay:** `fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4`, applied with: `modal-overlay` custom class.
 
-**Wide Modal container for form modals:** `.form-card w-full max-w-2xl max-h-[90vh]`
-**Thin Modal container for other modals:** `.card w-full max-w-lg max-h-[90vh]`
+**Wide Modal container for form modals:** `form-card` and `w-full max-w-2xl max-h-[90vh]`, applied with `form-modal` custom class.
+**Thinner Modal container for other modals:** `card` and `w-full max-w-lg max-h-[90vh]`, applied with `modal` custom class.
+**Very thin Modal container for danger modals:** `card` and `w-full max-w-sm`, applied with `danger-modal` custom class.
 
 **Scrollable form body or general body:** `flex flex-col gap-4 p-3 overflow-y-auto`
 

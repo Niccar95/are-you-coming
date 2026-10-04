@@ -203,11 +203,8 @@ const Calendar = ({ allEvents }: EventListProps) => {
       </div>
 
       {showEventCard && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div
-            ref={popupRef}
-            className="card flex flex-col w-full max-w-lg max-h-[90vh] gap-3"
-          >
+        <div className="modal-overlay">
+          <div ref={popupRef} className="card modal flex flex-col gap-3">
             <h3 className="text-subtitle mb-2">
               {selectedDate && (
                 <time

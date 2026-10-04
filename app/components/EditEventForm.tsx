@@ -123,9 +123,9 @@ const EditEventForm = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+    <div className="modal-overlay">
       {loading && <Spinner />}
-      <div ref={modalRef} className="form-card w-full max-w-2xl max-h-[90vh]">
+      <div ref={modalRef} className="form-card form-modal">
         <h3 className="form-heading">Edit Event</h3>
 
         <form

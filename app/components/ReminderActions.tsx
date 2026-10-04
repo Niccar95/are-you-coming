@@ -60,11 +60,8 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
       </button>
 
       {isEditing && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div
-            ref={modalRef}
-            className="card flex flex-col w-full max-w-lg max-h-[90vh]"
-          >
+        <div className="modal-overlay">
+          <div ref={modalRef} className="card modal flex flex-col">
             <h3 className="text-subtitle mb-4">Manage reminders</h3>
             <div className="flex flex-col gap-6 overflow-y-auto ">
               <div className="flex flex-col gap-4 mb-6">

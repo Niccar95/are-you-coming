@@ -146,3 +146,18 @@ button, input, textarea, select {
   display: none;
 }
 
+.modal-overlay {
+ @apply fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4;
+}
+
+.form-modal {
+  @apply w-full max-w-2xl max-h-[90vh];
+}
+
+.modal {
+  @apply w-full max-w-lg max-h-[90vh];
+}
+
+.danger-modal {
+  @apply w-full max-w-sm;
+}

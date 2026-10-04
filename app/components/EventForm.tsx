@@ -129,11 +129,8 @@ const EventForm = ({ selectedDate }: FormProps) => {
       )}
 
       {openEventForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div
-            ref={formRef}
-            className="form-card w-full max-w-2xl max-h-[90vh]"
-          >
+        <div className="modal-overlay">
+          <div ref={formRef} className="form-card form-modal">
             <h3 className="form-heading">Create Event</h3>
             <form
               onSubmit={addNewEvent}

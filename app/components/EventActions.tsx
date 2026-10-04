@@ -68,8 +68,8 @@ const EventActions = ({
       </div>
 
       {confirmDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div ref={modalRef} className="card w-full max-w-sm">
+        <div className="modal-overlay">
+          <div ref={modalRef} className="card danger-modal">
             <h3 className="form-heading">Delete Event</h3>
             <p className="text-body mb-6">
               Are you sure you want to delete this event? This cannot be undone.
