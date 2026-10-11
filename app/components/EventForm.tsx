@@ -86,6 +86,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
           spotify_url: spotifyUrl,
           spotify_invite_url: spotifyInviteUrl,
           event_location: eventLocation || null,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         }),
       });
 

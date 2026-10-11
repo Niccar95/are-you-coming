@@ -13,10 +13,18 @@ export const POST = async (req: NextRequest) => {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { name, event_date, description, image_url, spotify_url, spotify_invite_url, event_location } =
-    await req.json();
+  const {
+    name,
+    event_date,
+    description,
+    image_url,
+    spotify_url,
+    spotify_invite_url,
+    event_location,
+    timezone,
+  } = await req.json();
 
-  if (!name || !event_date || !description || !event_location) {
+  if (!name || !event_date || !description || !event_location || !timezone) {
     return NextResponse.json(
       { error: "Missing required fields." },
       { status: 400 },
@@ -33,6 +41,7 @@ export const POST = async (req: NextRequest) => {
     spotify_invite_url || null,
     event_location,
     session.user.name ?? null,
+    timezone,
   );
 
   return NextResponse.json(event, { status: 201 });
@@ -44,8 +53,16 @@ export const PATCH = async (req: NextRequest) => {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { id, name, event_date, description, image_url, spotify_url, spotify_invite_url, event_location } =
-    await req.json();
+  const {
+    id,
+    name,
+    event_date,
+    description,
+    image_url,
+    spotify_url,
+    spotify_invite_url,
+    event_location,
+  } = await req.json();
 
   if (!id || !name || !event_date || !description || !event_location) {
     return NextResponse.json(

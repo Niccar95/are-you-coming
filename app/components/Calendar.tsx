@@ -239,13 +239,6 @@ const Calendar = ({ allEvents }: EventListProps) => {
                         {event.name}
                       </h3>
                       <div className="flex flex-wrap gap-2">
-                        <time
-                          dateTime={new Date(event.eventDate).toISOString()}
-                          className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate"
-                        >
-                          <CalendarDays size={12} />
-                          {formatDateForUI(event.eventDate)}
-                        </time>
                         <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
                           <Clock size={12} />
                           {formatTimeForUI(event.eventDate)}

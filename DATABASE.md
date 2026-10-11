@@ -21,11 +21,15 @@ psql "$PROD_DATABASE_URL"
 
 ## Inside psql
 
-| Command         | Description                     |
-| --------------- | ------------------------------- |
-| `\dt`           | List all tables                 |
-| `\d table_name` | Describe a table (show columns) |
-| `\q`            | Quit psql                       |
+| Command               | Description                                                   |
+| --------------------- | ------------------------------------------------------------- |
+| `\dt`                 | List all tables                                               |
+| `\d table_name`       | Describe a table (show columns)                               |
+| `\i path/to/file.sql` | Run all the SQL in a file (see [Migrations](#migrations))     |
+| `\! command`          | Run a normal terminal command from inside psql, e.g. `\! pwd` |
+| `\q`                  | Quit psql                                                     |
+
+`\i` and `\!` are psql commands, not SQL. `\i` means "include": psql reads the file and runs it as if you had pasted it.
 
 ## Common SQL Commands
 
@@ -75,6 +79,73 @@ DROP TABLE your_table_name;
 UPDATE events SET event_location = '' WHERE event_location IS NULL;
 ALTER TABLE events ALTER COLUMN event_location SET NOT NULL;
 ```
+
+## Migrations
+
+A migration is a `.sql` file with one database change in it. Every change to the database gets its own numbered file, so there is a history of what was changed and in what order.
+
+### Where the files are
+
+Currently in `app/migrations/`:
+
+```
+app/
+  migrations/
+    001_add_timezone_to_events.sql
+```
+
+> `app/` is for Next.js pages and components, so the folder would fit better in the project root next to `package.json`. Nothing breaks if it stays where it is. If it's moved, the `\i` path below changes too.
+
+### Rules
+
+1. **One change per file**, numbered in order: `001_...`, `002_...`, `003_...`.
+2. **Never edit a migration after it has been run.** Add a new numbered file instead.
+3. **Commit the files to git** together with the code that needs them.
+4. **Run it on dev first**, check it, then run it on prod.
+5. **Don't run the same file twice.** The second run usually fails, e.g. "column already exists". Adding `IF NOT EXISTS` makes a file safe to repeat:
+   ```sql
+   ALTER TABLE events ADD COLUMN IF NOT EXISTS location TEXT;
+   ```
+
+### How to write one
+
+```sql
+-- 001_add_timezone_to_events.sql
+-- Stores which timezone each event's clock time refers to.
+-- Existing events are labelled Europe/Stockholm; new events must supply their own.
+
+BEGIN;
+
+ALTER TABLE events ADD COLUMN timezone TEXT NOT NULL DEFAULT 'Europe/Stockholm';
+ALTER TABLE events ALTER COLUMN timezone DROP DEFAULT;
+
+COMMIT;
+```
+
+`BEGIN` and `COMMIT` are optional. They wrap several statements so that either all of them run or none do. If line 2 fails, line 1 is undone as well, so the database is never left half-changed. A file with a single statement doesn't need them.
+
+### How to run one
+
+1. Start psql **from the project root**: `ayc-db` (dev) or `ayc-prod` (prod).
+2. Check where psql is and that it can see the file:
+   ```
+   \! pwd
+   \! ls app/migrations
+   ```
+3. Run it:
+   ```
+   \i app/migrations/001_add_timezone_to_events.sql
+   ```
+   Success looks like `BEGIN`, `ALTER TABLE`, `ALTER TABLE`, `COMMIT`.
+4. Check the result, e.g. `\d events` or a `SELECT`.
+
+The path in `\i` is relative to the folder where psql was started. If it says `No such file or directory`, the path is wrong: use `\! pwd` and `\! ls` to find the file, or give the full path.
+
+Pasting the SQL straight into psql does the same thing as `\i`. Still save the file, so the change is recorded.
+
+### Migration log
+
+Which migrations have been run on dev and prod is listed in `MIGRATIONS.md`.
 
 ## Database Endpoints
 

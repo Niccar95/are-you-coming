@@ -21,6 +21,7 @@ const DeleteButton = ({ id }: DeleteButtonProps) => {
 
   return (
     <button
+      id={`delete-event-${id}`}
       onClick={handleDelete}
       className="btn-danger absolute top-2 right-2"
     >
