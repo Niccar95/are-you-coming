@@ -96,7 +96,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
               <time className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full">
                 <Clock size={12} />
-                {formatTimeForUI(eventData.eventDate)}
+                {formatTimeForUI(eventData.eventDate)} ({event.timeZone})
               </time>
               {event.eventLocation && (
                 <p className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full m-0 max-w-full truncate">
@@ -138,7 +138,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </time>
               <time className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full">
                 <Clock size={12} />
-                {formatTimeForUI(eventData.eventDate)}
+                {formatTimeForUI(eventData.eventDate)} ({event.timeZone})
               </time>
               {event.eventLocation && (
                 <p className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full m-0 max-w-full truncate">

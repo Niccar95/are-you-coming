@@ -41,8 +41,6 @@ const Calendar = ({ allEvents }: EventListProps) => {
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
 
-  console.log(currentMonth, selectedDate?.getDate());
-
   const month = [
     "January",
     "February",
@@ -241,7 +239,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
                       <div className="flex flex-wrap gap-2">
                         <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
                           <Clock size={12} />
-                          {formatTimeForUI(event.eventDate)}
+                          {formatTimeForUI(event.eventDate)} {event.timeZone}
                         </time>
                         {event.eventLocation && (
                           <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
