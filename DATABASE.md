@@ -28,8 +28,26 @@ psql "$PROD_DATABASE_URL"
 | `\i path/to/file.sql` | Run all the SQL in a file (see [Migrations](#migrations))     |
 | `\! command`          | Run a normal terminal command from inside psql, e.g. `\! pwd` |
 | `\q`                  | Quit psql                                                     |
+| `\r`                  | Clear an unfinished statement (see the prompt)                |
 
 `\i` and `\!` are psql commands, not SQL. `\i` means "include": psql reads the file and runs it as if you had pasted it.
+
+### How to read the psql prompt
+
+The prompt tells you what psql is waiting for. Look at the character after the database name.
+
+| Prompt     | Meaning                                            |
+| ---------- | -------------------------------------------------- |
+| `neondb=>` | Ready for a new command                            |
+| `neondb->` | In the middle of a statement, waiting for the rest |
+| `neondb'>` | An open quote `'` was never closed                 |
+| `neondb(>` | An open parenthesis `(` was never closed           |
+
+If the prompt is anything other than `=>`, an earlier statement is unfinished (usually a missing `;` at the end). Anything typed as SQL gets glued onto it and causes confusing errors.
+
+**Fix:** type `\r` to clear the unfinished statement. The prompt should go back to `neondb=>`. Do this before running a migration.
+
+Backslash commands (`\i`, `\d`, `\dt`) still work while a statement is unfinished.
 
 ## Common SQL Commands
 
