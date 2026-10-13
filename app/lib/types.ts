@@ -9,6 +9,7 @@ export type EventType = {
   spotifyInviteUrl: string | null;
   eventLocation: string;
   hostName: string | null;
+  timeZone: string;
 };
 
 export type AttendeeType = {

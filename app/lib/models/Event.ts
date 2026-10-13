@@ -9,6 +9,7 @@ export class EventClass {
   spotifyInviteUrl: string | null;
   eventLocation: string;
   hostName: string | null;
+  timeZone: string;
 
   constructor(
     id: number,
@@ -21,6 +22,7 @@ export class EventClass {
     spotifyInviteUrl: string | null,
     eventLocation: string,
     hostName: string | null = null,
+    timeZone: string,
   ) {
     this.id = id;
     this.name = name;
@@ -32,6 +34,7 @@ export class EventClass {
     this.spotifyInviteUrl = spotifyInviteUrl;
     this.eventLocation = eventLocation;
     this.hostName = hostName;
+    this.timeZone = timeZone;
   }
 
   hasValidDate(): boolean {
@@ -75,6 +78,7 @@ export class EventClass {
       spotifyInviteUrl: this.spotifyInviteUrl,
       eventLocation: this.eventLocation,
       hostName: this.hostName,
+      timeZone: this.timeZone,
     };
   }
 }

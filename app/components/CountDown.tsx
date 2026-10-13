@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatUtcToLocal } from "../utils/dateTimeFormatters";
 
 interface DateProps {
   eventDate: Date;
 }
 
 const CountDown = ({ eventDate }: DateProps) => {
-  const target = new Date(eventDate).getTime();
+  const target = formatUtcToLocal(eventDate).getTime();
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,

@@ -16,6 +16,15 @@ export const formatDateToUtc = (eventDate: string): Date => {
   return new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
 };
 
+// Converts the stored date back into the real moment it happens, for the countdown.
+// The database holds the Swedish clock time (e.g. 20:00) labelled as UTC, so this
+// shifts it by the timezone offset. It is the reverse of formatDateToUtc.
+
+export const formatUtcToLocal = (storedDate: Date | string): Date => {
+  const date = new Date(storedDate);
+  return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+};
+
 // For UI display
 
 export const formatDateForUI = (date?: Date | string | null): string => {

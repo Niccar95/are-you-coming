@@ -26,6 +26,7 @@ export const getEvents = async (): Promise<EventClass[]> => {
       spotify_invite_url: string | null;
       event_location: string;
       event_host: string | null;
+      timezone: string;
     }) =>
       new EventClass(
         event.id,
@@ -38,6 +39,7 @@ export const getEvents = async (): Promise<EventClass[]> => {
         event.spotify_invite_url,
         event.event_location,
         event.event_host,
+        event.timezone,
       ),
   );
 };
@@ -56,6 +58,7 @@ export const getEventById = async (id: number): Promise<EventClass> => {
     rows[0].spotify_invite_url,
     rows[0].event_location,
     rows[0].event_host,
+    rows[0].timezone,
   );
 };
 
@@ -69,9 +72,10 @@ export const addEvent = async (
   spotifyInviteUrl: string | null,
   eventLocation: string,
   hostName: string | null,
+  timezone: string,
 ): Promise<EventClass> => {
   const { rows } = await pool.query(
-    "INSERT INTO events (name, event_date, description, user_id, image_url, spotify_url, spotify_invite_url, event_location, event_host) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+    "INSERT INTO events (name, event_date, description, user_id, image_url, spotify_url, spotify_invite_url, event_location, event_host, timezone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
     [
       name,
       eventDate,
@@ -82,6 +86,7 @@ export const addEvent = async (
       spotifyInviteUrl,
       eventLocation,
       hostName,
+      timezone,
     ],
   );
   return new EventClass(
@@ -95,6 +100,7 @@ export const addEvent = async (
     rows[0].spotify_invite_url,
     rows[0].event_location,
     rows[0].event_host,
+    rows[0].timezone,
   );
 };
 
@@ -138,6 +144,8 @@ export const updateEvent = async (
     rows[0].spotify_url,
     rows[0].spotify_invite_url,
     rows[0].event_location,
+    rows[0].event_host,
+    rows[0].timezone,
   );
 };
 
