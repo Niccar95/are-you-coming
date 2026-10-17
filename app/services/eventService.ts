@@ -19,6 +19,7 @@ export const getEvents = async (): Promise<EventClass[]> => {
       id: number;
       name: string;
       event_date: Date;
+      event_end_date: Date;
       description: string;
       user_id: string;
       image_url: string | null;
@@ -32,6 +33,7 @@ export const getEvents = async (): Promise<EventClass[]> => {
         event.id,
         event.name,
         event.event_date,
+        event.event_end_date,
         event.description,
         event.user_id,
         event.image_url,
@@ -44,13 +46,15 @@ export const getEvents = async (): Promise<EventClass[]> => {
   );
 };
 
-export const getEventById = async (id: number): Promise<EventClass> => {
+export const getEventById = async (id: number): Promise<EventClass | null> => {
   const { rows } = await pool.query("SELECT * FROM events WHERE id = $1", [id]);
 
+  if (rows.length === 0) return null;
   return new EventClass(
     rows[0].id,
     rows[0].name,
     rows[0].event_date,
+    rows[0].event_end_date,
     rows[0].description,
     rows[0].user_id,
     rows[0].image_url,
@@ -65,6 +69,7 @@ export const getEventById = async (id: number): Promise<EventClass> => {
 export const addEvent = async (
   name: string,
   eventDate: Date,
+  eventEndDate: Date,
   description: string,
   userId: string,
   imageUrl: string | null,
@@ -75,10 +80,11 @@ export const addEvent = async (
   timezone: string,
 ): Promise<EventClass> => {
   const { rows } = await pool.query(
-    "INSERT INTO events (name, event_date, description, user_id, image_url, spotify_url, spotify_invite_url, event_location, event_host, timezone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
+    "INSERT INTO events (name, event_date, event_end_date, description, user_id, image_url, spotify_url, spotify_invite_url, event_location, event_host, timezone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
     [
       name,
       eventDate,
+      eventEndDate,
       description,
       userId,
       imageUrl,
@@ -93,6 +99,7 @@ export const addEvent = async (
     rows[0].id,
     rows[0].name,
     rows[0].event_date,
+    rows[0].event_end_date,
     rows[0].description,
     rows[0].user_id,
     rows[0].image_url,
@@ -108,6 +115,7 @@ export const updateEvent = async (
   id: number,
   name: string,
   eventDate: Date,
+  eventEndDate: Date,
   description: string,
   imageUrl: string | null,
   spotifyUrl: string | null,
@@ -122,10 +130,11 @@ export const updateEvent = async (
   if (oldImageUrl && oldImageUrl !== imageUrl) await del(oldImageUrl);
 
   const { rows } = await pool.query(
-    "UPDATE events SET name = $1, event_date = $2, description = $3, image_url = $4, spotify_url = $5, spotify_invite_url = $6, event_location = $7 WHERE id = $8 RETURNING *",
+    "UPDATE events SET name = $1, event_date = $2, event_end_date = $3, description = $4, image_url = $5, spotify_url = $6, spotify_invite_url = $7, event_location = $8 WHERE id = $9 RETURNING *",
     [
       name,
       eventDate,
+      eventEndDate,
       description,
       imageUrl,
       spotifyUrl,
@@ -138,6 +147,7 @@ export const updateEvent = async (
     rows[0].id,
     rows[0].name,
     rows[0].event_date,
+    rows[0].event_end_date,
     rows[0].description,
     rows[0].user_id,
     rows[0].image_url,

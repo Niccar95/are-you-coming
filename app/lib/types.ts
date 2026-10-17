@@ -2,6 +2,7 @@ export type EventType = {
   id: number;
   name: string;
   eventDate: string;
+  eventEndDate: string;
   description: string;
   userId: string;
   imageUrl: string | null;

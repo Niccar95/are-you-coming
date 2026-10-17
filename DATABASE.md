@@ -152,7 +152,7 @@ COMMIT;
    ```
 3. Run it:
    ```
-   \i app/migrations/001_add_timezone_to_events.sql
+   \i migrations/001_add_timezone_to_events.sql
    ```
    Success looks like `BEGIN`, `ALTER TABLE`, `ALTER TABLE`, `COMMIT`.
 4. Check the result, e.g. `\d events` or a `SELECT`.

@@ -17,9 +17,12 @@ interface FormProps {
 const EventForm = ({ selectedDate }: FormProps) => {
   const router = useRouter();
   const [eventName, setEventName] = useState<string>("");
+
   const [eventDate, setEventDate] = useState<string>(
     selectedDate ? formatDate(selectedDate) : "",
   );
+
+  const [eventEndDate, setEventEndDate] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [eventLocation, setEventLocation] = useState<string>("");
@@ -42,12 +45,23 @@ const EventForm = ({ selectedDate }: FormProps) => {
 
   const addNewEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!eventName || !eventDate || !description || !eventLocation) {
+    if (
+      !eventName ||
+      !eventDate ||
+      !eventEndDate ||
+      !description ||
+      !eventLocation
+    ) {
       setError("Please fill in all required fields.");
       return;
     }
     if (new Date(eventDate) <= new Date()) {
       setError("Event date must be in the future.");
+      return;
+    }
+
+    if (new Date(eventEndDate) <= new Date(eventDate)) {
+      setError("Event end date must be later than the event date.");
       return;
     }
 
@@ -64,6 +78,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
 
     try {
       const utcDate = formatDateToUtc(eventDate);
+      const utcEndDate = formatDateToUtc(eventEndDate);
 
       let imageUrl: string | null = null;
       const file = inputFileRef.current?.files?.[0];
@@ -81,6 +96,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
         body: JSON.stringify({
           name: eventName,
           event_date: utcDate.toISOString(),
+          event_end_date: utcEndDate.toISOString(),
           description: description,
           image_url: imageUrl,
           spotify_url: spotifyUrl,
@@ -96,6 +112,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
 
       setEventName("");
       setEventDate("");
+      setEventEndDate("");
       setDescription("");
       setEventLocation("");
       setSpotifyUrl("");
@@ -170,18 +187,31 @@ const EventForm = ({ selectedDate }: FormProps) => {
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="eventDate" className="form-label">
-                  Event Date <span className="text-red-500">*</span>
-                </label>
-
-                <input
-                  id="eventDate"
-                  value={eventDate}
-                  onChange={(e) => setEventDate(e.target.value)}
-                  type="datetime-local"
-                  className="form-input"
-                />
+              <div className="flex flex-col gap-4 md:flex-row md:gap-2">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="eventStartDate" className="form-label">
+                    Event Start Date <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="eventStartDate"
+                    value={eventDate}
+                    onChange={(e) => setEventDate(e.target.value)}
+                    type="datetime-local"
+                    className="form-input"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="eventEndDate" className="form-label">
+                    Event End Date <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="eventEndDate"
+                    value={eventEndDate}
+                    onChange={(e) => setEventEndDate(e.target.value)}
+                    type="datetime-local"
+                    className="form-input"
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col gap-2">
