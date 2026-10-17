@@ -6,10 +6,6 @@ interface EventListProps {
 }
 
 const Events = ({ allEvents }: EventListProps) => {
-  if (allEvents.length === 0) {
-    return <p className="text-meta text-center">No events to show.</p>;
-  }
-
   return (
     <section className="w-full">
       <h2 className="text-title mb-4">My latest Events</h2>
