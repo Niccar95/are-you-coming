@@ -133,7 +133,10 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         </figcaption>
       </figure>
       <article>
-        <CountDown eventDate={event.eventDate} />
+        <CountDown
+          eventDate={event.eventDate}
+          eventEndDate={event.eventEndDate}
+        />
         {event.hostName && (
           <div className="flex items-center gap-3 mt-6">
             <div className="w-10 h-10 rounded-full bg-zinc-200 shrink-0" />
