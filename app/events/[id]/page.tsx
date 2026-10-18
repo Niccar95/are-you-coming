@@ -178,24 +178,111 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
           <Users size={18} /> Attendees
-          <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
-            {eventAttendees.length}
-          </span>
         </h2>
-        {eventAttendees.length > 0 ? (
-          <ul className="flex gap-1 md:w-1/2 overflow-x-auto scrollbar-hide list-none">
-            {eventAttendees.map((attendee) => (
-              <li
-                className="inline-block text-nowrap bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
-                key={attendee.id}
-              >
-                {attendee.name}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-subtle">No Attendees</p>
-        )}
+
+        <div className="grid grid-cols-3 gap-3 lg:w-1/2">
+          <section>
+            <h3 className="mb-4 text-status flex items-center gap-2">
+              Pending
+              <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
+                {
+                  eventAttendees.filter(
+                    (attendee) => attendee.inviteStatus === "pending",
+                  ).length
+                }
+              </span>
+            </h3>
+
+            {eventAttendees.filter(
+              (attendee) => attendee.inviteStatus === "pending",
+            ).length > 0 ? (
+              <ul className="flex flex-col gap-1 list-none h-10 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
+                {eventAttendees
+                  .filter((attendee) => attendee.inviteStatus === "pending")
+                  .map((attendee) => (
+                    <li
+                      className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"
+                      key={attendee.id}
+                    >
+                      <p className="w-full truncate text-xs font-medium text-blue-700">
+                        {attendee.name}
+                      </p>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p className="text-subtle">No Attendees</p>
+            )}
+          </section>
+
+          <section>
+            <h3 className="mb-4 text-status flex items-center gap-2">
+              Attending
+              <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
+                {
+                  eventAttendees.filter(
+                    (attendee) => attendee.inviteStatus === "accepted",
+                  ).length
+                }
+              </span>
+            </h3>
+
+            {eventAttendees.filter(
+              (attendee) => attendee.inviteStatus === "accepted",
+            ).length > 0 ? (
+              <ul className="flex flex-col gap-1 list-none">
+                {eventAttendees
+                  .filter((attendee) => attendee.inviteStatus === "accepted")
+                  .map((attendee) => (
+                    <li
+                      className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"
+                      key={attendee.id}
+                    >
+                      <p className="w-full truncate text-xs font-medium text-blue-700">
+                        {attendee.name}
+                      </p>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p className="text-subtle">No Attendees</p>
+            )}
+          </section>
+
+          <section>
+            <h3 className="mb-4 text-status flex items-center gap-2">
+              Declined
+              <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
+                {
+                  eventAttendees.filter(
+                    (attendee) => attendee.inviteStatus === "declined",
+                  ).length
+                }
+              </span>
+            </h3>
+
+            {eventAttendees.filter(
+              (attendee) => attendee.inviteStatus === "declined",
+            ).length > 0 ? (
+              <ul className="flex flex-col gap-1 list-none">
+                {eventAttendees
+                  .filter((attendee) => attendee.inviteStatus === "declined")
+                  .map((attendee) => (
+                    <li
+                      className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"
+                      key={attendee.id}
+                    >
+                      <p className="w-full truncate text-xs font-medium text-blue-700">
+                        {attendee.name}
+                      </p>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p className="text-subtle">No Attendees</p>
+            )}
+          </section>
+        </div>
       </article>
       {!session &&
         (event.isAFutureDate() ? (

@@ -11,6 +11,7 @@ A simple event planning app. Create events, share them with friends, and let the
 - **[TypeScript](https://www.typescriptlang.org)** — type safety throughout
 - **[PostgreSQL](https://www.postgresql.org)** via **[Neon](https://neon.tech)** — serverless database
 - **[NextAuth v5](https://authjs.dev)** — Google OAuth authentication
+- **[Vitest](https://https://vitest.dev)** — Unit and component testing
 - **[Tailwind CSS](https://tailwindcss.com)** — styling
 - **[Lucide React](https://lucide.dev)** — icons
 - **[Vercel](https://vercel.com)** — deployment

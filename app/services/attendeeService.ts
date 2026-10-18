@@ -1,16 +1,34 @@
 import pool from "../lib/db";
 import { AttendeeClass } from "../lib/models/Attendee";
+import { InviteStatus } from "../lib/types";
 
 export const getAttendeesByEventId = async (
   eventId: number,
 ): Promise<AttendeeClass[]> => {
   const { rows } = await pool.query(
-    "SELECT * FROM attendees WHERE id IN (SELECT attendee_id FROM event_attendees WHERE event_id = $1) ORDER BY id ASC",
+    `SELECT attendees.id, attendees.name, attendees.email,
+            event_attendees.invite_status
+     FROM attendees
+     JOIN event_attendees
+       ON attendees.id = event_attendees.attendee_id
+     WHERE event_attendees.event_id = $1
+     ORDER BY attendees.id ASC`,
     [eventId],
   );
+
   return rows.map(
-    (attendee: { id: number; name: string; email: string }) =>
-      new AttendeeClass(attendee.id, attendee.name, attendee.email),
+    (attendee: {
+      id: number;
+      name: string;
+      email: string;
+      invite_status: InviteStatus;
+    }) =>
+      new AttendeeClass(
+        attendee.id,
+        attendee.name,
+        attendee.email,
+        attendee.invite_status,
+      ),
   );
 };
 
@@ -19,16 +37,36 @@ export const addAttendee = async (
   name: string,
   email: string,
 ): Promise<AttendeeClass> => {
-  const { rows } = await pool.query(
-    "INSERT INTO attendees (name, email) VALUES ($1, $2) RETURNING *",
-    [name, email],
-  );
-  const attendee = new AttendeeClass(rows[0].id, rows[0].name, rows[0].email);
+  const client = await pool.connect();
 
-  await pool.query(
-    "INSERT INTO event_attendees (event_id, attendee_id) VALUES ($1, $2)",
-    [eventId, attendee.id],
-  );
+  try {
+    await client.query("BEGIN");
 
-  return attendee;
+    const { rows } = await client.query(
+      "INSERT INTO attendees (name, email) VALUES ($1, $2) RETURNING *",
+      [name, email],
+    );
+
+    const attendee = rows[0];
+
+    await client.query(
+      `INSERT INTO event_attendees (event_id, attendee_id, invite_status)
+       VALUES ($1, $2, $3)`,
+      [eventId, attendee.id, "accepted"],
+    );
+
+    await client.query("COMMIT");
+
+    return new AttendeeClass(
+      attendee.id,
+      attendee.name,
+      attendee.email,
+      "accepted",
+    );
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 };

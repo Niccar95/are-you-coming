@@ -8,13 +8,15 @@
 
 ## Typography
 
-| Class            | Style                                                                                 | Usage                       |
-| ---------------- | ------------------------------------------------------------------------------------- | --------------------------- |
-| `.text-title`    | `text-xl font-bold text-zinc-700` + `border-l-4 border-violet-500 pl-3 tracking-wide` | Page/section headings       |
-| `.text-subtitle` | `text-lg font-semibold text-zinc-700 dark:text-white tracking-wide`                   | Card titles, event names    |
-| `.text-body`     | `text-sm text-zinc-700 dark:text-zinc-300`                                            | Paragraphs, descriptions    |
-| `.text-meta`     | `text-sm text-zinc-500 dark:text-zinc-400`                                            | Dates, secondary info       |
-| `.text-subtle`   | `text-xs text-zinc-500 dark:text-zinc-400`                                            | Hints, labels, tiny details |
+| Class            | Style                                                                                 | Usage                                             |
+| ---------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `.text-title`    | `text-xl font-bold text-zinc-700` + `border-l-4 border-violet-500 pl-3 tracking-wide` | Page/section headings                             |
+| `.text-subtitle` | `text-lg font-semibold text-zinc-700 dark:text-white tracking-wide`                   | Card titles, event names                          |
+| `.text-status`   | `text-xs font-semibold text-zinc-800 dark:text-zinc-100 tracking-wide`                | Status headings, e.g. Pending, Accepted, Declined |
+| names            |
+| `.text-body`     | `text-sm text-zinc-700 dark:text-zinc-300`                                            | Paragraphs, descriptions                          |
+| `.text-meta`     | `text-sm text-zinc-500 dark:text-zinc-400`                                            | Dates, secondary info                             |
+| `.text-subtle`   | `text-xs text-zinc-500 dark:text-zinc-400`                                            | Hints, labels, tiny details                       |
 
 Text truncation: `truncate` (single line), `line-clamp-1` / `line-clamp-2` (multiline).
 
