@@ -10,6 +10,7 @@ interface EventActionsProps {
   id: number;
   eventName: string;
   eventDate: string;
+  eventEndDate: string;
   description: string;
   imageUrl: string | null;
   spotifyUrl: string | null;
@@ -22,6 +23,7 @@ const EventActions = ({
   id,
   eventName,
   eventDate,
+  eventEndDate,
   description,
   imageUrl,
   spotifyUrl,
@@ -97,6 +99,7 @@ const EventActions = ({
           id={id}
           initialName={eventName}
           initialDate={eventDate}
+          initialEndDate={eventEndDate}
           initialDescription={description}
           initialImageUrl={imageUrl}
           initialSpotifyUrl={spotifyUrl}

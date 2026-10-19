@@ -23,24 +23,35 @@ import {
   formatDateForUI,
   formatTimeForUI,
 } from "@/app/utils/dateTimeFormatters";
+import { notFound } from "next/navigation";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
+  const eventId = Number(id);
+  if (!Number.isInteger(eventId)) notFound();
 
-  const event = await getEventById(Number(id));
-  const eventAttendees = await getAttendeesByEventId(Number(id));
-  const session = await auth();
+  const event = await getEventById(eventId);
+  if (!event) notFound();
+
+  const [eventAttendees, session] = await Promise.all([
+    getAttendeesByEventId(eventId),
+    auth(),
+  ]);
+
+  const isOwner =
+    !!session?.user?.id && String(event.userId) === String(session.user.id);
 
   const allAttendees = toPlainObjects(eventAttendees);
-
-  //Converting this to plain object to send to the EventActions
   const eventData = toPlainObject(event);
 
-  const playlistId = event?.spotifyUrl?.split("/").at(-1)?.split("?")[0];
+  const playlistId = event.spotifyUrl?.split("/").at(-1)?.split("?")[0];
+  const hasImage = !!event.imageUrl;
 
-  if (!event) {
-    return <p className="text-subtle">Event not found.</p>;
-  }
+  const badgeClass = `inline-flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full ${
+    hasImage
+      ? "bg-white/20 backdrop-blur-sm text-white"
+      : "bg-violet-100 text-violet-700"
+  }`;
 
   return (
     <div
@@ -58,100 +69,74 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </Link>
         </nav>
       )}
-      {event.imageUrl ? (
-        <figure className="relative rounded-lg overflow-hidden">
-          {session?.user?.id &&
-            String(event.userId) === String(session.user.id) && (
-              <EventActions
-                id={event.id}
-                eventName={event.name}
-                eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
-                description={event.description}
-                imageUrl={event.imageUrl ?? null}
-                spotifyUrl={event.spotifyUrl ?? null}
-                spotifyInviteUrl={event.spotifyInviteUrl ?? null}
-                eventLocation={event.eventLocation}
-                redirect={"/dashboard"}
-              />
-            )}
-          <Image
-            src={event.imageUrl}
-            alt={event.name}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-72 object-cover"
+      <figure className="relative rounded-lg overflow-hidden">
+        {isOwner && (
+          <EventActions
+            id={event.id}
+            eventName={event.name}
+            eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
+            eventEndDate={new Date(event.eventEndDate)
+              .toISOString()
+              .slice(0, 16)}
+            description={event.description}
+            imageUrl={event.imageUrl}
+            spotifyUrl={event.spotifyUrl}
+            spotifyInviteUrl={event.spotifyInviteUrl}
+            eventLocation={event.eventLocation}
+            redirect="/dashboard"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent pointer-events-none" />
-          <figcaption className="absolute bottom-0 left-0 right-0 p-6">
-            <h1 className="text-4xl font-bold text-white">{event.name}</h1>
-            <div className="flex flex-wrap gap-2 mt-3">
-              <time
-                dateTime={new Date(event.eventDate).toISOString()}
-                className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full"
-              >
-                <CalendarDays size={12} />
-                {formatDateForUI(eventData.eventDate)}
-              </time>
-
-              <time className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full">
-                <Clock size={12} />
-                {formatTimeForUI(eventData.eventDate)} ({event.timeZone})
-              </time>
-              {event.eventLocation && (
-                <p className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full m-0 max-w-full truncate">
-                  <MapPin size={12} />
-                  {event.eventLocation}
-                </p>
-              )}
-            </div>
-          </figcaption>
-        </figure>
-      ) : (
-        <figure className="relative rounded-lg overflow-hidden">
-          {session?.user?.id &&
-            String(event.userId) === String(session.user.id) && (
-              <EventActions
-                id={event.id}
-                eventName={event.name}
-                eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
-                description={event.description}
-                imageUrl={null}
-                spotifyUrl={event.spotifyUrl ?? null}
-                spotifyInviteUrl={event.spotifyInviteUrl ?? null}
-                eventLocation={event.eventLocation}
-                redirect={"/dashboard"}
-              />
-            )}
+        )}
+        {event.imageUrl ? (
+          <>
+            <Image
+              src={event.imageUrl}
+              alt={event.name}
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-full h-72 object-cover"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent pointer-events-none" />
+          </>
+        ) : (
           <div className="flex items-center justify-center bg-violet-50 w-full h-72">
             <CalendarDays size={80} className="text-violet-300" />
           </div>
-          <figcaption className="absolute bottom-0 left-0 right-0 p-6">
-            <h1 className="text-4xl font-bold text-zinc-800">{event.name}</h1>
-            <div className="flex flex-wrap gap-2 mt-3">
-              <time
-                dateTime={new Date(event.eventDate).toISOString()}
-                className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full"
-              >
-                <CalendarDays size={12} />
-                {formatDateForUI(eventData.eventDate)}
-              </time>
-              <time className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full">
-                <Clock size={12} />
-                {formatTimeForUI(eventData.eventDate)} ({event.timeZone})
-              </time>
-              {event.eventLocation && (
-                <p className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full m-0 max-w-full truncate">
-                  <MapPin size={12} />
-                  {event.eventLocation}
-                </p>
-              )}
-            </div>
-          </figcaption>
-        </figure>
-      )}
+        )}
+        <figcaption className="absolute bottom-0 left-0 right-0 p-6">
+          <h1
+            className={`text-4xl font-bold ${hasImage ? "text-white" : "text-zinc-800"}`}
+          >
+            {event.name}
+          </h1>
+          <div className="flex flex-wrap gap-2 mt-3">
+            <time
+              dateTime={event.eventDate.toISOString()}
+              className={badgeClass}
+            >
+              <CalendarDays size={12} />
+              {formatDateForUI(eventData.eventDate)}
+            </time>
+
+            <time className={badgeClass}>
+              <Clock size={12} />
+              {formatTimeForUI(eventData.eventDate)} -{" "}
+              {formatTimeForUI(eventData.eventEndDate)} ({event.timeZone})
+            </time>
+            {event.eventLocation && (
+              <p className={`${badgeClass} m-0 max-w-full truncate`}>
+                <MapPin size={12} />
+                {event.eventLocation}
+              </p>
+            )}
+          </div>
+        </figcaption>
+      </figure>
       <article>
-        <CountDown eventDate={event.eventDate} />
+        <CountDown
+          eventDate={event.eventDate}
+          eventEndDate={event.eventEndDate}
+        />
         {event.hostName && (
           <div className="flex items-center gap-3 mt-6">
             <div className="w-10 h-10 rounded-full bg-zinc-200 shrink-0" />
@@ -185,7 +170,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           <div className="flex items-center gap-3 w-full md:w-auto">
             <ShareButton />
-            {session && (
+            {isOwner && (
               <ReminderActions attendees={allAttendees} eventData={eventData} />
             )}
           </div>
@@ -193,24 +178,111 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
           <Users size={18} /> Attendees
-          <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
-            {eventAttendees?.length ?? 0}
-          </span>
         </h2>
-        {eventAttendees.length > 0 ? (
-          <ul className="flex gap-1 md:w-1/2 overflow-x-auto scrollbar-hide list-none">
-            {eventAttendees.map((attendee) => (
-              <li
-                className="inline-block text-nowrap bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
-                key={attendee.id}
-              >
-                {attendee.name}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-subtle">No Attendees</p>
-        )}
+
+        <div className="grid grid-cols-3 gap-3 lg:w-1/2">
+          <section>
+            <h3 className="mb-4 text-status flex items-center gap-2">
+              Pending
+              <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
+                {
+                  eventAttendees.filter(
+                    (attendee) => attendee.inviteStatus === "pending",
+                  ).length
+                }
+              </span>
+            </h3>
+
+            {eventAttendees.filter(
+              (attendee) => attendee.inviteStatus === "pending",
+            ).length > 0 ? (
+              <ul className="flex flex-col gap-1 list-none h-10 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
+                {eventAttendees
+                  .filter((attendee) => attendee.inviteStatus === "pending")
+                  .map((attendee) => (
+                    <li
+                      className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"
+                      key={attendee.id}
+                    >
+                      <p className="w-full truncate text-xs font-medium text-blue-700">
+                        {attendee.name}
+                      </p>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p className="text-subtle">No Attendees</p>
+            )}
+          </section>
+
+          <section>
+            <h3 className="mb-4 text-status flex items-center gap-2">
+              Attending
+              <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
+                {
+                  eventAttendees.filter(
+                    (attendee) => attendee.inviteStatus === "accepted",
+                  ).length
+                }
+              </span>
+            </h3>
+
+            {eventAttendees.filter(
+              (attendee) => attendee.inviteStatus === "accepted",
+            ).length > 0 ? (
+              <ul className="flex flex-col gap-1 list-none">
+                {eventAttendees
+                  .filter((attendee) => attendee.inviteStatus === "accepted")
+                  .map((attendee) => (
+                    <li
+                      className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"
+                      key={attendee.id}
+                    >
+                      <p className="w-full truncate text-xs font-medium text-blue-700">
+                        {attendee.name}
+                      </p>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p className="text-subtle">No Attendees</p>
+            )}
+          </section>
+
+          <section>
+            <h3 className="mb-4 text-status flex items-center gap-2">
+              Declined
+              <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
+                {
+                  eventAttendees.filter(
+                    (attendee) => attendee.inviteStatus === "declined",
+                  ).length
+                }
+              </span>
+            </h3>
+
+            {eventAttendees.filter(
+              (attendee) => attendee.inviteStatus === "declined",
+            ).length > 0 ? (
+              <ul className="flex flex-col gap-1 list-none">
+                {eventAttendees
+                  .filter((attendee) => attendee.inviteStatus === "declined")
+                  .map((attendee) => (
+                    <li
+                      className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"
+                      key={attendee.id}
+                    >
+                      <p className="w-full truncate text-xs font-medium text-blue-700">
+                        {attendee.name}
+                      </p>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p className="text-subtle">No Attendees</p>
+            )}
+          </section>
+        </div>
       </article>
       {!session &&
         (event.isAFutureDate() ? (

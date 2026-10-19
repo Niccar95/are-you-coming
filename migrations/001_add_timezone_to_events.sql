@@ -5,6 +5,7 @@
 BEGIN;
 
 ALTER TABLE events ADD COLUMN timezone TEXT NOT NULL DEFAULT 'Europe/Stockholm';
+
 ALTER TABLE events ALTER COLUMN timezone DROP DEFAULT;
 
 COMMIT;

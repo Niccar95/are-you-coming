@@ -2,6 +2,7 @@ export class EventClass {
   id: number;
   name: string;
   eventDate: Date;
+  eventEndDate: Date;
   description: string;
   userId: string;
   imageUrl: string | null;
@@ -15,6 +16,7 @@ export class EventClass {
     id: number,
     name: string,
     eventDate: Date,
+    eventEndDate: Date,
     description: string,
     userId: string,
     imageUrl: string | null,
@@ -27,6 +29,7 @@ export class EventClass {
     this.id = id;
     this.name = name;
     this.eventDate = eventDate;
+    this.eventEndDate = eventEndDate;
     this.description = description;
     this.userId = userId;
     this.imageUrl = imageUrl;
@@ -45,9 +48,9 @@ export class EventClass {
     return this.hasValidDate() && this.eventDate > new Date();
   }
 
-  getGoogleCalendarUrl(durationHours: number = 2): string {
+  getGoogleCalendarUrl(): string {
     const start = new Date(this.eventDate);
-    const end = new Date(start.getTime() + durationHours * 60 * 60 * 1000);
+    const end = new Date(this.eventEndDate);
 
     const formatGoogleCalendarDate = (d: Date) => {
       const pad = (n: number) => String(n).padStart(2, "0");
@@ -71,6 +74,7 @@ export class EventClass {
       id: this.id,
       name: this.name,
       eventDate: this.eventDate.toISOString(),
+      eventEndDate: this.eventEndDate.toISOString(),
       description: this.description,
       userId: this.userId,
       imageUrl: this.imageUrl,

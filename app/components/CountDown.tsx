@@ -2,78 +2,66 @@
 
 import { useEffect, useState } from "react";
 import { formatUtcToLocal } from "../utils/dateTimeFormatters";
+import { getCountdownState } from "../utils/countdown";
 
 interface DateProps {
   eventDate: Date;
+  eventEndDate: Date;
 }
 
-const CountDown = ({ eventDate }: DateProps) => {
-  const target = formatUtcToLocal(eventDate).getTime();
+const CountDown = ({ eventDate, eventEndDate }: DateProps) => {
+  const endTarget = formatUtcToLocal(eventEndDate).getTime();
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    expired: false,
-  });
+  const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
+    setNow(Date.now());
     const timer = setInterval(() => {
-      const now = Date.now();
-      const distance = target - now;
-
-      if (distance <= 0) {
-        clearInterval(timer);
-        setTimeLeft((t) => ({ ...t, expired: true }));
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-        ),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
-        expired: false,
-      });
+      const current = Date.now();
+      setNow(current);
+      if (current >= endTarget) clearInterval(timer);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [target]);
+  }, [endTarget]);
 
-  if (timeLeft.expired) {
-    const today = new Date().toDateString();
-    const eventDay = eventDate.toDateString();
+  if (now === null) return null;
 
-    if (eventDay === today) {
-      return <div className="countdown-expired">EVENT HAS STARTED</div>;
-    }
+  const state = getCountdownState(eventDate, eventEndDate, now);
 
+  if (state.status === "started") {
+    return <div className="countdown-expired">EVENT HAS STARTED</div>;
+  }
+  if (state.status === "passed") {
     return <div className="countdown-expired">EVENT HAS PASSED</div>;
   }
 
-  if (timeLeft)
+  if (state.status === "upcoming") {
+    const { days, hours, minutes, seconds } = state;
+
     return (
       <div className="countdown-wrapper">
         <div className="countdown-box">
-          <p className="countdown-number">{timeLeft.days}</p>
+          <p className="countdown-number">{days}</p>
           <p className="countdown-label">Days</p>
         </div>
         <div className="countdown-box">
-          <p className="countdown-number">{timeLeft.hours}</p>
+          <p className="countdown-number">{hours}</p>
           <p className="countdown-label">Hours</p>
         </div>
         <div className="countdown-box">
-          <p className="countdown-number">{timeLeft.minutes}</p>
+          <p className="countdown-number">{minutes}</p>
           <p className="countdown-label">Minutes</p>
         </div>
         <div className="countdown-box">
-          <p className="countdown-number">{timeLeft.seconds}</p>
+          <p className="countdown-number">{seconds}</p>
           <p className="countdown-label">Seconds</p>
         </div>
       </div>
     );
+  }
+
+  return null;
 };
+
 export default CountDown;

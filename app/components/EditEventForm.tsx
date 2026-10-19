@@ -14,6 +14,7 @@ interface EditEventFormProps {
   id: number;
   initialName: string;
   initialDate: string;
+  initialEndDate: string;
   initialDescription: string;
   initialImageUrl: string | null;
   initialSpotifyUrl: string | null;
@@ -26,6 +27,7 @@ const EditEventForm = ({
   id,
   initialName,
   initialDate,
+  initialEndDate,
   initialDescription,
   initialImageUrl,
   initialSpotifyUrl,
@@ -36,6 +38,7 @@ const EditEventForm = ({
   const router = useRouter();
   const [eventName, setEventName] = useState<string>(initialName);
   const [eventDate, setEventDate] = useState<string>(initialDate);
+  const [eventEndDate, setEventEndDate] = useState<string>(initialEndDate);
 
   const [description, setDescription] = useState<string>(initialDescription);
   const [eventLocation, setEventLocation] =
@@ -60,13 +63,24 @@ const EditEventForm = ({
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!eventName || !eventDate || !description || !eventLocation) {
+    if (
+      !eventName ||
+      !eventDate ||
+      !eventEndDate ||
+      !description ||
+      !eventLocation
+    ) {
       setError("Please fill in all required fields.");
       return;
     }
 
     if (new Date(eventDate) <= new Date()) {
       setError("Event date must be in the future.");
+      return;
+    }
+
+    if (new Date(eventEndDate) <= new Date(eventDate)) {
+      setError("Event end date must be later than the event date.");
       return;
     }
 
@@ -86,6 +100,7 @@ const EditEventForm = ({
 
     try {
       const utcDate = formatDateToUtc(eventDate);
+      const utcEndDate = formatDateToUtc(eventEndDate);
 
       const file = inputFileRef.current?.files?.[0];
       if (file) {
@@ -103,6 +118,7 @@ const EditEventForm = ({
           id,
           name: eventName,
           event_date: utcDate.toISOString(),
+          event_end_date: utcEndDate.toISOString(),
           description: description,
           image_url: imageUrl,
           spotify_url: spotifyUrl,
@@ -165,17 +181,32 @@ const EditEventForm = ({
                 suggestion={(value) => setEventName(value)}
               />
             </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="edit-eventDate" className="form-label">
-                Event Date <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="edit-eventDate"
-                value={eventDate}
-                onChange={(e) => setEventDate(e.target.value)}
-                type="datetime-local"
-                className="form-input"
-              />
+
+            <div className="flex flex-col gap-4 md:flex-row md:gap-2">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="eventStartDate" className="form-label">
+                  Event Start Date <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="eventStartDate"
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  type="datetime-local"
+                  className="form-input"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="eventEndDate" className="form-label">
+                  Event End Date <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="eventEndDate"
+                  value={eventEndDate}
+                  onChange={(e) => setEventEndDate(e.target.value)}
+                  type="datetime-local"
+                  className="form-input"
+                />
+              </div>
             </div>
           </div>
 

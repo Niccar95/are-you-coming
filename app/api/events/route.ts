@@ -16,6 +16,7 @@ export const POST = async (req: NextRequest) => {
   const {
     name,
     event_date,
+    event_end_date,
     description,
     image_url,
     spotify_url,
@@ -24,7 +25,14 @@ export const POST = async (req: NextRequest) => {
     timezone,
   } = await req.json();
 
-  if (!name || !event_date || !description || !event_location || !timezone) {
+  if (
+    !name ||
+    !event_date ||
+    !event_end_date ||
+    !description ||
+    !event_location ||
+    !timezone
+  ) {
     return NextResponse.json(
       { error: "Missing required fields." },
       { status: 400 },
@@ -34,6 +42,7 @@ export const POST = async (req: NextRequest) => {
   const event = await addEvent(
     name,
     new Date(event_date),
+    new Date(event_end_date),
     description,
     session.user.id,
     image_url || null,
@@ -57,6 +66,7 @@ export const PATCH = async (req: NextRequest) => {
     id,
     name,
     event_date,
+    event_end_date,
     description,
     image_url,
     spotify_url,
@@ -64,7 +74,14 @@ export const PATCH = async (req: NextRequest) => {
     event_location,
   } = await req.json();
 
-  if (!id || !name || !event_date || !description || !event_location) {
+  if (
+    !id ||
+    !name ||
+    !event_date ||
+    !event_end_date ||
+    !description ||
+    !event_location
+  ) {
     return NextResponse.json(
       { error: "Missing required fields." },
       { status: 400 },
@@ -83,6 +100,7 @@ export const PATCH = async (req: NextRequest) => {
     id,
     name,
     new Date(event_date),
+    new Date(event_end_date),
     description,
     image_url || null,
     spotify_url || null,
@@ -90,7 +108,7 @@ export const PATCH = async (req: NextRequest) => {
     event_location,
   );
 
-  return NextResponse.json(event, { status: 201 });
+  return NextResponse.json(event, { status: 200 });
 };
 
 export const DELETE = async (req: NextRequest) => {
