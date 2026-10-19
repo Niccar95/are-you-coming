@@ -63,6 +63,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <Image
               src="/are-you-coming-logo-light-q.svg"
               alt="Are You Coming?"
+              className="cursor-pointer"
               width={82}
               height={30}
             />
@@ -183,7 +184,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="grid grid-cols-3 gap-3 lg:w-1/2">
           <section>
             <h3 className="mb-4 text-status flex items-center gap-2">
-              Pending
+              Unsure
               <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
                 {
                   eventAttendees.filter(
@@ -196,7 +197,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             {eventAttendees.filter(
               (attendee) => attendee.inviteStatus === "pending",
             ).length > 0 ? (
-              <ul className="flex flex-col gap-1 list-none h-10 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
+              <ul className="flex flex-col gap-1 list-none h-15 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
                 {eventAttendees
                   .filter((attendee) => attendee.inviteStatus === "pending")
                   .map((attendee) => (
@@ -217,7 +218,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           <section>
             <h3 className="mb-4 text-status flex items-center gap-2">
-              Attending
+              Coming
               <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
                 {
                   eventAttendees.filter(
@@ -230,7 +231,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             {eventAttendees.filter(
               (attendee) => attendee.inviteStatus === "accepted",
             ).length > 0 ? (
-              <ul className="flex flex-col gap-1 list-none">
+              <ul className="flex flex-col gap-1 list-none h-15 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
                 {eventAttendees
                   .filter((attendee) => attendee.inviteStatus === "accepted")
                   .map((attendee) => (
@@ -251,7 +252,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           <section>
             <h3 className="mb-4 text-status flex items-center gap-2">
-              Declined
+              Skipping
               <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
                 {
                   eventAttendees.filter(
@@ -264,7 +265,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             {eventAttendees.filter(
               (attendee) => attendee.inviteStatus === "declined",
             ).length > 0 ? (
-              <ul className="flex flex-col gap-1 list-none">
+              <ul className="flex flex-col gap-1 list-none h-15 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
                 {eventAttendees
                   .filter((attendee) => attendee.inviteStatus === "declined")
                   .map((attendee) => (
@@ -283,69 +284,69 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           </section>
         </div>
-      </article>
-      {!session &&
-        (event.isAFutureDate() ? (
-          <AttendeeForm eventId={event.id} />
-        ) : (
-          <div className="card md:w-1/2 flex flex-col items-center gap-3 text-center">
-            <p className="text-body">
-              You can no longer sign up to this event.
-            </p>
+        {!session &&
+          (event.isAFutureDate() ? (
+            <AttendeeForm eventId={event.id} />
+          ) : (
+            <div className="card md:w-1/2 mt-8 flex flex-col items-center gap-3 text-center">
+              <p className="text-body">
+                You can no longer sign up to this event.
+              </p>
+            </div>
+          ))}
+        {playlistId && (
+          <div>
+            <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
+              <Music size={18} /> Event Playlist
+            </h2>
+            <div className="flex flex-col md:flex-row gap-4 items-start w-full">
+              <iframe
+                style={{ borderRadius: "12px" }}
+                src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`}
+                width="100%"
+                height="352"
+                allowFullScreen
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                className="w-full md:w-1/2"
+              />
+              {event.spotifyInviteUrl && (
+                <div className="card flex flex-col gap-4 items-center w-full md:w-1/2">
+                  <p className="text-xs text-zinc-400">
+                    Scan to join as collaborator
+                  </p>
+                  <QRCode spotifyInviteUrl={event.spotifyInviteUrl} />
+                  <p className="text-xs text-zinc-400">
+                    Or click to join as collaborator
+                  </p>
+                  <a
+                    href={event.spotifyInviteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 btn-outline-violet"
+                  >
+                    <UserPlus size={16} />
+                    Join as collaborator
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
-        ))}
-      {playlistId && (
-        <div>
-          <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
-            <Music size={18} /> Event Playlist
-          </h2>
-          <div className="flex flex-col md:flex-row gap-4 items-start w-full">
-            <iframe
-              style={{ borderRadius: "12px" }}
-              src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`}
-              width="100%"
-              height="352"
-              allowFullScreen
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              className="w-full md:w-1/2"
-            />
-            {event.spotifyInviteUrl && (
-              <div className="card flex flex-col gap-4 items-center w-full md:w-1/2">
-                <p className="text-xs text-zinc-400">
-                  Scan to join as collaborator
-                </p>
-                <QRCode spotifyInviteUrl={event.spotifyInviteUrl} />
-                <p className="text-xs text-zinc-400">
-                  Or click to join as collaborator
-                </p>
-                <a
-                  href={event.spotifyInviteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 btn-outline-violet"
-                >
-                  <UserPlus size={16} />
-                  Join as collaborator
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+        )}
 
-      {event.eventLocation && (
-        <div>
-          <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
-            <MapPin size={18} /> Event Location
-          </h2>
-          <iframe
-            src={`https://maps.google.com/maps?q=${encodeURIComponent(event.eventLocation)}&output=embed`}
-            className="w-full h-87.5 border border-zinc-200 rounded-lg"
-            aria-hidden="true"
-          />
-        </div>
-      )}
+        {event.eventLocation && (
+          <div>
+            <h2 className="mt-8 mb-4 text-subtitle flex items-center gap-2">
+              <MapPin size={18} /> Event Location
+            </h2>
+            <iframe
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(event.eventLocation)}&output=embed`}
+              className="w-full h-87.5 border border-zinc-200 rounded-lg"
+              aria-hidden="true"
+            />
+          </div>
+        )}
+      </article>
     </div>
   );
 };
