@@ -10,3 +10,6 @@ Update this list every time a migration file is run. Put it next to the migratio
 
 - [x] `003_add_attendee_invite_status_to_event_attendees.sql`: dev
 - [x] `003_add_attendee_invite_status_to_event_attendees.sql`: prod
+
+- [x] `004_rename_invite_status_to_response_status.sql`: dev
+- [x] `004_rename_invite_status_to_response_status.sql`: prod

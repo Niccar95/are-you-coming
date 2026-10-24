@@ -1,21 +1,21 @@
-import { InviteStatus } from "../types";
+import { ResponseStatus } from "../types";
 
 export class AttendeeClass {
   id: number;
   name: string;
   email: string;
-  inviteStatus: InviteStatus;
+  responseStatus: ResponseStatus;
 
   constructor(
     id: number,
     name: string,
     email: string,
-    inviteStatus: InviteStatus,
+    responseStatus: ResponseStatus,
   ) {
     this.id = id;
     this.name = name;
     this.email = email;
-    this.inviteStatus = inviteStatus;
+    this.responseStatus = responseStatus;
   }
 
   toJSON() {
@@ -23,7 +23,7 @@ export class AttendeeClass {
       id: this.id,
       name: this.name,
       email: this.email,
-      inviteStatus: this.inviteStatus,
+      responseStatus: this.responseStatus,
     };
   }
 }

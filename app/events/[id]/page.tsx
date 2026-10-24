@@ -188,18 +188,18 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
                 {
                   eventAttendees.filter(
-                    (attendee) => attendee.inviteStatus === "pending",
+                    (attendee) => attendee.responseStatus === "unsure",
                   ).length
                 }
               </span>
             </h3>
 
             {eventAttendees.filter(
-              (attendee) => attendee.inviteStatus === "pending",
+              (attendee) => attendee.responseStatus === "unsure",
             ).length > 0 ? (
               <ul className="flex flex-col gap-1 list-none h-15 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
                 {eventAttendees
-                  .filter((attendee) => attendee.inviteStatus === "pending")
+                  .filter((attendee) => attendee.responseStatus === "unsure")
                   .map((attendee) => (
                     <li
                       className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"
@@ -222,18 +222,18 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
                 {
                   eventAttendees.filter(
-                    (attendee) => attendee.inviteStatus === "accepted",
+                    (attendee) => attendee.responseStatus === "coming",
                   ).length
                 }
               </span>
             </h3>
 
             {eventAttendees.filter(
-              (attendee) => attendee.inviteStatus === "accepted",
+              (attendee) => attendee.responseStatus === "coming",
             ).length > 0 ? (
               <ul className="flex flex-col gap-1 list-none h-15 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
                 {eventAttendees
-                  .filter((attendee) => attendee.inviteStatus === "accepted")
+                  .filter((attendee) => attendee.responseStatus === "coming")
                   .map((attendee) => (
                     <li
                       className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"
@@ -256,18 +256,18 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full font-medium">
                 {
                   eventAttendees.filter(
-                    (attendee) => attendee.inviteStatus === "declined",
+                    (attendee) => attendee.responseStatus === "skipping",
                   ).length
                 }
               </span>
             </h3>
 
             {eventAttendees.filter(
-              (attendee) => attendee.inviteStatus === "declined",
+              (attendee) => attendee.responseStatus === "skipping",
             ).length > 0 ? (
               <ul className="flex flex-col gap-1 list-none h-15 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent">
                 {eventAttendees
-                  .filter((attendee) => attendee.inviteStatus === "declined")
+                  .filter((attendee) => attendee.responseStatus === "skipping")
                   .map((attendee) => (
                     <li
                       className="max-w-full self-start bg-blue-100 rounded-full px-3 py-1"

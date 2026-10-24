@@ -1,13 +1,13 @@
 import pool from "../lib/db";
 import { AttendeeClass } from "../lib/models/Attendee";
-import { InviteStatus } from "../lib/types";
+import { ResponseStatus } from "../lib/types";
 
 export const getAttendeesByEventId = async (
   eventId: number,
 ): Promise<AttendeeClass[]> => {
   const { rows } = await pool.query(
     `SELECT attendees.id, attendees.name, attendees.email,
-            event_attendees.invite_status
+            event_attendees.response_status
      FROM attendees
      JOIN event_attendees
        ON attendees.id = event_attendees.attendee_id
@@ -21,13 +21,13 @@ export const getAttendeesByEventId = async (
       id: number;
       name: string;
       email: string;
-      invite_status: InviteStatus;
+      response_status: ResponseStatus;
     }) =>
       new AttendeeClass(
         attendee.id,
         attendee.name,
         attendee.email,
-        attendee.invite_status,
+        attendee.response_status,
       ),
   );
 };
@@ -36,6 +36,7 @@ export const addAttendee = async (
   eventId: number,
   name: string,
   email: string,
+  responseStatus: string,
 ): Promise<AttendeeClass> => {
   const client = await pool.connect();
 
@@ -50,9 +51,9 @@ export const addAttendee = async (
     const attendee = rows[0];
 
     await client.query(
-      `INSERT INTO event_attendees (event_id, attendee_id, invite_status)
+      `INSERT INTO event_attendees (event_id, attendee_id, response_status)
        VALUES ($1, $2, $3)`,
-      [eventId, attendee.id, "accepted"],
+      [eventId, attendee.id, responseStatus],
     );
 
     await client.query("COMMIT");
@@ -61,7 +62,7 @@ export const addAttendee = async (
       attendee.id,
       attendee.name,
       attendee.email,
-      "accepted",
+      attendee.response_status,
     );
   } catch (error) {
     await client.query("ROLLBACK");

@@ -148,7 +148,7 @@ COMMIT;
 2. Check where psql is and that it can see the file:
    ```
    \! pwd
-   \! ls app/migrations
+   \! ls migrations
    ```
 3. Run it:
    ```

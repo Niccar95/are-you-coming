@@ -17,15 +17,15 @@ export type AttendeeType = {
   id: number;
   name: string;
   email: string;
-  inviteStatus: InviteStatus;
+  responseStatus: ResponseStatus;
 };
 
-export type InviteStatus = "pending" | "accepted" | "declined";
+export type ResponseStatus = "unsure" | "coming" | "skipping";
 
-export const inviteStatusLabels: Record<InviteStatus, string> = {
-  pending: "Pending response",
-  accepted: "Invitation accepted",
-  declined: "Invitation declined",
+export const statusLabels: Record<ResponseStatus, string> = {
+  unsure: "Pending response",
+  coming: "Invitation accepted",
+  skipping: "Invitation declined",
 };
 
 /// example for future card that will show invited guest timestamps with their status
@@ -33,7 +33,7 @@ export const inviteStatusLabels: Record<InviteStatus, string> = {
 // export type EventAttendeeType = {
 //   eventId: number;
 //   attendeeId: number;
-//   inviteStatus: InviteStatus;
+//   responseStatus: ResponseStatus;
 //   invitedAt: string;
 //   respondedAt: string | null;
 // };

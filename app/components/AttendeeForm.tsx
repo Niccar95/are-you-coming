@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { UserPlus, CheckCircle } from "lucide-react";
+import { UserPlus, CheckCircle, Send } from "lucide-react";
 import Spinner from "./Spinner";
 
 interface EventFormProps {
@@ -13,13 +13,15 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
   const router = useRouter();
   const [attendeeName, setAttendeeName] = useState<string>("");
   const [attendeeEmail, setAttendeeEmail] = useState<string>("");
+  const [attendeeStatus, setAttendeeStatus] = useState<string>("");
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const submitAttendance = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!attendeeName || !attendeeEmail) {
+    if (!attendeeName || !attendeeEmail!) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -34,6 +36,7 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
           event_id: eventId,
           name: attendeeName,
           email: attendeeEmail,
+          response_status: attendeeStatus,
         }),
       });
 
@@ -54,11 +57,10 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
     return (
       <div className="card md:w-1/2 mt-8 flex flex-col items-center gap-3 text-center">
         <h3 className="text-title flex items-center justify-center gap-2">
-          You&apos;re in! <CheckCircle size={20} className="text-violet-500" />
+          Response submitted!{" "}
+          <CheckCircle size={20} className="text-violet-500" />
         </h3>
-        <p className="text-subtle">
-          We&apos;ll send you a reminder before the event.
-        </p>
+        <p className="text-subtle">Your response has been saved.</p>
       </div>
     );
   }
@@ -67,7 +69,7 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
     <div className="form-card mt-8">
       <form onSubmit={submitAttendance} className="flex flex-col gap-4 p-3 ">
         {loading && <Spinner />}
-        <h3 className="form-heading">Sign up</h3>
+        <h3 className="form-heading">Are you coming?</h3>
         <div className="flex flex-col gap-2">
           <label htmlFor="name" className="form-label">
             Name <span className="text-red-500">*</span>
@@ -93,17 +95,50 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
             placeholder="your@email.com"
             className="form-input"
           />
-          <p className="text-subtle">
-            We&apos;ll send you a reminder before the event.
-          </p>
         </div>
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center gap-2 form-label cursor-pointer">
+            <input
+              type="radio"
+              name="response"
+              value="coming"
+              checked={attendeeStatus === "coming"}
+              onChange={() => setAttendeeStatus("coming")}
+            />
+            Coming
+          </label>
+          <label className="flex items-center gap-2 form-label cursor-pointer">
+            <input
+              type="radio"
+              name="response"
+              value="unsure"
+              checked={attendeeStatus === "unsure"}
+              onChange={() => setAttendeeStatus("unsure")}
+            />
+            Unsure
+          </label>
+          <label className="flex items-center gap-2 form-label cursor-pointer">
+            <input
+              type="radio"
+              name="response"
+              value="skipping"
+              checked={attendeeStatus === "skipping"}
+              onChange={() => setAttendeeStatus("skipping")}
+            />
+            Skipping
+          </label>
+        </div>
+        <p className="text-subtle">
+          If you&apos;re coming, we&apos;ll send you a reminder before the
+          event.
+        </p>
         {error && <p className="text-xs text-red-500">{error}</p>}
         <button
           type="submit"
           className="btn-primary mt-2 flex items-center gap-2 self-start"
         >
-          <UserPlus size={16} />
-          I&apos;m in
+          <Send size={16} />
+          Submit
         </button>
       </form>
     </div>
