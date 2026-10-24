@@ -286,7 +286,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
         {!session &&
           (event.isAFutureDate() ? (
-            <AttendeeForm eventId={event.id} />
+            <AttendeeForm eventId={event.id} eventData={eventData} />
           ) : (
             <div className="card md:w-1/2 mt-8 flex flex-col items-center gap-3 text-center">
               <p className="text-body">

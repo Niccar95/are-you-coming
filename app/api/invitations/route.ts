@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import emailjs from "@emailjs/nodejs";
 
 export const POST = async (req: NextRequest) => {
-  const { attendees, eventData } = await req.json();
+  const { attendees, eventData, emailMessage } = await req.json();
 
   if (!attendees || !Array.isArray(attendees)) {
     return NextResponse.json(
@@ -15,15 +15,9 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ error: "Missing event data." }, { status: 400 });
   }
 
-  const formattedDate = new Date(eventData.eventDate).toLocaleDateString(
-    "en-US",
-    {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    },
-  );
+  if (!emailMessage) {
+    return NextResponse.json({ error: "Missing message." }, { status: 400 });
+  }
 
   try {
     for (const attendee of attendees) {
@@ -33,7 +27,7 @@ export const POST = async (req: NextRequest) => {
         {
           to_email: attendee.email,
           event_id: eventData.id,
-          message: `Here's a reminder that you have been invited the upcoming event:<br><br><b>${eventData.name}</b><br><br>${eventData.description}<br><br><b>Location and date</b><br><br>${eventData.eventLocation}<br>${formattedDate}<br><br><i><b>Best regards,</b><br>${eventData.hostName}</i>`,
+          message: emailMessage,
         },
         {
           publicKey: "_TeZKUhH8wHVx8a5J",

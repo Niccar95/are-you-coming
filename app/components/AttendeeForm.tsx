@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { UserPlus, CheckCircle, Send } from "lucide-react";
+import { CheckCircle, Send } from "lucide-react";
 import Spinner from "./Spinner";
+import { EventType } from "../lib/types";
 
 interface EventFormProps {
   eventId: number;
+  eventData: EventType;
 }
 
-const AttendeeForm = ({ eventId }: EventFormProps) => {
+const AttendeeForm = ({ eventId, eventData }: EventFormProps) => {
   const router = useRouter();
   const [attendeeName, setAttendeeName] = useState<string>("");
   const [attendeeEmail, setAttendeeEmail] = useState<string>("");
@@ -21,10 +23,12 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
 
   const submitAttendance = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!attendeeName || !attendeeEmail!) {
+
+    if (!attendeeName || !attendeeEmail) {
       setError("Please fill in all required fields.");
       return;
     }
+
     setError("");
     setLoading(true);
 
@@ -44,10 +48,55 @@ const AttendeeForm = ({ eventId }: EventFormProps) => {
         throw new Error("Failed to submit attendee");
       }
 
+      const { attendee, token } = await response.json();
+
+      const responseUrl = `${window.location.origin}/events/${eventId}/respond?token=${token}`;
+
+      const formattedDate = new Date(eventData.eventDate).toLocaleDateString(
+        "en-US",
+        {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        },
+      );
+
+      const emailMessage = `<div style="border-left: 4px solid #8b5cf6; padding-left: 16px; margin-bottom: 24px;">
+<h1 style="margin: 0; font-family: 'Plus Jakarta Sans', Arial, sans-serif; font-size: 24px; line-height: 1.3; font-weight: bold; color: #3f3f46; letter-spacing: 0.025em;">Response confirmation</h1>
+</div>
+This email confirms your response to the following event:<br><br>
+<b>${eventData.name}</b><br><br>
+${eventData.description}<br><br>
+<b>Location and date</b><br><br>
+${eventData.eventLocation}<br>
+${formattedDate}<br><br>
+You can update your response at any time using the personal link below:<br><br>
+<a href="${responseUrl}">Update your response</a><br><br>
+<i><b>Best regards,</b><br>${eventData.hostName}</i>`;
+
+      const emailSubmitResponse = await fetch("/api/responses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          attendee,
+          token,
+          eventData,
+          emailMessage,
+        }),
+      });
+
+      if (!emailSubmitResponse.ok) {
+        const errorData = await emailSubmitResponse.json();
+        console.error("Email request failed:", errorData);
+        throw new Error("Failed to send confirmation email");
+      }
+
       setSubmitted(true);
       router.refresh();
     } catch (error) {
       console.error("Error submitting attendee:", error);
+      setError("Something went wrong submitting your response.");
     } finally {
       setLoading(false);
     }

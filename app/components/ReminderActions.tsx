@@ -19,6 +19,27 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
   const modalRef = useClickOutside(true, onClose);
   const [isEditing, setIsEditing] = useState(false);
 
+  const formattedDate = new Date(eventData.eventDate).toLocaleDateString(
+    "en-US",
+    {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    },
+  );
+
+  const emailMessage = `<div style="border-left: 4px solid #8b5cf6; padding-left: 16px; margin-bottom: 24px;">
+<h1 style="margin: 0; font-family: 'Plus Jakarta Sans', Arial, sans-serif; font-size: 24px; line-height: 1.3; font-weight: bold; color: #3f3f46; letter-spacing: 0.025em;">Event reminder!</h1>
+</div>
+Here's a reminder that you have been invited to the following event:<br><br>
+<b>${eventData.name}</b><br><br>
+${eventData.description}<br><br>
+<b>Location and date</b><br><br>
+${eventData.eventLocation}<br>
+${formattedDate}<br><br>
+<i><b>Best regards,</b><br>${eventData.hostName}</i>`;
+
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
@@ -34,7 +55,7 @@ const ReminderActions = ({ attendees, eventData }: ReminderProps) => {
       const response = await fetch("/api/invitations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ attendees, eventData }),
+        body: JSON.stringify({ attendees, eventData, emailMessage }),
       });
 
       if (!response.ok) throw new Error("Server error");
