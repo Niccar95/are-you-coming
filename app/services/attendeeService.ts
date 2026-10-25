@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import pool from "../lib/db";
 import { AttendeeClass } from "../lib/models/Attendee";
-import { ResponseStatus } from "../lib/types";
+import { AttendeeType, ResponseStatus } from "../lib/types";
 
 export const getAttendeesByEventId = async (
   eventId: number,
@@ -33,7 +33,10 @@ export const getAttendeesByEventId = async (
   );
 };
 
-export const getAttendeeResponse = async (eventId: number, token: string) => {
+export const getAttendeeResponse = async (
+  eventId: number,
+  token: string,
+): Promise<AttendeeType | null> => {
   const tokenHash = createHash("sha256").update(token).digest("hex");
 
   const { rows } = await pool.query(
@@ -57,7 +60,7 @@ export const updateAttendeeResponse = async (
   eventId: number,
   token: string,
   responseStatus: string,
-) => {
+): Promise<boolean> => {
   const tokenHash = createHash("sha256").update(token).digest("hex");
 
   const { rowCount } = await pool.query(
@@ -77,6 +80,7 @@ export const addAttendee = async (
   email: string,
   responseStatus: ResponseStatus,
   responseTokenHash: string,
+  sendConfirmation: (attendee: AttendeeClass) => Promise<void>,
 ): Promise<AttendeeClass> => {
   const client = await pool.connect();
 
@@ -85,10 +89,10 @@ export const addAttendee = async (
 
     const { rows } = await client.query(
       `INSERT INTO attendees (name, email)
-   VALUES ($1, $2)
-   ON CONFLICT (email)
-   DO UPDATE SET name = EXCLUDED.name
-   RETURNING *`,
+       VALUES ($1, $2)
+       ON CONFLICT (email)
+       DO UPDATE SET name = EXCLUDED.name
+       RETURNING *`,
       [name, email],
     );
 
@@ -96,23 +100,27 @@ export const addAttendee = async (
 
     await client.query(
       `INSERT INTO event_attendees
-     (event_id, attendee_id, response_status, response_token)
-   VALUES ($1, $2, $3, $4)
-   ON CONFLICT (event_id, attendee_id)
-   DO UPDATE SET
-     response_status = EXCLUDED.response_status,
-     response_token = EXCLUDED.response_token`,
+         (event_id, attendee_id, response_status, response_token)
+       VALUES ($1, $2, $3, $4)
+       ON CONFLICT (event_id, attendee_id)
+       DO UPDATE SET
+         response_status = EXCLUDED.response_status,
+         response_token = EXCLUDED.response_token`,
       [eventId, attendee.id, responseStatus, responseTokenHash],
     );
 
-    await client.query("COMMIT");
-
-    return new AttendeeClass(
+    const result = new AttendeeClass(
       attendee.id,
       attendee.name,
       attendee.email,
-      attendee.response_status,
+      responseStatus,
     );
+
+    await sendConfirmation(result);
+
+    await client.query("COMMIT");
+
+    return result;
   } catch (error) {
     await client.query("ROLLBACK");
     throw error;

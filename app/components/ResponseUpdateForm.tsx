@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { CheckCircle, Send } from "lucide-react";
 import Spinner from "./Spinner";
+import { ResponseStatus } from "../lib/types";
 
 type ResponseUpdateFormProps = {
   eventId: number;
   token: string;
   response: {
     name: string;
-    response_status: string;
+    responseStatus: ResponseStatus;
   };
 };
 
@@ -18,9 +19,7 @@ const ResponseUpdateForm = ({
   token,
   response,
 }: ResponseUpdateFormProps) => {
-  const [responseStatus, setResponseStatus] = useState(
-    response.response_status,
-  );
+  const [responseStatus, setResponseStatus] = useState(response.responseStatus);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
