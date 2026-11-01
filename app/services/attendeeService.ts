@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import pool from "../lib/db";
 import { AttendeeClass } from "../lib/models/Attendee";
-import { AttendeeType, ResponseStatus } from "../lib/types";
+import { AttendeeType, ResponseLogType, ResponseStatus } from "../lib/types";
 
 export const getAttendeesByEventId = async (
   eventId: number,
@@ -56,22 +56,67 @@ export const getAttendeeResponse = async (
   return rows[0] ?? null;
 };
 
+export const getResponseLogs = async (): Promise<ResponseLogType[]> => {
+  const { rows } = await pool.query(
+    `SELECT
+       event_response_logs.id,
+       event_response_logs.event_id AS "eventId",
+       event_response_logs.attendee_id AS "attendeeId",
+       attendees.name AS "attendeeName",
+       event_response_logs.response_status AS "responseStatus",
+       event_response_logs.created_at AS "createdAt",
+       events.name AS "eventName"
+     FROM event_response_logs
+     JOIN attendees
+       ON event_response_logs.attendee_id = attendees.id
+     JOIN events
+       ON event_response_logs.event_id = events.id
+     ORDER BY event_response_logs.created_at DESC`,
+  );
+
+  return rows;
+};
+
 export const updateAttendeeResponse = async (
   eventId: number,
   token: string,
   responseStatus: string,
 ): Promise<boolean> => {
   const tokenHash = createHash("sha256").update(token).digest("hex");
+  const client = await pool.connect();
 
-  const { rowCount } = await pool.query(
-    `UPDATE event_attendees
-     SET response_status = $1
-     WHERE event_id = $2
-       AND response_token = $3`,
-    [responseStatus, eventId, tokenHash],
-  );
+  try {
+    await client.query("BEGIN");
 
-  return rowCount === 1;
+    const { rows, rowCount } = await client.query(
+      `UPDATE event_attendees
+       SET response_status = $1
+       WHERE event_id = $2
+         AND response_token = $3
+       RETURNING attendee_id`,
+      [responseStatus, eventId, tokenHash],
+    );
+
+    if (rowCount !== 1) {
+      await client.query("ROLLBACK");
+      return false;
+    }
+
+    await client.query(
+      `INSERT INTO event_response_logs
+         (event_id, attendee_id, response_status)
+       VALUES ($1, $2, $3)`,
+      [eventId, rows[0].attendee_id, responseStatus],
+    );
+
+    await client.query("COMMIT");
+    return true;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 };
 
 export const addAttendee = async (
@@ -117,6 +162,13 @@ export const addAttendee = async (
     );
 
     await sendConfirmation(result);
+
+    await client.query(
+      `INSERT INTO event_response_logs
+         (event_id, attendee_id, response_status)
+       VALUES ($1, $2, $3)`,
+      [eventId, attendee.id, responseStatus],
+    );
 
     await client.query("COMMIT");
 

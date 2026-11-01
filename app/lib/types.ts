@@ -28,6 +28,15 @@ export const statusLabels: Record<ResponseStatus, string> = {
   skipping: "Invitation declined",
 };
 
+export type ResponseLogType = {
+  id: number;
+  eventId: number;
+  attendeeId: number;
+  attendeeName: string;
+  responseStatus: ResponseStatus;
+  createdAt: Date;
+  eventName: string;
+};
 /// example for future card that will show invited guest timestamps with their status
 
 // export type EventAttendeeType = {
