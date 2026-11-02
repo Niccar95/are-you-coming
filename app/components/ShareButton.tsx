@@ -2,13 +2,17 @@
 
 import { Share2 } from "lucide-react";
 
-const ShareButton = () => {
+interface ShareButtonProps {
+  url?: string;
+}
+
+const ShareButton = ({ url }: ShareButtonProps) => {
   const handleShare = async () => {
     try {
       if (navigator.share) {
         await navigator.share({
           title: document.title,
-          url: window.location.href,
+          url: url ?? window.location.href,
         });
       } else {
         await navigator.clipboard.writeText(window.location.href);
@@ -24,7 +28,7 @@ const ShareButton = () => {
   return (
     <button
       onClick={handleShare}
-      className="btn-outline-violet flex items-center gap-2 self-start"
+      className="btn-outline-violet flex items-center gap-2"
     >
       <Share2 size={16} />
       Share

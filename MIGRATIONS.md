@@ -21,4 +21,4 @@ Update this list every time a migration file is run. Put it next to the migratio
 - [x] `006_remove_attendee_email_duplicates.sql`: prod
 
 - [x] `007_add_event_response_logs.sql`: dev
-- [ ] `007_add_event_response_logs.sql`: prod
+- [x] `007_add_event_response_logs.sql`: prod
