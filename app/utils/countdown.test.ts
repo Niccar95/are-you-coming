@@ -4,10 +4,8 @@ import { getCountdownState } from "./countdown";
 const storedStart = new Date("2027-10-28T21:00:00.000Z");
 const storedEnd = new Date("2027-10-28T23:00:00.000Z");
 
-// 21:00 Stockholm (UTC+2) = 19:00 UTC, this is the real moment the event starts
-const start = new Date("2027-10-28T19:00:00.000Z").getTime();
-//real moment event ends
-const end = new Date("2027-10-28T21:00:00.000Z").getTime();
+const start = storedStart.getTime();
+const end = storedEnd.getTime();
 
 const SECOND = 1000;
 

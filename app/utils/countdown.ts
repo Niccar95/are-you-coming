@@ -1,5 +1,3 @@
-import { formatUtcToLocal } from "./dateTimeFormatters";
-
 export type CountdownState =
   | {
       status: "upcoming";
@@ -12,12 +10,13 @@ export type CountdownState =
   | { status: "passed" };
 
 export const getCountdownState = (
-  eventDate: Date,
-  eventEndDate: Date,
+  eventDate: Date | string,
+  eventEndDate: Date | string,
   now: number,
 ): CountdownState => {
-  const target = formatUtcToLocal(eventDate).getTime();
-  const endTarget = formatUtcToLocal(eventEndDate).getTime();
+  const target = new Date(eventDate).getTime();
+  const endTarget = new Date(eventEndDate).getTime();
+
   const distance = target - now;
 
   if (distance <= 0) {

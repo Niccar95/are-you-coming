@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatUtcToLocal } from "../utils/dateTimeFormatters";
 import { getCountdownState } from "../utils/countdown";
 
 interface DateProps {
@@ -10,8 +9,7 @@ interface DateProps {
 }
 
 const CountDown = ({ eventDate, eventEndDate }: DateProps) => {
-  const endTarget = formatUtcToLocal(eventEndDate).getTime();
-
+  const endTarget = new Date(eventEndDate).getTime();
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
