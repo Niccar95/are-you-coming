@@ -44,10 +44,10 @@ const EventCard = ({
           </h3>
           <time
             dateTime={new Date(eventDate).toISOString()}
-            className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate"
+            className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full"
           >
-            <CalendarDays size={12} />
-            {formatDateForUI(eventDate)}
+            <CalendarDays size={12} className="shrink-0" />
+            <span className="truncate">{formatDateForUI(eventDate)}</span>
           </time>
           {description && (
             <p className="text-body mt-3 line-clamp-2">{description}</p>

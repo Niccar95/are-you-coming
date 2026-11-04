@@ -223,7 +223,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
               {selectedDate && (
                 <time
                   dateTime={selectedDate.toISOString()}
-                  className="flex items-center gap-2 border-l-2 border-violet-500 pl-3 py-0.5"
+                  className="flex items-center gap-2"
                 >
                   <CalendarDays size={14} className="text-violet-500" />
 
@@ -231,7 +231,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
                 </time>
               )}
             </h3>
-            <div className="flex flex-col gap-6 overflow-y-auto">
+            <div className="flex flex-col gap-6 overflow-y-auto overflow-x-hidden">
               {selectedEvents?.map((event) => (
                 <div key={event.id} className="flex flex-col gap-3">
                   <div className="flex items-start gap-4">
@@ -253,15 +253,20 @@ const Calendar = ({ allEvents }: EventListProps) => {
                         {event.name}
                       </h3>
                       <div className="flex flex-wrap gap-2">
-                        <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
-                          <Clock size={12} />
-                          {formatTimeForUI(event.eventDate)} -{" "}
-                          {formatTimeForUI(event.eventEndDate)} {event.timeZone}
+                        <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 min-w-0">
+                          <Clock size={12} className="shrink-0" />
+                          <span className="truncate">
+                            {formatTimeForUI(event.eventDate)} -{" "}
+                            {formatTimeForUI(event.eventEndDate)}{" "}
+                            {event.timeZone}
+                          </span>
                         </time>
                         {event.eventLocation && (
-                          <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
-                            <MapPin size={12} />
-                            {event.eventLocation}
+                          <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 min-w-0">
+                            <MapPin size={12} className="shrink-0" />
+                            <span className="truncate">
+                              {event.eventLocation}
+                            </span>
                           </span>
                         )}
                       </div>
