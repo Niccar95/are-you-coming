@@ -37,12 +37,3 @@ export type ResponseLogType = {
   createdAt: Date;
   eventName: string;
 };
-/// example for future card that will show invited guest timestamps with their status
-
-// export type EventAttendeeType = {
-//   eventId: number;
-//   attendeeId: number;
-//   responseStatus: ResponseStatus;
-//   invitedAt: string;
-//   respondedAt: string | null;
-// };

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { JSX, useCallback, useState } from "react";
+import { JSX, useCallback, useEffect, useState } from "react";
 import useClickOutside from "../hooks/useClickOutside";
 import { EventType } from "../lib/types";
 import EventForm from "./EventForm";
@@ -35,6 +35,22 @@ const Calendar = ({ allEvents }: EventListProps) => {
   }, []);
 
   const popupRef = useClickOutside(showEventCard, closePopup);
+
+  useEffect(() => {
+    if (!showEventCard || !selectedDate) return;
+
+    const updatedEvents = allEvents.filter((item) => {
+      const eventDate = new Date(item.eventDate);
+
+      return (
+        eventDate.getDate() === selectedDate.getDate() &&
+        eventDate.getMonth() === selectedDate.getMonth() &&
+        eventDate.getFullYear() === selectedDate.getFullYear()
+      );
+    });
+
+    setSelectedEvents(updatedEvents);
+  }, [allEvents, selectedDate, showEventCard]);
 
   const today = new Date();
   const currentDate = today.getDate();
