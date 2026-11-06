@@ -95,8 +95,8 @@ const EventForm = ({ selectedDate }: FormProps) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: eventName,
-          event_date: utcDate.toISOString(),
-          event_end_date: utcEndDate.toISOString(),
+          event_date: utcDate,
+          event_end_date: utcEndDate,
           description: description,
           image_url: imageUrl,
           spotify_url: spotifyUrl,

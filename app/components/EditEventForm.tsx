@@ -117,8 +117,8 @@ const EditEventForm = ({
         body: JSON.stringify({
           id,
           name: eventName,
-          event_date: utcDate.toISOString(),
-          event_end_date: utcEndDate.toISOString(),
+          event_date: utcDate,
+          event_end_date: utcEndDate,
           description: description,
           image_url: imageUrl,
           spotify_url: spotifyUrl,

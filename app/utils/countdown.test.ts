@@ -27,8 +27,29 @@ describe("getCountdownState", () => {
 
     expect(result.status).toBe("started");
   });
+
   it("returns passed when now is exactly the end time", () => {
     const result = getCountdownState(storedStart, storedEnd, end);
+
+    expect(result.status).toBe("passed");
+  });
+
+  it("calculates remaining days, hours, minutes and seconds correctly", () => {
+    const now = start - (2 * 86400000 + 3 * 3600000 + 15 * 60000 + 20 * SECOND);
+
+    const result = getCountdownState(storedStart, storedEnd, now);
+
+    expect(result).toEqual({
+      status: "upcoming",
+      days: 2,
+      hours: 3,
+      minutes: 15,
+      seconds: 20,
+    });
+  });
+
+  it("returns passed after the event has ended", () => {
+    const result = getCountdownState(storedStart, storedEnd, end + SECOND);
 
     expect(result.status).toBe("passed");
   });

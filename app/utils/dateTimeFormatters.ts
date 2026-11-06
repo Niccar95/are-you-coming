@@ -10,19 +10,8 @@ export const formatDate = (date: Date) => {
 // Takes the raw string from <input type="datetime-local" /> and converts it
 // to a standardized UTC ISO string for database storage
 
-export const formatDateToUtc = (eventDate: string): Date => {
-  const localDate = new Date(eventDate);
-
-  return new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
-};
-
-// Converts the stored date back into the real moment it happens, for the countdown.
-// The database holds the Swedish clock time (e.g. 20:00) labelled as UTC, so this
-// shifts it by the timezone offset. It is the reverse of formatDateToUtc.
-
-export const formatUtcToLocal = (storedDate: Date | string): Date => {
-  const date = new Date(storedDate);
-  return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+export const formatDateToUtc = (eventDate: string): string => {
+  return new Date(eventDate).toISOString();
 };
 
 // For UI display
@@ -49,6 +38,6 @@ export const formatTimeForUI = (time?: Date | string | null): string => {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
-    timeZone: "UTC",
+    timeZone: "Europe/Stockholm",
   });
 };
