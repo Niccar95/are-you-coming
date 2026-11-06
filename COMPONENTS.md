@@ -33,7 +33,7 @@ hover:scale-[1.02] transition-all duration-300
 
 - Image: `w-full h-36 object-cover` — fallback: `bg-violet-50` with `<CalendarDays size={60} className="text-violet-300" />`
 - Content wrapper: `p-5`
-- Title: `text-subtitle mb-2 line-clamp-2 md:line-clamp-1`
+- Title: `text-subtitle mb-2 truncate`
 - Description: `text-body mt-3 line-clamp-2`
 
 ---
@@ -116,9 +116,10 @@ Selected state: `border-violet-400 text-violet-600`
 Standard pill — icon + text:
 
 ```jsx
-<span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full truncate">
-  <Icon size={12} />
-  Text
+<span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full">
+  <Icon size={12} className="shrink-0" />
+
+  <p className="truncate">Text</p>
 </span>
 ```
 
@@ -207,4 +208,4 @@ Place inside the modal/form container, not the overlay.
 - Card titles: `line-clamp-2 md:line-clamp-1`
 - Card descriptions: `line-clamp-2`
 - Detail pages: no clamping — let text wrap naturally
-- In flex rows, add `min-w-0` to the content div or truncation won't work
+- In flex rows, add `max-w-0` to the content div or truncation won't work

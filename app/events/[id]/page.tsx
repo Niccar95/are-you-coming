@@ -106,7 +106,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         )}
         <figcaption className="absolute bottom-0 left-0 right-0 p-6">
           <h1
-            className={`text-4xl font-bold ${hasImage ? "text-white" : "text-zinc-800"}`}
+            className={`text-4xl font-bold truncate ${hasImage ? "text-white" : "text-zinc-800"}`}
           >
             {event.name}
           </h1>
@@ -125,10 +125,10 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               {formatTimeForUI(eventData.eventEndDate)} ({event.timeZone})
             </time>
             {event.eventLocation && (
-              <p className={`${badgeClass} m-0 max-w-full truncate`}>
-                <MapPin size={12} />
-                {event.eventLocation}
-              </p>
+              <span className={`${badgeClass} m-0 max-w-full`}>
+                <MapPin size={12} className="shrink-0" />
+                <p className="truncate">{event.eventLocation}</p>
+              </span>
             )}
           </div>
         </figcaption>

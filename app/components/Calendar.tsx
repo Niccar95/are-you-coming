@@ -249,24 +249,20 @@ const Calendar = ({ allEvents }: EventListProps) => {
                       </div>
                     )}
                     <div className="flex flex-col gap-2 min-w-0">
-                      <h3 className="text-subtitle line-clamp-2 md:line-clamp-1">
-                        {event.name}
-                      </h3>
+                      <h3 className="text-subtitle truncate">{event.name}</h3>
                       <div className="flex flex-wrap gap-2">
-                        <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 min-w-0">
+                        <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full">
                           <Clock size={12} className="shrink-0" />
-                          <span className="truncate">
+                          <p className="truncate">
                             {formatTimeForUI(event.eventDate)} -{" "}
                             {formatTimeForUI(event.eventEndDate)}{" "}
                             {event.timeZone}
-                          </span>
+                          </p>
                         </time>
                         {event.eventLocation && (
-                          <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 min-w-0">
+                          <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full">
                             <MapPin size={12} className="shrink-0" />
-                            <span className="truncate">
-                              {event.eventLocation}
-                            </span>
+                            <p className="truncate">{event.eventLocation}</p>
                           </span>
                         )}
                       </div>

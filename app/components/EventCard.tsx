@@ -39,15 +39,13 @@ const EventCard = ({
           </div>
         )}
         <div className="p-5">
-          <h3 className="text-subtitle mb-2 line-clamp-2 md:line-clamp-1">
-            {name}
-          </h3>
+          <h3 className="text-subtitle mb-2 truncate">{name}</h3>
           <time
             dateTime={new Date(eventDate).toISOString()}
             className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full"
           >
             <CalendarDays size={12} className="shrink-0" />
-            <span className="truncate">{formatDateForUI(eventDate)}</span>
+            <p className="truncate">{formatDateForUI(eventDate)}</p>
           </time>
           {description && (
             <p className="text-body mt-3 line-clamp-2">{description}</p>

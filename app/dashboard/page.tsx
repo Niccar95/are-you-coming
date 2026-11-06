@@ -127,7 +127,7 @@ const DashboardPage = async () => {
                       <CalendarDays size={27} className="text-violet-300" />
                     </div>
                   )}
-                  <p className="font-semibold text-sm text-zinc-900 truncate max-w-50">
+                  <p className="font-semibold text-sm text-zinc-900 truncate max-w-20 md:max-w-30">
                     {event.name}
                   </p>
                 </div>
