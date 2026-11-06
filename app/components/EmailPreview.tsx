@@ -27,7 +27,7 @@ export const EmailPreview = ({ eventData }: PreviewProps) => {
 
       <div className="pb-6">
         <p className="font-bold pb-6">Location and date</p>
-        <p>{eventData.eventLocation}</p>
+        <p className="pb-2">{eventData.eventLocation}</p>
         <p>{formattedDate}</p>
       </div>
 
