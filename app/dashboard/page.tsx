@@ -54,7 +54,7 @@ const DashboardPage = async () => {
         pastCount={pastCount}
       />
 
-      <div className="flex flex-col md:flex-row md:gap-4 gap-6">
+      <div className="flex flex-col gap-6 md:flex-row md:gap-4">
         <RecentActivityCard responseLogs={responseLogs} />
 
         <EventLinksCard
