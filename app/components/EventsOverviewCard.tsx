@@ -10,7 +10,7 @@ const EventsOverviewCard = ({
   pastCount,
 }: EventsOverviewProps) => {
   return (
-    <section className="card">
+    <section className="card w-full">
       <h2 className="text-title mb-4">Events Overview</h2>
       <div className="grid grid-cols-3 gap-3">
         <div className="rounded-lg bg-zinc-50 border border-zinc-100 p-4 text-center">

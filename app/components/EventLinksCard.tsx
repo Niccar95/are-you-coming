@@ -26,7 +26,7 @@ const EventLinksCard = ({
 
   return (
     <>
-      <section className="card h-55 shrink-0 flex flex-col w-full md:w-1/2">
+      <section className="card h-55 shrink-0 flex flex-col w-full md:flex-1 min-w-0">
         <h2 className="text-title mb-4">Active Event Links</h2>
 
         {upcomingCount === 0 ? (

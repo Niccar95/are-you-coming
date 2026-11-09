@@ -18,7 +18,7 @@ const RecentActivityCard = ({ responseLogs }: RecentActivityCardProps) => {
   const mostrecentResponseLog = responseLogs[0];
   return (
     <>
-      <section className="card h-55 shrink-0 flex flex-col w-full md:w-1/2">
+      <section className="card h-55 shrink-0 flex flex-col w-full md:flex-1 min-w-0">
         <h2 className="text-title mb-4">Recent Activity</h2>
 
         {responseLogs.length === 0 ? (
