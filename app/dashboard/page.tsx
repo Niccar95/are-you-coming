@@ -54,12 +54,14 @@ const DashboardPage = async () => {
         pastCount={pastCount}
       />
 
-      <RecentActivityCard responseLogs={responseLogs} />
+      <div className="flex flex-col md:flex-row md:gap-4 gap-6">
+        <RecentActivityCard responseLogs={responseLogs} />
 
-      <EventLinksCard
-        upcomingEvents={upcomingEvents}
-        upcomingCount={upcomingCount}
-      />
+        <EventLinksCard
+          upcomingEvents={upcomingEvents}
+          upcomingCount={upcomingCount}
+        />
+      </div>
     </div>
   );
 };
