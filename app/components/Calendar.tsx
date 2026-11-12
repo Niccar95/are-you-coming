@@ -259,7 +259,7 @@ const Calendar = ({ allEvents }: EventListProps) => {
                               event.eventEndDate,
                               event.timeZone,
                             )}{" "}
-                            {event.timeZone}
+                            {event.timeZone.replace(/_/g, " ")}
                           </p>
                         </time>
                         {event.eventLocation && (

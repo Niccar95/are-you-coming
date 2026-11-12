@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-interface TimezoneSelectProps {
+interface TimeZoneSelectProps {
   value: string;
   onChange: (timezone: string) => void;
 }
 
-const TimezoneSelect = ({ value, onChange }: TimezoneSelectProps) => {
+const TimeZoneSelect = ({ value, onChange }: TimeZoneSelectProps) => {
   const [timezones, setTimezones] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -28,14 +28,18 @@ const TimezoneSelect = ({ value, onChange }: TimezoneSelectProps) => {
 
   return (
     <div className="relative flex flex-col gap-2">
-      <label htmlFor="eventTimezone" className="form-label">
+      <label htmlFor="eventTimezone" className="form-label mb-1">
         Event Timezone (Optional)
       </label>
+      <p className="text-xs text-zinc-400">
+        Only change this if your event takes place in a different timezone.
+        Otherwise, we'll use your local timezone.
+      </p>
 
       <input
         id="eventTimezone"
         type="text"
-        value={isOpen ? search : value}
+        value={isOpen ? search : value.replace(/_/g, " ")}
         onChange={(e) => setSearch(e.target.value)}
         onFocus={() => {
           setIsOpen(true);
@@ -60,7 +64,7 @@ const TimezoneSelect = ({ value, onChange }: TimezoneSelectProps) => {
                     : "text-zinc-700"
                 }`}
               >
-                {timezone.replaceAll("_", " ")}
+                {timezone.replace(/_/g, " ")}
               </button>
             ))
           ) : (
@@ -72,4 +76,4 @@ const TimezoneSelect = ({ value, onChange }: TimezoneSelectProps) => {
   );
 };
 
-export default TimezoneSelect;
+export default TimeZoneSelect;

@@ -1,7 +1,7 @@
 // Converts a JS Date object into the format required by <input type="datetime-local" />
 // How it looks like: "YYYY-MM-DDTHH:mm" (Local Time)
 
-import { fromZonedTime } from "date-fns-tz";
+import { fromZonedTime, toZonedTime } from "date-fns-tz";
 
 export const formatDate = (date: Date) => {
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -52,4 +52,16 @@ export const formatTimeForUI = (
     hour12: false,
     timeZone: timezone,
   });
+};
+
+// Converts a UTC date into the event's timezone for datetime-local inputs
+
+export const formatDateForInput = (
+  date: Date | string,
+  timezone: string,
+): string => {
+  const zonedDate = toZonedTime(date, timezone);
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  return `${zonedDate.getFullYear()}-${pad(zonedDate.getMonth() + 1)}-${pad(zonedDate.getDate())}T${pad(zonedDate.getHours())}:${pad(zonedDate.getMinutes())}`;
 };

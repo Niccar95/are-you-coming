@@ -16,6 +16,7 @@ interface EventActionsProps {
   spotifyUrl: string | null;
   spotifyInviteUrl: string | null;
   eventLocation: string;
+  eventTimeZone: string;
   redirect?: string;
 }
 
@@ -29,6 +30,7 @@ const EventActions = ({
   spotifyUrl,
   spotifyInviteUrl,
   eventLocation,
+  eventTimeZone,
   redirect,
 }: EventActionsProps) => {
   const router = useRouter();
@@ -105,6 +107,7 @@ const EventActions = ({
           initialSpotifyUrl={spotifyUrl}
           initialSpotifyInviteUrl={spotifyInviteUrl}
           initialEventLocation={eventLocation}
+          initialEventTimeZone={eventTimeZone}
           onClose={onClose}
         />
       )}

@@ -9,7 +9,7 @@ import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
 import MiniAssistant from "./MiniAssistant";
 import { formatDate, formatDateToUtc } from "../utils/dateTimeFormatters";
-import TimezoneSelect from "./TimezoneSelect";
+import TimeZoneSelect from "./TimeZoneSelect";
 
 interface FormProps {
   selectedDate?: Date;
@@ -27,7 +27,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
   const [description, setDescription] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [eventLocation, setEventLocation] = useState<string>("");
-  const [eventTimezone, setEventTimezone] = useState("");
+  const [eventTimeZone, setEventTimeZone] = useState("");
   const [spotifyUrl, setSpotifyUrl] = useState<string>("");
   const [spotifyInviteUrl, setSpotifyInviteUrl] = useState<string>("");
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
@@ -42,7 +42,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setEventTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    setEventTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
 
   const toggleEventForm = () => {
@@ -64,7 +64,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
     }
 
     const timezone =
-      eventTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+      eventTimeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     const utcDate = formatDateToUtc(eventDate, timezone);
     const utcEndDate = formatDateToUtc(eventEndDate, timezone);
@@ -129,7 +129,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
       setEventEndDate("");
       setDescription("");
       setEventLocation("");
-      setEventTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+      setEventTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
       setSpotifyUrl("");
       setSpotifyInviteUrl("");
       setFileName("");
@@ -244,9 +244,9 @@ const EventForm = ({ selectedDate }: FormProps) => {
                 />
               </div>
 
-              <TimezoneSelect
-                value={eventTimezone}
-                onChange={setEventTimezone}
+              <TimeZoneSelect
+                value={eventTimeZone}
+                onChange={setEventTimeZone}
               />
 
               <div className="flex flex-col gap-2">

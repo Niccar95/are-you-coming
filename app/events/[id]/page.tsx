@@ -20,6 +20,7 @@ import QRCode from "@/app/components/QRCode";
 import { toPlainObject, toPlainObjects } from "@/app/utils/toPlainObject";
 import ReminderActions from "@/app/components/ReminderActions";
 import {
+  formatDateForInput,
   formatDateForUI,
   formatTimeForUI,
 } from "@/app/utils/dateTimeFormatters";
@@ -75,15 +76,17 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <EventActions
             id={event.id}
             eventName={event.name}
-            eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
-            eventEndDate={new Date(event.eventEndDate)
-              .toISOString()
-              .slice(0, 16)}
+            eventDate={formatDateForInput(event.eventDate, event.timeZone)}
+            eventEndDate={formatDateForInput(
+              event.eventEndDate,
+              event.timeZone,
+            )}
             description={event.description}
             imageUrl={event.imageUrl}
             spotifyUrl={event.spotifyUrl}
             spotifyInviteUrl={event.spotifyInviteUrl}
             eventLocation={event.eventLocation}
+            eventTimeZone={event.timeZone}
             redirect="/dashboard"
           />
         )}
@@ -123,7 +126,7 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <Clock size={12} />
               {formatTimeForUI(eventData.eventDate, eventData.timeZone)} -{" "}
               {formatTimeForUI(eventData.eventEndDate, eventData.timeZone)} (
-              {event.timeZone})
+              {event.timeZone.replace(/_/g, " ")})
             </time>
             {event.eventLocation && (
               <span className={`${badgeClass} m-0 max-w-full`}>

@@ -9,6 +9,7 @@ import { upload } from "@vercel/blob/client";
 import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
 import { formatDateToUtc } from "../utils/dateTimeFormatters";
+import TimeZoneSelect from "./TimeZoneSelect";
 
 interface EditEventFormProps {
   id: number;
@@ -20,6 +21,7 @@ interface EditEventFormProps {
   initialSpotifyUrl: string | null;
   initialSpotifyInviteUrl: string | null;
   initialEventLocation: string;
+  initialEventTimeZone: string;
   onClose: () => void;
 }
 
@@ -33,6 +35,7 @@ const EditEventForm = ({
   initialSpotifyUrl,
   initialSpotifyInviteUrl,
   initialEventLocation,
+  initialEventTimeZone,
   onClose,
 }: EditEventFormProps) => {
   const router = useRouter();
@@ -43,6 +46,9 @@ const EditEventForm = ({
   const [description, setDescription] = useState<string>(initialDescription);
   const [eventLocation, setEventLocation] =
     useState<string>(initialEventLocation);
+
+  const [eventTimeZone, setEventTimeZone] = useState(initialEventTimeZone);
+
   const [spotifyUrl, setSpotifyUrl] = useState<string | null>(
     initialSpotifyUrl,
   );
@@ -74,12 +80,15 @@ const EditEventForm = ({
       return;
     }
 
-    if (new Date(eventDate) <= new Date()) {
+    const utcDate = formatDateToUtc(eventDate, eventTimeZone);
+    const utcEndDate = formatDateToUtc(eventEndDate, eventTimeZone);
+
+    if (new Date(utcDate) <= new Date()) {
       setError("Event date must be in the future.");
       return;
     }
 
-    if (new Date(eventEndDate) <= new Date(eventDate)) {
+    if (new Date(utcEndDate) <= new Date(utcDate)) {
       setError("Event end date must be later than the event date.");
       return;
     }
@@ -99,9 +108,6 @@ const EditEventForm = ({
     let imageUrl: string | null = initialImageUrl;
 
     try {
-      const utcDate = formatDateToUtc(eventDate);
-      const utcEndDate = formatDateToUtc(eventEndDate);
-
       const file = inputFileRef.current?.files?.[0];
       if (file) {
         const newBlob = await upload(file.name, file, {
@@ -124,6 +130,7 @@ const EditEventForm = ({
           spotify_url: spotifyUrl,
           spotify_invite_url: spotifyInviteUrl,
           event_location: eventLocation || null,
+          event_timezone: eventTimeZone,
         }),
       });
 
@@ -131,7 +138,8 @@ const EditEventForm = ({
 
       router.refresh();
       onClose();
-    } catch {
+    } catch (error) {
+      console.error("Error updating event:", error);
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
@@ -223,6 +231,8 @@ const EditEventForm = ({
               className="form-input"
             />
           </div>
+
+          <TimeZoneSelect value={eventTimeZone} onChange={setEventTimeZone} />
 
           <div className="flex flex-col gap-2">
             <span className="form-label">Event Image (Optional)</span>
@@ -335,7 +345,7 @@ const EditEventForm = ({
           <div className="flex justify-between md:justify-start gap-3 mt-2">
             <button
               type="submit"
-              className="btn-primary flex items-center gap-2 self start"
+              className="btn-primary flex items-center gap-2 self-start"
             >
               <Save size={16} />
               Save Changes
