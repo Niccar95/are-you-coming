@@ -9,6 +9,7 @@ import useClickOutside from "../hooks/useClickOutside";
 import Spinner from "./Spinner";
 import MiniAssistant from "./MiniAssistant";
 import { formatDate, formatDateToUtc } from "../utils/dateTimeFormatters";
+import TimezoneSelect from "./TimezoneSelect";
 
 interface FormProps {
   selectedDate?: Date;
@@ -26,6 +27,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
   const [description, setDescription] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [eventLocation, setEventLocation] = useState<string>("");
+  const [eventTimezone, setEventTimezone] = useState("");
   const [spotifyUrl, setSpotifyUrl] = useState<string>("");
   const [spotifyInviteUrl, setSpotifyInviteUrl] = useState<string>("");
   const [openEventForm, setOpenEventForm] = useState<boolean>(false);
@@ -39,12 +41,17 @@ const EventForm = ({ selectedDate }: FormProps) => {
     useState<boolean>(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    setEventTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  }, []);
+
   const toggleEventForm = () => {
     setOpenEventForm(!openEventForm);
   };
 
   const addNewEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (
       !eventName ||
       !eventDate ||
@@ -55,33 +62,40 @@ const EventForm = ({ selectedDate }: FormProps) => {
       setError("Please fill in all required fields.");
       return;
     }
-    if (new Date(eventDate) <= new Date()) {
+
+    const timezone =
+      eventTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const utcDate = formatDateToUtc(eventDate, timezone);
+    const utcEndDate = formatDateToUtc(eventEndDate, timezone);
+
+    if (new Date(utcDate) <= new Date()) {
       setError("Event date must be in the future.");
       return;
     }
 
-    if (new Date(eventEndDate) <= new Date(eventDate)) {
+    if (new Date(utcEndDate) <= new Date(utcDate)) {
       setError("Event end date must be later than the event date.");
       return;
     }
 
     const spotifyFieldsMismatch =
       Boolean(spotifyUrl) !== Boolean(spotifyInviteUrl);
+
     if (spotifyFieldsMismatch) {
       setError(
         "Both Spotify fields are required. Please fill in the playlist URL and the collab invite URL.",
       );
       return;
     }
+
     setError("");
     setLoading(true);
 
     try {
-      const utcDate = formatDateToUtc(eventDate);
-      const utcEndDate = formatDateToUtc(eventEndDate);
-
       let imageUrl: string | null = null;
       const file = inputFileRef.current?.files?.[0];
+
       if (file) {
         const newBlob = await upload(file.name, file, {
           access: "public",
@@ -102,7 +116,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
           spotify_url: spotifyUrl,
           spotify_invite_url: spotifyInviteUrl,
           event_location: eventLocation || null,
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          timezone,
         }),
       });
 
@@ -115,6 +129,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
       setEventEndDate("");
       setDescription("");
       setEventLocation("");
+      setEventTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone);
       setSpotifyUrl("");
       setSpotifyInviteUrl("");
       setFileName("");
@@ -124,6 +139,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
       setTimeout(() => setSuccess(false), 4000);
     } catch (error) {
       console.error("Error adding new event:", error);
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -227,6 +243,11 @@ const EventForm = ({ selectedDate }: FormProps) => {
                   className="form-input"
                 />
               </div>
+
+              <TimezoneSelect
+                value={eventTimezone}
+                onChange={setEventTimezone}
+              />
 
               <div className="flex flex-col gap-2">
                 <span className="form-label">Event Image (Optional)</span>
@@ -345,7 +366,7 @@ const EventForm = ({ selectedDate }: FormProps) => {
                 <button
                   type="button"
                   onClick={() => setOpenEventForm(false)}
-                  className="btn-secondary flex items-center gap-2 self start"
+                  className="btn-secondary flex items-center gap-2 self-start"
                 >
                   <X size={16} />
                   Cancel

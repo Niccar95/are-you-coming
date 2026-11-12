@@ -46,7 +46,12 @@ const RecentActivityCard = ({ responseLogs }: RecentActivityCardProps) => {
                 <p className="text-meta">{mostrecentResponseLog.eventName}</p>
 
                 <time className="text-subtle">
-                  {new Date(mostrecentResponseLog.createdAt).toLocaleString()}
+                  {new Date(mostrecentResponseLog.createdAt).toLocaleString(
+                    "sv-SE",
+                    {
+                      timeZone: "Europe/Stockholm",
+                    },
+                  )}
                 </time>
               </div>
             </li>

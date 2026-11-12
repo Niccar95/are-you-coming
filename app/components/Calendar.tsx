@@ -254,8 +254,11 @@ const Calendar = ({ allEvents }: EventListProps) => {
                         <time className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full">
                           <Clock size={12} className="shrink-0" />
                           <p className="truncate">
-                            {formatTimeForUI(event.eventDate)} -{" "}
-                            {formatTimeForUI(event.eventEndDate)}{" "}
+                            {formatTimeForUI(event.eventDate, event.timeZone)} -{" "}
+                            {formatTimeForUI(
+                              event.eventEndDate,
+                              event.timeZone,
+                            )}{" "}
                             {event.timeZone}
                           </p>
                         </time>

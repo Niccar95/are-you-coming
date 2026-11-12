@@ -121,8 +121,9 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
             <time className={badgeClass}>
               <Clock size={12} />
-              {formatTimeForUI(eventData.eventDate)} -{" "}
-              {formatTimeForUI(eventData.eventEndDate)} ({event.timeZone})
+              {formatTimeForUI(eventData.eventDate, eventData.timeZone)} -{" "}
+              {formatTimeForUI(eventData.eventEndDate, eventData.timeZone)} (
+              {event.timeZone})
             </time>
             {event.eventLocation && (
               <span className={`${badgeClass} m-0 max-w-full`}>
