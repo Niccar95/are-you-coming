@@ -5,6 +5,7 @@ import { EventType } from "../lib/types";
 import EventCard from "./EventCard";
 import EventActions from "./EventActions";
 import { Settings2, Check } from "lucide-react";
+import { formatDateForInput } from "../utils/dateTimeFormatters";
 
 interface UpcomingEventsProps {
   events: EventType[];
@@ -51,15 +52,17 @@ const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
               <EventActions
                 id={event.id}
                 eventName={event.name}
-                eventDate={new Date(event.eventDate).toISOString().slice(0, 16)}
-                eventEndDate={new Date(event.eventEndDate)
-                  .toISOString()
-                  .slice(0, 16)}
+                eventDate={formatDateForInput(event.eventDate, event.timeZone)}
+                eventEndDate={formatDateForInput(
+                  event.eventEndDate,
+                  event.timeZone,
+                )}
                 description={event.description}
                 spotifyUrl={event.spotifyUrl ?? null}
                 spotifyInviteUrl={event.spotifyInviteUrl ?? null}
                 imageUrl={event.imageUrl ?? null}
                 eventLocation={event.eventLocation}
+                eventTimeZone={event.timeZone}
               />
             )}
           </li>
