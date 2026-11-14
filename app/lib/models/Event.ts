@@ -1,3 +1,5 @@
+import { toZonedTime } from "date-fns-tz";
+
 export class EventClass {
   id: number;
   name: string;
@@ -53,9 +55,10 @@ export class EventClass {
     const end = new Date(this.eventEndDate);
 
     const formatGoogleCalendarDate = (d: Date) => {
+      const zonedDate = toZonedTime(d, this.timeZone);
       const pad = (n: number) => String(n).padStart(2, "0");
 
-      return `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}`;
+      return `${zonedDate.getFullYear()}${pad(zonedDate.getMonth() + 1)}${pad(zonedDate.getDate())}T${pad(zonedDate.getHours())}${pad(zonedDate.getMinutes())}${pad(zonedDate.getSeconds())}`;
     };
 
     const params = new URLSearchParams({
@@ -64,6 +67,7 @@ export class EventClass {
       dates: `${formatGoogleCalendarDate(start)}/${formatGoogleCalendarDate(end)}`,
       details: this.description || "",
       location: this.eventLocation || "",
+      ctz: this.timeZone || "",
     });
 
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
