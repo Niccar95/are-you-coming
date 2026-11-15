@@ -26,7 +26,7 @@ export const getEvents = async (): Promise<EventClass[]> => {
       spotify_url: string | null;
       spotify_invite_url: string | null;
       event_location: string;
-      event_host: string | null;
+      event_host: string;
       timezone: string;
     }) =>
       new EventClass(
@@ -76,7 +76,7 @@ export const addEvent = async (
   spotifyUrl: string | null,
   spotifyInviteUrl: string | null,
   eventLocation: string,
-  hostName: string | null,
+  hostName: string,
   timezone: string,
 ): Promise<EventClass> => {
   const { rows } = await pool.query(

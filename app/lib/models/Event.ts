@@ -11,7 +11,7 @@ export class EventClass {
   spotifyUrl: string | null;
   spotifyInviteUrl: string | null;
   eventLocation: string;
-  hostName: string | null;
+  hostName: string;
   timeZone: string;
 
   constructor(
@@ -25,7 +25,7 @@ export class EventClass {
     spotifyUrl: string | null,
     spotifyInviteUrl: string | null,
     eventLocation: string,
-    hostName: string | null = null,
+    hostName: string,
     timeZone: string,
   ) {
     this.id = id;

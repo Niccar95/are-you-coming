@@ -13,6 +13,14 @@ export const POST = async (req: NextRequest) => {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  if (!session.user.name) {
+    return NextResponse.json(
+      { error: "Host name is required" },
+      { status: 400 },
+    );
+  }
+
   const {
     name,
     event_date,
@@ -49,7 +57,7 @@ export const POST = async (req: NextRequest) => {
     spotify_url || null,
     spotify_invite_url || null,
     event_location,
-    session.user.name ?? null,
+    session.user.name,
     timezone,
   );
 
