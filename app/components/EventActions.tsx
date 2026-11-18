@@ -1,10 +1,13 @@
 "use client";
 
-import { Pencil, Trash2, X } from "lucide-react";
+import { ClipboardList, Pencil, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import EditEventForm from "./EditEventForm";
 import useClickOutside from "../hooks/useClickOutside";
+import Spinner from "./Spinner";
+import EventInventoryModal from "./EventInventoryModal";
+import { EventInventoryItem, InventoryCatalogueItem } from "../lib/types";
 
 interface EventActionsProps {
   id: number;
@@ -17,6 +20,8 @@ interface EventActionsProps {
   spotifyInviteUrl: string | null;
   eventLocation: string;
   eventTimeZone: string;
+  eventInventory: EventInventoryItem[];
+  inventoryCatalogue: InventoryCatalogueItem[];
   redirect?: string;
 }
 
@@ -31,14 +36,21 @@ const EventActions = ({
   spotifyInviteUrl,
   eventLocation,
   eventTimeZone,
+  eventInventory,
+  inventoryCatalogue,
   redirect,
 }: EventActionsProps) => {
   const router = useRouter();
-  const [isEditing, setIsEditing] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isManagingInventory, setIsManagingInventory] =
+    useState<boolean>(false);
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
 
   const closeModal = useCallback(() => setConfirmDelete(false), []);
-  const onClose = useCallback(() => setIsEditing(false), []);
+  const onClose = useCallback(() => {
+    setIsEditing(false);
+    setIsManagingInventory(false);
+  }, []);
   const modalRef = useClickOutside(confirmDelete, closeModal);
 
   const handleDelete = async () => {
@@ -57,6 +69,12 @@ const EventActions = ({
   return (
     <>
       <div className="absolute top-2 right-2 flex gap-2">
+        <button
+          onClick={() => setIsManagingInventory(true)}
+          className="btn-secondary py-1.5! px-2! md:py-1! md:px-1.5! bg-white! text-zinc-700! hover:bg-zinc-100!"
+        >
+          <ClipboardList size={16} />
+        </button>
         <button
           onClick={() => setIsEditing(true)}
           className="btn-secondary py-1.5! px-2! md:py-1! md:px-1.5! bg-white! text-zinc-700! hover:bg-zinc-100!"
@@ -109,6 +127,13 @@ const EventActions = ({
           initialEventLocation={eventLocation}
           initialEventTimeZone={eventTimeZone}
           onClose={onClose}
+        />
+      )}
+      {isManagingInventory && (
+        <EventInventoryModal
+          onClose={onClose}
+          eventInventory={eventInventory}
+          inventoryCatalogue={inventoryCatalogue}
         />
       )}
     </>

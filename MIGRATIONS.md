@@ -22,3 +22,6 @@ Update this list every time a migration file is run. Put it next to the migratio
 
 - [x] `007_add_event_response_logs.sql`: dev
 - [x] `007_add_event_response_logs.sql`: prod
+
+- [x] `008_add_inventory_items.sql`: dev
+- [ ] `008_add_inventory_items.sql`: prod

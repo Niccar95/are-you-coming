@@ -25,6 +25,10 @@ import {
   formatTimeForUI,
 } from "@/app/utils/dateTimeFormatters";
 import { notFound } from "next/navigation";
+import {
+  getEventInventories,
+  getInventoryCatalogue,
+} from "@/app/services/inventoryService";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -38,6 +42,14 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     getAttendeesByEventId(eventId),
     auth(),
   ]);
+
+  const [inventory, catalogue] = await Promise.all([
+    getEventInventories(eventId),
+    getInventoryCatalogue(),
+  ]);
+
+  const eventInventory = toPlainObjects(inventory);
+  const inventoryCatalogue = toPlainObjects(catalogue);
 
   const isOwner =
     !!session?.user?.id && String(event.userId) === String(session.user.id);
@@ -87,6 +99,8 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             spotifyInviteUrl={event.spotifyInviteUrl}
             eventLocation={event.eventLocation}
             eventTimeZone={event.timeZone}
+            eventInventory={eventInventory}
+            inventoryCatalogue={inventoryCatalogue}
             redirect="/dashboard"
           />
         )}

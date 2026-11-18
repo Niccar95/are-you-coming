@@ -37,3 +37,19 @@ export type ResponseLogType = {
   createdAt: Date;
   eventName: string;
 };
+
+export type InventoryCategory = "Food" | "Drinks" | "Decorations" | "Equipment";
+
+export type InventoryCatalogueItem = {
+  id: number;
+  name: string;
+  emoji: string;
+  category: InventoryCategory;
+};
+
+export type EventInventoryItem = {
+  id: number;
+  eventId: number;
+  inventoryItemId: number;
+  quantity: number;
+};
