@@ -113,7 +113,7 @@ Selected state: `border-violet-400 text-violet-600`
 
 ## Pills / Badges
 
-Standard pill — icon + text:
+### Standard pill — icon + text:
 
 ```jsx
 <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full">
@@ -130,6 +130,25 @@ Glass variant (on dark/image backgrounds):
 ```
 bg-white/20 backdrop-blur-sm text-white
 ```
+
+### Action Pill
+
+A clickable pill. Same look as the standard pill, but it is a `<button>`, has a leading `Plus` icon, and reacts to hover. Used for adding items, e.g. inventory catalogue items.
+
+```jsx
+<button
+  type="button"
+  className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1 max-w-full cursor-pointer transition-colors hover:bg-violet-200"
+>
+  <Plus size={12} className="shrink-0" />
+  <span>Label</span>
+</button>
+```
+
+- Always a `<button type="button">`, never a `<span>`.
+- Standard pills are display-only. Use the action pill only when clicking does something.
+- Icon is `Plus`, `size={12}`, with `shrink-0`.
+- In a flex column, add `self-start` so it doesn't stretch.
 
 ---
 
