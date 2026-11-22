@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@auth/pg-adapter": "^1.11.3",
+    "@dnd-kit/react": "^0.5.3",
     "@emailjs/browser": "^5.0.3",
     "@emailjs/nodejs": "^5.0.2",
     "@google/genai": "^2.31.0",
@@ -36,11 +37,12 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.1.2",
     "baseline-browser-mapping": "^2.11.29",
-    "eslint": "^10",
+    "eslint": "^10.15.0",
     "eslint-config-next": "^16.4.6",
     "jsdom": "^29.1.1",
     "tailwindcss": "^4",
-    "typescript": "^7",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.73.0",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^5.1.0"
   }
