@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import EditEventForm from "./EditEventForm";
 import useClickOutside from "../hooks/useClickOutside";
-import Spinner from "./Spinner";
 import EventInventoryModal from "./EventInventoryModal";
 import { EventInventoryItem, InventoryCatalogueItem } from "../lib/types";
 
