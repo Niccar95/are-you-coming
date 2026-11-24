@@ -43,14 +43,6 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     auth(),
   ]);
 
-  const [inventory, catalogue] = await Promise.all([
-    getEventInventories(eventId),
-    getInventoryCatalogue(),
-  ]);
-
-  const eventInventory = toPlainObjects(inventory);
-  const inventoryCatalogue = toPlainObjects(catalogue);
-
   const isOwner =
     !!session?.user?.id && String(event.userId) === String(session.user.id);
 
@@ -99,8 +91,6 @@ const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             spotifyInviteUrl={event.spotifyInviteUrl}
             eventLocation={event.eventLocation}
             eventTimeZone={event.timeZone}
-            eventInventory={eventInventory}
-            inventoryCatalogue={inventoryCatalogue}
             redirect="/dashboard"
           />
         )}

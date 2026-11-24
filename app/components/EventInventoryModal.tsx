@@ -4,6 +4,8 @@ import { DragDropProvider } from "@dnd-kit/react";
 import InventoryModalContent from "./InventoryModalContent";
 import { EventInventoryItem, InventoryCatalogueItem } from "../lib/types";
 import { useState } from "react";
+import { addEventInventoryItem } from "../services/inventoryService";
+import { addInventoryItemAction } from "../actions/inventoryActions";
 
 type ItemId = string | number;
 
@@ -11,12 +13,14 @@ interface InventoryModalProps {
   onClose: () => void;
   eventInventory: EventInventoryItem[];
   inventoryCatalogue: InventoryCatalogueItem[];
+  eventId: number;
 }
 
 const EventInventoryModal = ({
   onClose,
   eventInventory,
   inventoryCatalogue,
+  eventId,
 }: InventoryModalProps) => {
   const [pendingIds, setPendingIds] = useState<ItemId[]>([]);
   const [inventoryIds, setInventoryIds] = useState<ItemId[]>([]);
@@ -31,7 +35,7 @@ const EventInventoryModal = ({
 
         const itemId = source.id;
 
-        if (target.id === "pending" || target.id === "inventory") {
+        if (target.id === "pending" || target.id === "in_inventory") {
           setPendingIds((prev) => prev.filter((id) => id !== itemId));
           setInventoryIds((prev) => prev.filter((id) => id !== itemId));
 
@@ -40,6 +44,7 @@ const EventInventoryModal = ({
           } else {
             setInventoryIds((prev) => [...prev, itemId]);
           }
+          addInventoryItemAction(eventId, Number(source.id), 0, target.id);
         }
       }}
     >

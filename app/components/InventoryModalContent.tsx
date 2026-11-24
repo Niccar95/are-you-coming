@@ -59,7 +59,7 @@ const InventoryModalContent = ({
   });
 
   const { ref: inventoryRef } = useDroppable({
-    id: "inventory",
+    id: "in_inventory",
   });
 
   return (

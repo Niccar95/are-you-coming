@@ -7,6 +7,7 @@ import EditEventForm from "./EditEventForm";
 import useClickOutside from "../hooks/useClickOutside";
 import EventInventoryModal from "./EventInventoryModal";
 import { EventInventoryItem, InventoryCatalogueItem } from "../lib/types";
+import { getInventoryData } from "../actions/inventoryActions";
 
 interface EventActionsProps {
   id: number;
@@ -19,8 +20,6 @@ interface EventActionsProps {
   spotifyInviteUrl: string | null;
   eventLocation: string;
   eventTimeZone: string;
-  eventInventory: EventInventoryItem[];
-  inventoryCatalogue: InventoryCatalogueItem[];
   redirect?: string;
 }
 
@@ -35,22 +34,36 @@ const EventActions = ({
   spotifyInviteUrl,
   eventLocation,
   eventTimeZone,
-  eventInventory,
-  inventoryCatalogue,
   redirect,
 }: EventActionsProps) => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isManagingInventory, setIsManagingInventory] =
     useState<boolean>(false);
+
+  const [inventoryData, setInventoryData] = useState<{
+    eventInventory: EventInventoryItem[];
+    inventoryCatalogue: InventoryCatalogueItem[];
+  } | null>(null);
+
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
 
   const closeModal = useCallback(() => setConfirmDelete(false), []);
   const onClose = useCallback(() => {
     setIsEditing(false);
     setIsManagingInventory(false);
+    setInventoryData(null);
   }, []);
   const modalRef = useClickOutside(confirmDelete, closeModal);
+
+  const handleInventoryClick = async () => {
+    setIsManagingInventory(true);
+    try {
+      setInventoryData(await getInventoryData(id));
+    } catch (error) {
+      console.error("getInventoryData failed:", error);
+    }
+  };
 
   const handleDelete = async () => {
     await fetch("/api/events", {
@@ -69,7 +82,7 @@ const EventActions = ({
     <>
       <div className="absolute top-2 right-2 flex gap-2">
         <button
-          onClick={() => setIsManagingInventory(true)}
+          onClick={handleInventoryClick}
           className="btn-secondary py-1.5! px-2! md:py-1! md:px-1.5! bg-white! text-zinc-700! hover:bg-zinc-100!"
         >
           <ClipboardList size={16} />
@@ -131,8 +144,9 @@ const EventActions = ({
       {isManagingInventory && (
         <EventInventoryModal
           onClose={onClose}
-          eventInventory={eventInventory}
-          inventoryCatalogue={inventoryCatalogue}
+          eventInventory={inventoryData?.eventInventory ?? []}
+          inventoryCatalogue={inventoryData?.inventoryCatalogue ?? []}
+          eventId={id}
         />
       )}
     </>

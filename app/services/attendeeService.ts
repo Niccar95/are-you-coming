@@ -80,7 +80,7 @@ export const getResponseLogs = async (): Promise<ResponseLogType[]> => {
 export const updateAttendeeResponse = async (
   eventId: number,
   token: string,
-  responseStatus: string,
+  responseStatus: ResponseStatus,
 ): Promise<boolean> => {
   const tokenHash = createHash("sha256").update(token).digest("hex");
   const client = await pool.connect();

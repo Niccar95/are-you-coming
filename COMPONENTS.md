@@ -89,8 +89,8 @@ hover:scale-[1.02] transition-all duration-300
 **State pattern:**
 
 ```ts
-const [loading, setLoading] = useState(false);
-const [error, setError] = useState("");
+const [loading, setLoading] = useState<boolean>(false);
+const [error, setError] = useState<boolean>("");
 // Flow: validate → setLoading(true) → setError("") → fetch → catch setError(...) → finally setLoading(false) → router.refresh()
 ```
 

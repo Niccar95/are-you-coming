@@ -22,11 +22,12 @@ export type AttendeeType = {
 
 export type ResponseStatus = "unsure" | "coming" | "skipping";
 
-export const statusLabels: Record<ResponseStatus, string> = {
-  unsure: "Pending response",
-  coming: "Invitation accepted",
-  skipping: "Invitation declined",
-};
+// for later implementation
+// export const statusLabels: Record<ResponseStatus, string> = {
+//   unsure: "Pending response",
+//   coming: "Invitation accepted",
+//   skipping: "Invitation declined",
+// };
 
 export type ResponseLogType = {
   id: number;
@@ -52,4 +53,10 @@ export type EventInventoryItem = {
   eventId: number;
   inventoryItemId: number;
   quantity: number;
+  status: EventInventoryItemStatus;
 };
+
+export type EventInventoryItemStatus =
+  | "unselected"
+  | "pending"
+  | "in_inventory";

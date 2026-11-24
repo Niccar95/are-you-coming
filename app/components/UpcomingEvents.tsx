@@ -12,7 +12,7 @@ interface UpcomingEventsProps {
 }
 
 const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
-  const [manageMode, setManageMode] = useState(false);
+  const [manageMode, setManageMode] = useState<boolean>(false);
 
   const toggleManageMode = () => {
     setManageMode(!manageMode);

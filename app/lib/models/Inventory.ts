@@ -1,4 +1,4 @@
-import { InventoryCategory } from "../types";
+import { EventInventoryItemStatus, InventoryCategory } from "../types";
 
 export class CatalogueItemClass {
   id: number;
@@ -33,17 +33,20 @@ export class InventoryItemClass {
   eventId: number;
   inventoryItemId: number;
   quantity: number;
+  status: EventInventoryItemStatus;
 
   constructor(
     id: number,
     eventId: number,
     inventoryItemId: number,
     quantity: number,
+    status: EventInventoryItemStatus,
   ) {
     this.id = id;
     this.eventId = eventId;
     this.inventoryItemId = inventoryItemId;
     this.quantity = quantity;
+    this.status = status;
   }
 
   hasValidQuantity(): boolean {
@@ -56,6 +59,7 @@ export class InventoryItemClass {
       eventId: this.eventId,
       inventoryItemId: this.inventoryItemId,
       quantity: this.quantity,
+      status: this.status,
     };
   }
 }

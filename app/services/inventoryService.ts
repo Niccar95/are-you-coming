@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { inventoryItems } from "../data/inventory";
 import pool from "../lib/db";
 
-import { InventoryCategory } from "../lib/types";
+import { EventInventoryItemStatus, InventoryCategory } from "../lib/types";
 import {
   CatalogueItemClass,
   InventoryItemClass,
@@ -43,12 +43,14 @@ export const getEventInventories = async (
       event_id: number;
       inventory_item_id: number;
       quantity: number;
+      status: EventInventoryItemStatus;
     }) =>
       new InventoryItemClass(
         item.id,
         item.event_id,
         item.inventory_item_id,
         item.quantity,
+        item.status,
       ),
   );
 };
@@ -67,5 +69,31 @@ export const getInventoryCatalogue = async (): Promise<
       emoji: string;
       category: InventoryCategory;
     }) => new CatalogueItemClass(item.id, item.name, item.emoji, item.category),
+  );
+};
+
+export const addEventInventoryItem = async (
+  event_id: number,
+  inventory_item_id: number,
+  quantity: number,
+  status: EventInventoryItemStatus,
+) => {
+  const { rows } = await pool.query(
+    `INSERT INTO event_inventory (event_id, inventory_item_id, quantity, status)
+   VALUES ($1, $2, $3, $4)
+   ON CONFLICT (event_id, inventory_item_id)
+   DO UPDATE SET status = $4
+   RETURNING *`,
+    [event_id, inventory_item_id, quantity, status],
+  );
+
+  const item = rows[0];
+
+  return new InventoryItemClass(
+    item.id,
+    item.event_id,
+    item.inventory_item_id,
+    item.quantity,
+    item.status,
   );
 };
