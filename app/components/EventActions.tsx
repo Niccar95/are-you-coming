@@ -143,6 +143,7 @@ const EventActions = ({
       )}
       {isManagingInventory && (
         <EventInventoryModal
+          key={inventoryData ? "loaded" : "loading"}
           onClose={onClose}
           eventInventory={inventoryData?.eventInventory ?? []}
           inventoryCatalogue={inventoryData?.inventoryCatalogue ?? []}

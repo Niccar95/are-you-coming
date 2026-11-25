@@ -14,7 +14,6 @@ import DraggableInventoryItem from "./DraggableInventoryItem";
 
 interface InventoryProps {
   onClose: () => void;
-  eventInventory: EventInventoryItem[];
   inventoryCatalogue: InventoryCatalogueItem[];
   pendingIds: (string | number)[];
   inventoryIds: (string | number)[];
@@ -29,7 +28,6 @@ const CATEGORIES: { name: InventoryCategory; emoji: string; bg: string }[] = [
 
 const InventoryModalContent = ({
   onClose,
-  eventInventory,
   inventoryCatalogue,
   pendingIds,
   inventoryIds,

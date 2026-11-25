@@ -25,10 +25,6 @@ import {
   formatTimeForUI,
 } from "@/app/utils/dateTimeFormatters";
 import { notFound } from "next/navigation";
-import {
-  getEventInventories,
-  getInventoryCatalogue,
-} from "@/app/services/inventoryService";
 
 const EventPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

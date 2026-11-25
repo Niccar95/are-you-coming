@@ -4,7 +4,6 @@ import { DragDropProvider } from "@dnd-kit/react";
 import InventoryModalContent from "./InventoryModalContent";
 import { EventInventoryItem, InventoryCatalogueItem } from "../lib/types";
 import { useState } from "react";
-import { addEventInventoryItem } from "../services/inventoryService";
 import { addInventoryItemAction } from "../actions/inventoryActions";
 
 type ItemId = string | number;
@@ -22,12 +21,20 @@ const EventInventoryModal = ({
   inventoryCatalogue,
   eventId,
 }: InventoryModalProps) => {
-  const [pendingIds, setPendingIds] = useState<ItemId[]>([]);
-  const [inventoryIds, setInventoryIds] = useState<ItemId[]>([]);
+  const [pendingIds, setPendingIds] = useState<ItemId[]>(
+    eventInventory
+      .filter((item) => item.status === "pending")
+      .map((item) => item.inventoryItemId),
+  );
+  const [inventoryIds, setInventoryIds] = useState<ItemId[]>(
+    eventInventory
+      .filter((item) => item.status === "in_inventory")
+      .map((item) => item.inventoryItemId),
+  );
 
   return (
     <DragDropProvider
-      onDragEnd={(event) => {
+      onDragEnd={async (event) => {
         if (event.canceled) return;
 
         const { source, target } = event.operation;
@@ -44,13 +51,22 @@ const EventInventoryModal = ({
           } else {
             setInventoryIds((prev) => [...prev, itemId]);
           }
-          addInventoryItemAction(eventId, Number(source.id), 0, target.id);
+
+          try {
+            await addInventoryItemAction(
+              eventId,
+              Number(source.id),
+              0,
+              target.id,
+            );
+          } catch (error) {
+            console.error("Save failed:", error);
+          }
         }
       }}
     >
       <InventoryModalContent
         onClose={onClose}
-        eventInventory={eventInventory}
         inventoryCatalogue={inventoryCatalogue}
         pendingIds={pendingIds}
         inventoryIds={inventoryIds}
