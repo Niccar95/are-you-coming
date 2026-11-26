@@ -2,15 +2,12 @@
 
 import { useState } from "react";
 import useClickOutside from "../hooks/useClickOutside";
-import {
-  EventInventoryItem,
-  InventoryCatalogueItem,
-  InventoryCategory,
-} from "../lib/types";
+import { InventoryCatalogueItem, InventoryCategory } from "../lib/types";
 
 import { useDroppable } from "@dnd-kit/react";
 import DraggableInventoryList from "./DraggableInventoryList";
 import DraggableInventoryItem from "./DraggableInventoryItem";
+import SortableInventoryItem from "./SortableInventoryItem";
 
 interface InventoryProps {
   onClose: () => void;
@@ -132,8 +129,13 @@ const InventoryModalContent = ({
                 {pendingItems.length === 0 ? (
                   <p className="text-meta text-center">No pending items</p>
                 ) : (
-                  pendingItems.map((item) => (
-                    <DraggableInventoryItem key={item.id} item={item} />
+                  pendingItems.map((item, index) => (
+                    <SortableInventoryItem
+                      key={item.id}
+                      item={item}
+                      index={index}
+                      column="pending"
+                    />
                   ))
                 )}
               </div>
@@ -152,8 +154,13 @@ const InventoryModalContent = ({
                 {inventoryItems.length === 0 ? (
                   <p className="text-meta text-center">No items in inventory</p>
                 ) : (
-                  inventoryItems.map((item) => (
-                    <DraggableInventoryItem key={item.id} item={item} />
+                  inventoryItems.map((item, index) => (
+                    <SortableInventoryItem
+                      key={item.id}
+                      item={item}
+                      index={index}
+                      column="in_inventory"
+                    />
                   ))
                 )}
               </div>
